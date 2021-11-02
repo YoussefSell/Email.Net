@@ -21,14 +21,14 @@
     }
 
     /// <summary>
-    /// 
+    /// partial part for <see cref="SmtpEmailDeliveryProvider"/>
     /// </summary>
     public partial class SmtpEmailDeliveryProvider
     {
         /// <summary>
         /// the name of the email delivery provider
         /// </summary>
-        public const string Name = "smtp_client_edp";
+        public const string Name = "smtp_edp";
 
         /// <inheritdoc/>
         string IEmailDeliveryProvider.Name => Name;
