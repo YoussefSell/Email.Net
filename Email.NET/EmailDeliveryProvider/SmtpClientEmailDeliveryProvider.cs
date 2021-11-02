@@ -5,7 +5,7 @@
     /// <summary>
     /// the smtp client email delivery provider
     /// </summary>
-    public partial class SmtpClientEmailDeliveryProvider : IEmailDeliveryProvider
+    public partial class SmtpEmailDeliveryProvider : IEmailDeliveryProvider
     {
         /// <inheritdoc/>
         public EmailSendingResult Send(Message message, params EmailDeliveryProviderData[] data)
@@ -23,7 +23,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public partial class SmtpClientEmailDeliveryProvider
+    public partial class SmtpEmailDeliveryProvider
     {
         /// <summary>
         /// the name of the email delivery provider
@@ -33,7 +33,7 @@
         /// <inheritdoc/>
         string IEmailDeliveryProvider.Name => Name;
 
-        public SmtpClientEmailDeliveryProvider()
+        public SmtpEmailDeliveryProvider()
         {
 
         }

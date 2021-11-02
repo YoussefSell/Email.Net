@@ -8,8 +8,8 @@
     public class EmailServiceOptions
     {
         /// <summary>
-        /// the name of the default email delivery provider, by default is set to <see cref="SmtpClientEmailDeliveryProvider.Name"/>
+        /// the name of the default email delivery provider, by default is set to <see cref="SmtpEmailDeliveryProvider.Name"/>
         /// </summary>
-        public string DefaultEmailDeliveryProvider { get; set; } = SmtpClientEmailDeliveryProvider.Name;
+        public string DefaultEmailDeliveryProvider { get; set; } = SmtpEmailDeliveryProvider.Name;
     }
 }
