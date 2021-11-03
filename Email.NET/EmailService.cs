@@ -82,8 +82,12 @@
             if (provider is null)
                 throw new ArgumentNullException(nameof(provider));
 
-            // validate the email message 
-            message.Validate();
+            // check if the from is null
+            CheckMessageFromValue(message);
+
+            // check if the sending is paused
+            if (Options.PauseSending)
+                return EmailSendingResult.SendingPaused();
 
             // send the email message
             return provider.Send(message, data);
@@ -104,8 +108,12 @@
             if (provider is null)
                 throw new ArgumentNullException(nameof(provider));
 
-            // validate the email message 
-            message.Validate();
+            // check if the from is null
+            CheckMessageFromValue(message);
+
+            // check if the sending is paused
+            if (Options.PauseSending)
+                return Task.FromResult(EmailSendingResult.SendingPaused());
 
             // send the email message
             return provider.SendAsync(message, data);
@@ -139,6 +147,9 @@
             if (options is null)
                 throw new ArgumentNullException(nameof(options));
 
+            // validate if the options are valid
+            options.Validate();
+
             Options = options;
 
             // init the providers dictionary
@@ -156,5 +167,20 @@
         /// the email service options instance
         /// </summary>
         public EmailServiceOptions Options { get; }
+
+        /// <summary>
+        /// check if the message from value is supplied
+        /// </summary>
+        /// <param name="message">the message instance</param>
+        private void CheckMessageFromValue(Message message)
+        {
+            if (message.From is null)
+            {
+                if (Options.DefaultFrom is null)
+                    throw new ArgumentException($"the {typeof(Message).FullName} [From] value is null, either supply a from value in the message, or set a default [From] value in {typeof(EmailServiceOptions).FullName}");
+
+                message.SetFrom(Options.DefaultFrom);
+            }
+        }
     }
 }
