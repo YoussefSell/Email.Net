@@ -1,5 +1,6 @@
 ﻿namespace Email.NET
 {
+    using Email.NET.Factories;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -81,7 +82,7 @@
         /// <param name="to">the recipient email address</param>
         public Message(IMessageContent content, MailAddress from, ICollection<MailAddress> to)
             : this(content, from, to, Priority.Normal) { }
-        
+
         /// <summary>
         /// create instance of <see cref="Message"/> with a content, to and priority
         /// </summary>
@@ -142,5 +143,12 @@
         /// <param name="from">the from mail address</param>
         internal void SetFrom(MailAddress from)
             => From = from;
+
+        /// <summary>
+        /// create an instance of <see cref="MessageComposer"/> to start composing the message data.
+        /// </summary>
+        /// <returns>instance of <see cref="MessageComposer"/>.</returns>
+        public static MessageComposer Compose()
+            => new MessageComposer();
     }
 }
