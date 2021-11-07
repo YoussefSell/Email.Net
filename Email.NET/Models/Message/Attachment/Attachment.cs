@@ -15,13 +15,19 @@
         protected Attachment(string fileName)
         {
             FileName = fileName;
-            FileType = FileHelper.GetFileMimeType(fileName);
+            Extension = FileHelper.GetFileExtension(fileName);
+            FileType = FileHelper.GetExtensionMimeType(Extension);
         }
 
         /// <summary>
         /// the original name of the file including the extension
         /// </summary>
         public string FileName { get; }
+
+        /// <summary>
+        /// the file extension.
+        /// </summary>
+        public string Extension { get; }
 
         /// <summary>
         /// the mime-type of the file
