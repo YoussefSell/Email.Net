@@ -275,7 +275,7 @@
         /// <param name="key">the header key.</param>
         /// <param name="value">the header value.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public MessageComposer Header(string key, string value)
+        public MessageComposer WithHeader(string key, string value)
         {
             if (key is null)
                 throw new ArgumentNullException(nameof(key));
@@ -292,7 +292,7 @@
         /// </summary>
         /// <param name="headers">the headers list.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public MessageComposer Header(Dictionary<string, string> headers)
+        public MessageComposer WithHeaders(Dictionary<string, string> headers)
         {
             _headers = headers;
             return this;
@@ -333,7 +333,7 @@
         /// </summary>
         /// <param name="attachments">the list of attachments</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public MessageComposer Attachment(params NET.Attachment[] attachments)
+        public MessageComposer WithAttachment(params NET.Attachment[] attachments)
         {
             foreach (var attachment in attachments)
                 _attachments.Add(attachment);
