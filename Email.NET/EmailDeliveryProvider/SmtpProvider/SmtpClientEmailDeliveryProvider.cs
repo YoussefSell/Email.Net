@@ -175,7 +175,7 @@
                         message.Attachments.Add(attachment);
                     }
                 }
-                else if (file is FilePathAttachmentModel filePathAttachment)
+                else if (file is FilePathAttachment filePathAttachment)
                 {
                     message.Attachments.Add(new Attachment(filePathAttachment.FilePath));
                 }

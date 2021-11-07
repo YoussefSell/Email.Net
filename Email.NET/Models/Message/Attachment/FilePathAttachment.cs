@@ -6,16 +6,16 @@
     /// <summary>
     /// attachment represented by the file path
     /// </summary>
-    public class FilePathAttachmentModel : Attachment
+    public class FilePathAttachment : Attachment
     {
         /// <summary>
-        /// create an instance of <see cref="FilePathAttachmentModel"/>
+        /// create an instance of <see cref="FilePathAttachment"/>
         /// </summary>
         /// <param name="filePath"></param>
         /// <exception cref="ArgumentNullException">file path is null.</exception>
         /// <exception cref="FileNotFoundException">the file at the specified path doesn't exist.</exception>
         /// <exception cref="ArgumentException">path contains one or more of the invalid characters defined in System.IO.Path.GetInvalidPathChars, or the value is empty.</exception>
-        public FilePathAttachmentModel(string filePath)
+        public FilePathAttachment(string filePath)
             : base(Path.GetFileName(filePath))
         {
             if (filePath is null)
@@ -24,7 +24,7 @@
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentException("the file path is empty, you must supply a valid file path.", nameof(filePath));
 
-            if (!File.Exists(FilePath))
+            if (!File.Exists(filePath))
                 throw new FileNotFoundException("the given file doesn't exist.", filePath);
 
             FilePath = filePath;
