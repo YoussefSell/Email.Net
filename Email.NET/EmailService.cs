@@ -28,7 +28,7 @@
             => SendAsync(message, _defaultProvider, data);
 
         /// <summary>
-        /// Sends the specified email message.
+        /// Sends the specified email message using the email delivery provider with the given name.
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
@@ -48,7 +48,7 @@
         }
 
         /// <summary>
-        /// Sends the specified email message.
+        /// Sends the specified email message using the email delivery provider with the given name.
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
@@ -68,7 +68,7 @@
         }
 
         /// <summary>
-        /// Sends the specified email message.
+        /// Sends the specified email message using the given email delivery provider.
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="provider">the email delivery provider used for sending the email message.</param>
@@ -94,7 +94,7 @@
         }
 
         /// <summary>
-        /// Sends the specified email message.
+        /// Sends the specified email message using the given email delivery provider.
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="provider">the email delivery provider used for sending the email message.</param>
