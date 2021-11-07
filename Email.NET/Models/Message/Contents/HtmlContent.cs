@@ -13,6 +13,11 @@
         private readonly Encoding _subjectEncoding;
 
         /// <summary>
+        /// create an instance of <see cref="PlainTextContent"/> with a subject and a body set to string.Empty.
+        /// </summary>
+        public HtmlContent() : this(string.Empty, string.Empty, null, null) { }
+
+        /// <summary>
         /// create an instance of <see cref="HtmlContent"/> with a subject and a body.
         /// </summary>
         /// <param name="subject">the subject content.</param>
