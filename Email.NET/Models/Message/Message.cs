@@ -128,6 +128,7 @@
 
             To = to;
             From = from;
+            Content = content;
             Priority = priority;
 
             Cc = cc ?? new HashSet<MailAddress>();
