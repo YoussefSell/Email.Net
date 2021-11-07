@@ -94,6 +94,9 @@
             if (emailAddress == string.Empty)
                 throw new AggregateException("the given email address is empty.");
 
+            if (delimiter == default)
+                delimiter = ';';
+
             // try to split the email address
             var emails = emailAddress.Split(delimiter);
 
@@ -139,6 +142,9 @@
             if (emailAddress == string.Empty)
                 throw new AggregateException("the given email address is empty.");
 
+            if (delimiter == default)
+                delimiter = ';';
+
             // try to split the email address
             var emails = emailAddress.Split(delimiter);
 
@@ -183,6 +189,9 @@
             if (emailAddress == string.Empty)
                 throw new AggregateException("the given email address is empty.");
 
+            if (delimiter == default)
+                delimiter = ';';
+
             // try to split the email address
             var emails = emailAddress.Split(delimiter);
 
@@ -226,6 +235,9 @@
 
             if (emailAddress == string.Empty)
                 throw new AggregateException("the given email address is empty.");
+
+            if (delimiter == default)
+                delimiter = ';';
 
             // try to split the email address
             var emails = emailAddress.Split(delimiter);
