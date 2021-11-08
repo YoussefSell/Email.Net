@@ -900,7 +900,7 @@
                 .Content(new PlainTextContent())
                 .To("to@email.net");
 
-            var filePath = @"C:\Email.Net\test_file.txt";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Email.Net", "test_file.txt");
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());
 
