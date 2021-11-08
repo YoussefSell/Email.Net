@@ -18,13 +18,13 @@
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        Result Send(Message message, params EmailDeliveryProviderData[] data);
+        Result Send(Message message, params EdpData[] data);
 
         /// <summary>
         /// Sends the specified email message.
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        Task<Result> SendAsync(Message message, params EmailDeliveryProviderData[] data);
+        Task<Result> SendAsync(Message message, params EdpData[] data);
     }
 }

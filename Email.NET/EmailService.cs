@@ -17,7 +17,7 @@
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Result Send(Message message, params EmailDeliveryProviderData[] data)
+        public Result Send(Message message, params EdpData[] data)
             => Send(message, _defaultProvider, data);
 
         /// <summary>
@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Task<Result> SendAsync(Message message, params EmailDeliveryProviderData[] data)
+        public Task<Result> SendAsync(Message message, params EdpData[] data)
             => SendAsync(message, _defaultProvider, data);
 
         /// <summary>
@@ -34,7 +34,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Result Send(Message message, string providerName, params EmailDeliveryProviderData[] data)
+        public Result Send(Message message, string providerName, params EdpData[] data)
         {
             // check if the provider name is valid
             if (providerName is null)
@@ -54,7 +54,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Task<Result> SendAsync(Message message, string providerName, params EmailDeliveryProviderData[] data)
+        public Task<Result> SendAsync(Message message, string providerName, params EdpData[] data)
         {
             // check if the provider name is valid
             if (providerName is null)
@@ -74,7 +74,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="provider">the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Result Send(Message message, IEmailDeliveryProvider provider, params EmailDeliveryProviderData[] data)
+        public Result Send(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
         {
             // check if given params are not null.
             if (message is null)
@@ -103,7 +103,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="provider">the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Task<Result> SendAsync(Message message, IEmailDeliveryProvider provider, params EmailDeliveryProviderData[] data)
+        public Task<Result> SendAsync(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
         {
             // check if given params are not null.
             if (message is null)

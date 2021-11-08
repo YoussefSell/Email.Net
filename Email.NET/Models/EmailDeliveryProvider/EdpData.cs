@@ -5,14 +5,14 @@
     /// <summary>
     /// the email delivery provider data
     /// </summary>
-    public struct EmailDeliveryProviderData
+    public struct EdpData
     {
         /// <summary>
         /// the email delivery provider data
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public EmailDeliveryProviderData(string key, string value)
+        public EdpData(string key, string value)
         {
             Key = key ?? throw new ArgumentNullException(nameof(key));
             Value = value ?? throw new ArgumentNullException(nameof(value));

@@ -15,7 +15,7 @@
     public partial class SmtpEmailDeliveryProvider : IEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public Result Send(Message message, params EmailDeliveryProviderData[] data)
+        public Result Send(Message message, params EdpData[] data)
         {
             try
             {
@@ -37,7 +37,7 @@
         }
 
         /// <inheritdoc/>
-        public async Task<Result> SendAsync(Message message, params EmailDeliveryProviderData[] data)
+        public async Task<Result> SendAsync(Message message, params EdpData[] data)
         {
             try
             {
