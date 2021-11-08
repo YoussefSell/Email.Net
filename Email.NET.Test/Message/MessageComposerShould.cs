@@ -1057,5 +1057,44 @@
         }
 
         #endregion
+
+        #region Message Addresses tests
+
+        [Fact]
+        public void SplitEmailAddressWithEmptySpaces()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .Content(new PlainTextContent());
+
+            // act
+            var message = composser
+                .To("to@email.net  ;            to2@email.net       ")
+                .Build();
+
+            // assert
+            Assert.Equal(2, message.To.Count);
+            Assert.Equal("to@email.net", message.To.First().Address);
+            Assert.Equal("to2@email.net", message.To.Skip(1).First().Address);
+        }
+
+        [Fact]
+        public void ThorwIfEmailIsInInvalidFormat()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .Content(new PlainTextContent());
+
+            // assert
+            Assert.Throws<FormatException>(() =>
+            {
+                // act
+                var message = composser
+                    .To("to@emailnet;to2email.net")
+                    .Build();
+            });
+        }
+
+        #endregion
     }
 }
