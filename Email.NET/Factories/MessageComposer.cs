@@ -325,7 +325,7 @@
         /// </summary>
         /// <param name="attachments">the list of attachments</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public MessageComposer WithAttachment(params NET.Attachment[] attachments)
+        public MessageComposer IncludeAttachment(params NET.Attachment[] attachments)
         {
             foreach (var attachment in attachments)
                 _attachments.Add(attachment);
