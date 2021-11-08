@@ -1,6 +1,7 @@
 ﻿namespace Email.NET
 {
     using Email.NET.Utilities;
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -14,8 +15,18 @@
         /// <param name="fileName">the name of the file with extension</param>
         protected Attachment(string fileName)
         {
+            if (fileName is null)
+                throw new ArgumentNullException();
+
+            if (string.IsNullOrEmpty(fileName))
+                throw new ArgumentException("the given file name is empty");
+
             FileName = fileName;
             Extension = FileHelper.GetFileExtension(fileName);
+
+            if (string.IsNullOrEmpty(Extension))
+                throw new ArgumentException("the given file name doesn't contains an extension");
+
             FileType = FileHelper.GetExtensionMimeType(Extension);
         }
 
