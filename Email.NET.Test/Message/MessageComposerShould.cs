@@ -13,6 +13,49 @@
     /// </summary>
     public class MessageComposerShould
     {
+        [Fact]
+        public void CreateMessageWithAllProps()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .Content(new PlainTextContent())
+                .To("to@email.net", "to")
+                .From("from@email.net", "from")
+                .ReplyTo("replayto@email.net", "replayto")
+                .WithBcc("bcc@email.net", "bcc")
+                .WithCc("cc@email.net", "cc")
+                .WithHeader("key", "value")
+                .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value));
+
+            // act
+            var message = composser.Build();
+
+            // assert
+            Assert.IsType<PlainTextContent>(message.Content);
+            
+            Assert.Equal(1, message.To.Count);
+            Assert.Equal("to", message.To.First().DisplayName);
+            Assert.Equal("to@email.net", message.To.First().Address);
+
+            Assert.Equal("from", message.From.DisplayName);
+            Assert.Equal("from@email.net", message.From.Address);
+
+            Assert.Equal(1, message.Bcc.Count);
+            Assert.Equal("bcc", message.Bcc.First().DisplayName);
+            Assert.Equal("bcc@email.net", message.Bcc.First().Address);
+
+            Assert.Equal(1, message.Cc.Count);
+            Assert.Equal("cc", message.Cc.First().DisplayName);
+            Assert.Equal("cc@email.net", message.Cc.First().Address);
+
+            Assert.Equal(1, message.Headers.Count);
+            Assert.Equal("key", message.Headers.First().Key);
+            Assert.Equal("value", message.Headers.First().Value);
+
+            Assert.Equal(1, message.Attachments.Count);
+            Assert.Equal("test_file.txt", message.Attachments.First().FileName);
+        }
+
         #region Message "Content" value test
 
         [Fact]
@@ -821,7 +864,7 @@
 
             // act
             var message = composser
-                .WithAttachment(attachment)
+                .IncludeAttachment(attachment)
                 .Build();
 
             // assert
@@ -841,7 +884,7 @@
 
             // act
             var message = composser
-                .WithAttachment(attachment)
+                .IncludeAttachment(attachment)
                 .Build();
 
             // assert
@@ -865,7 +908,7 @@
 
             // act
             var message = composser
-                .WithAttachment(attachment)
+                .IncludeAttachment(attachment)
                 .Build();
 
             // assert
@@ -890,7 +933,7 @@
 
             // act
             var message = composser
-                .WithAttachment(new NET.Attachment[] {
+                .IncludeAttachment(new NET.Attachment[] {
                     new FilePathAttachment(filePath),
                     new Base64Attachement(@"test_file_1.txt", MockData.TestFileBase64Value),
                     new ByteArrayAttachment(@"test_file_2.txt", MockData.TestFileAsByteArray())
