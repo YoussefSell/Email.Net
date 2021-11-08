@@ -1,9 +1,8 @@
 ﻿namespace Email.NET.Test.Models
 {
     using System;
-using System.IO;
+    using System.IO;
     using Xunit;
-
     public class AttachmentShould
     {
         #region base attachment file name tests
@@ -157,7 +156,7 @@ using System.IO;
         public void CreateFilePathAttachment()
         {
             // arrange
-            var fileName = "test_file.txt"; 
+            var fileName = "test_file.txt";
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Email.Net", fileName);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());

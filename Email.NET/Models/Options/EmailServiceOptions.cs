@@ -29,7 +29,7 @@
         /// validate if the options are all set correctly
         /// </summary>
         /// <exception cref="RequiredOptionValueNotSpecifiedException{TOptions}">if the required options are not specified</exception>
-        internal void Validate()
+        public void Validate()
         {
             if (DefaultEmailDeliveryProvider.IsValid())
                 throw new RequiredOptionValueNotSpecifiedException<EmailServiceOptions>(
