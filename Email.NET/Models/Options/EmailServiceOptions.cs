@@ -1,7 +1,8 @@
 ﻿namespace Email.NET
 {
+    using Email.NET.Exceptions;
+    using Email.NET.Utilities;
     using Providers.SmtpClient;
-    using System;
     using System.Net.Mail;
 
     /// <summary>
@@ -27,9 +28,13 @@
         /// <summary>
         /// validate if the options are all set correctly
         /// </summary>
+        /// <exception cref="RequiredOptionValueNotSpecifiedException{TOptions}">if the required options are not specified</exception>
         internal void Validate()
         {
-            throw new NotImplementedException();
+            if (DefaultEmailDeliveryProvider.IsValid())
+                throw new RequiredOptionValueNotSpecifiedException<EmailServiceOptions>(
+                    nameof(DefaultEmailDeliveryProvider),
+                    "you must specify a valid EmailDeliveryName to be used as the default provider");
         }
     }
 }

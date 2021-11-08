@@ -6,12 +6,11 @@
     /// exception thrown when a required exception value is not specified
     /// </summary>
     [Serializable]
-    public class RequiredOptionValueNotSpecifiedException : Exception
+    public class RequiredOptionValueNotSpecifiedException<TOptions> : Exception
     {
         /// <inheritdoc/>
-        public RequiredOptionValueNotSpecifiedException(Type optionsType, string optionsName, string message) : base(message)
+        public RequiredOptionValueNotSpecifiedException(string optionsName, string message) : base(message)
         {
-            OptionsType = optionsType;
             OptionsName = optionsName;
         }
 
@@ -23,7 +22,7 @@
         /// <summary>
         /// the option object type
         /// </summary>
-        public Type OptionsType { get; }
+        public Type OptionsType => typeof(TOptions);
 
         /// <summary>
         /// option parameter name
