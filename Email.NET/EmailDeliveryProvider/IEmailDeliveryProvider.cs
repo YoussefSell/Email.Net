@@ -1,5 +1,6 @@
 ﻿namespace Email.NET
 {
+    using ResultNet;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -17,13 +18,13 @@
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        EmailSendingResult Send(Message message, params EmailDeliveryProviderData[] data);
+        Result Send(Message message, params EmailDeliveryProviderData[] data);
 
         /// <summary>
         /// Sends the specified email message.
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        Task<EmailSendingResult> SendAsync(Message message, params EmailDeliveryProviderData[] data);
+        Task<Result> SendAsync(Message message, params EmailDeliveryProviderData[] data);
     }
 }

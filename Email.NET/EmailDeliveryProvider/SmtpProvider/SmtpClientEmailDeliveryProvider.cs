@@ -1,5 +1,6 @@
 ﻿namespace Email.NET.Providers.SmtpClient
 {
+    using ResultNet;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -14,13 +15,29 @@
     public partial class SmtpEmailDeliveryProvider : IEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EmailDeliveryProviderData[] data)
+        public Result Send(Message message, params EmailDeliveryProviderData[] data)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                using (var client = CreateSmtpClient(_options.SmtpClientOptions))
+                using (var mailMessage = CreateMailMessage(message))
+                {
+                    client.Send(mailMessage);
+                }
+
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure()
+                    .WithMessage("failed to send the email, and exception has been raised.")
+                    .WithCode(ResultCode.InternalException)
+                    .WithErrors(ex);
+            }
         }
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message, params EmailDeliveryProviderData[] data)
+        public async Task<Result> SendAsync(Message message, params EmailDeliveryProviderData[] data)
         {
             try
             {
@@ -30,11 +47,14 @@
                     await client.SendMailAsync(mailMessage);
                 }
 
-                return EmailSendingResult.Success();
+                return Result.Success();
             }
             catch (Exception ex)
             {
-                return EmailSendingResult.Failed(ex);
+                return Result.Failure()
+                    .WithMessage("failed to send the email, and exception has been raised.")
+                    .WithCode(ResultCode.InternalException)
+                    .WithErrors(ex);
             }
         }
     }
