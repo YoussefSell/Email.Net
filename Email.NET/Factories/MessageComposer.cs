@@ -55,17 +55,9 @@
         /// add the send From email address.
         /// </summary>
         /// <param name="emailAddress">sender email address.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public MessageComposer From(string emailAddress)
-            => From(emailAddress, string.Empty);
-
-        /// <summary>
-        /// add the send From email address.
-        /// </summary>
-        /// <param name="emailAddress">sender email address.</param>
         /// <param name="displayName">the name of the sender.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public MessageComposer From(string emailAddress, string displayName)
+        public MessageComposer From(string emailAddress, string displayName = "")
             => From(new MailAddress(emailAddress, displayName));
 
         /// <summary>
