@@ -959,5 +959,60 @@
         }
 
         #endregion
+
+        #region Message Priority tests
+
+        [Fact]
+        public void MarkMessageWithHighPriority()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .Content(new PlainTextContent())
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .WithHighPriority()
+                .Build();
+
+            // assert
+            Assert.Equal(Priority.High, message.Priority);
+        }
+
+        [Fact]
+        public void MarkMessageWithLowPriority()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .Content(new PlainTextContent())
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .WithLowPriority()
+                .Build();
+
+            // assert
+            Assert.Equal(Priority.Low, message.Priority);
+        }
+
+        [Fact]
+        public void MarkMessageWithNormalPriority()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .Content(new PlainTextContent())
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .WithNormalPriority()
+                .Build();
+
+            // assert
+            Assert.Equal(Priority.Normal, message.Priority);
+        }
+
+        #endregion
     }
 }
