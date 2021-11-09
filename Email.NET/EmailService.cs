@@ -163,7 +163,7 @@
             _providers = emailDeliveryProviders.ToDictionary(provider => provider.Name);
 
             // check if the default email delivery provider exist
-            if (_providers.ContainsKey(options.DefaultEmailDeliveryProvider))
+            if (!_providers.ContainsKey(options.DefaultEmailDeliveryProvider))
                 throw new EmailDeliveryProviderNotFoundException(options.DefaultEmailDeliveryProvider);
 
             // set the default provider
