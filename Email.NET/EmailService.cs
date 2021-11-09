@@ -176,6 +176,16 @@
         public EmailServiceOptions Options { get; }
 
         /// <summary>
+        /// Get the list of email delivery providers attached to this email service.
+        /// </summary>
+        public IEnumerable<IEmailDeliveryProvider> Edps => _providers.Values;
+
+        /// <summary>
+        /// Get the default email delivery provider attached to this email service.
+        /// </summary>
+        public IEmailDeliveryProvider DefaultEdp => _defaultProvider;
+
+        /// <summary>
         /// check if the message from value is supplied
         /// </summary>
         /// <param name="message">the message instance</param>
