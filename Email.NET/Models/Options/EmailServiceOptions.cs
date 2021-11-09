@@ -31,7 +31,7 @@
         /// <exception cref="RequiredOptionValueNotSpecifiedException{TOptions}">if the required options are not specified</exception>
         public void Validate()
         {
-            if (DefaultEmailDeliveryProvider.IsValid())
+            if (!DefaultEmailDeliveryProvider.IsValid())
                 throw new RequiredOptionValueNotSpecifiedException<EmailServiceOptions>(
                     nameof(DefaultEmailDeliveryProvider),
                     "you must specify a valid EmailDeliveryName to be used as the default provider");
