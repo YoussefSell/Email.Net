@@ -156,22 +156,15 @@
         public void CreateFilePathAttachment()
         {
             // arrange
-            var fileName = "test_file.txt";
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Email.Net", fileName);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());
 
             // act
-            var attachment = new FilePathAttachment(filePath);
+            var attachment = new FilePathAttachment(MockData.TestFilePath);
 
             // assert
-            Assert.Equal(fileName, attachment.FileName);
-            Assert.Equal(filePath, attachment.FilePath);
+            Assert.Equal(MockData.TestFileName, attachment.FileName);
+            Assert.Equal(MockData.TestFilePath, attachment.FilePath);
             Assert.Equal("text/plain", attachment.FileType);
             Assert.Equal(".txt", attachment.Extension);
-
-            File.Delete(filePath);
-            Directory.Delete(Path.GetDirectoryName(filePath));
         }
 
         [Fact]
@@ -214,8 +207,6 @@
                 var attachment = new FilePathAttachment(string.Empty);
             });
         }
-
-
 
         #endregion
     }

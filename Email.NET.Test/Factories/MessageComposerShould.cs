@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Test.Messages
+﻿namespace Email.NET.Test.Factories
 {
     using Email.NET.Factories;
     using System;
@@ -900,11 +900,7 @@
                 .Content(new PlainTextContent())
                 .To("to@email.net");
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Email.Net", "test_file.txt");
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());
-
-            var attachment = new FilePathAttachment(filePath);
+            var attachment = new FilePathAttachment(MockData.TestFilePath);
 
             // act
             var message = composser
@@ -914,9 +910,6 @@
             // assert
             Assert.Equal(1, message.Attachments.Count);
             Assert.Equal(attachment, message.Attachments.First());
-
-            File.Delete(filePath);
-            Directory.Delete(Path.GetDirectoryName(filePath));
         }
 
         [Fact]

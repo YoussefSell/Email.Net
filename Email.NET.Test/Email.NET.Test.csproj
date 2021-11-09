@@ -23,4 +23,10 @@
     <ProjectReference Include="..\Email.NET\Email.NET.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="test_file.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
