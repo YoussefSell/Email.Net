@@ -1,6 +1,5 @@
 ﻿namespace Email.NET.Providers.SmtpClient
 {
-    using ResultNet;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -15,7 +14,7 @@
     public partial class SmtpEmailDeliveryProvider : IEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public Result Send(Message message, params EdpData[] data)
+        public EmailSendingResult Send(Message message, params EdpData[] data)
         {
             try
             {
@@ -25,19 +24,16 @@
                     client.Send(mailMessage);
                 }
 
-                return Result.Success();
+                return EmailSendingResult.Success(Name);
             }
             catch (Exception ex)
             {
-                return Result.Failure()
-                    .WithMessage("failed to send the email, and exception has been raised.")
-                    .WithCode(ResultCode.InternalException)
-                    .WithErrors(ex);
+                return EmailSendingResult.Failure(Name).AddError(ex);
             }
         }
 
         /// <inheritdoc/>
-        public async Task<Result> SendAsync(Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
         {
             try
             {
@@ -47,14 +43,11 @@
                     await client.SendMailAsync(mailMessage);
                 }
 
-                return Result.Success();
+                return EmailSendingResult.Success(Name);
             }
             catch (Exception ex)
             {
-                return Result.Failure()
-                    .WithMessage("failed to send the email, and exception has been raised.")
-                    .WithCode(ResultCode.InternalException)
-                    .WithErrors(ex);
+                return EmailSendingResult.Failure(Name).AddError(ex);
             }
         }
     }

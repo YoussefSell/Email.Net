@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Result.Net" Version="1.2.0" />
-  </ItemGroup>
-
 </Project>

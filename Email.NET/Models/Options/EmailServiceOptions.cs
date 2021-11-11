@@ -13,7 +13,7 @@
         /// <summary>
         /// the name of the default email delivery provider, by default is set to <see cref="SmtpEmailDeliveryProvider.Name"/>
         /// </summary>
-        public string DefaultEmailDeliveryProvider { get; set; } = SmtpEmailDeliveryProvider.Name;
+        public string DefaultEmailDeliveryProvider { get; set; }
 
         /// <summary>
         /// the default email to be used as the "From" value.

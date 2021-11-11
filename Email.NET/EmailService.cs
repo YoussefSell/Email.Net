@@ -1,7 +1,6 @@
 ﻿namespace Email.NET
 {
     using Email.NET.Exceptions;
-    using ResultNet;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,7 +16,7 @@
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Result Send(Message message, params EdpData[] data)
+        public EmailSendingResult Send(Message message, params EdpData[] data)
             => Send(message, _defaultProvider, data);
 
         /// <summary>
@@ -25,7 +24,7 @@
         /// </summary>
         /// <param name="message">the email message to be send</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Task<Result> SendAsync(Message message, params EdpData[] data)
+        public Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
             => SendAsync(message, _defaultProvider, data);
 
         /// <summary>
@@ -34,7 +33,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Result Send(Message message, string providerName, params EdpData[] data)
+        public EmailSendingResult Send(Message message, string providerName, params EdpData[] data)
         {
             // check if the provider name is valid
             if (providerName is null)
@@ -54,7 +53,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Task<Result> SendAsync(Message message, string providerName, params EdpData[] data)
+        public Task<EmailSendingResult> SendAsync(Message message, string providerName, params EdpData[] data)
         {
             // check if the provider name is valid
             if (providerName is null)
@@ -74,7 +73,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="provider">the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Result Send(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
+        public EmailSendingResult Send(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
         {
             // check if given params are not null.
             if (message is null)
@@ -89,8 +88,8 @@
             // check if the sending is paused
             if (Options.PauseSending)
             {
-                return Result.Success()
-                    .WithMessage("the email sending is paused");
+                return EmailSendingResult.Success(provider.Name)
+                    .AddMetaData("sending_paused", true);
             }
 
             // send the email message
@@ -103,7 +102,7 @@
         /// <param name="message">the email message to be send</param>
         /// <param name="provider">the email delivery provider used for sending the email message.</param>
         /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        public Task<Result> SendAsync(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
+        public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
         {
             // check if given params are not null.
             if (message is null)
@@ -118,8 +117,8 @@
             // check if the sending is paused
             if (Options.PauseSending)
             {
-                return Task.FromResult(Result.Success()
-                    .WithMessage("the email sending is paused"));
+                return Task.FromResult(EmailSendingResult.Success(provider.Name)
+                    .AddMetaData("sending_paused", true));
             }
 
             // send the email message
