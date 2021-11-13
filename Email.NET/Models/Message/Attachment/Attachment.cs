@@ -1,8 +1,8 @@
 ﻿namespace Email.NET
 {
-    using Email.NET.Utilities;
     using System;
     using System.Collections.Generic;
+    using Utilities;
 
     /// <summary>
     /// base model for all attachment types
@@ -66,19 +66,14 @@
 
         /// <inheritdoc/>
         public bool Equals(Attachment other)
-            => !(other is null) &&
-            other.FileName == FileName &&
-            other.FileType == FileType;
+            => !(other is null) && FileName.Equals(other.FileName, StringComparison.OrdinalIgnoreCase);
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashCode = 144377059;
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FileName);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FileType);
-                return hashCode;
+                return 144377059 * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FileName);
             }
         }
 

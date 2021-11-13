@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+using System.Net.Mail;
     using Xunit;
     public class AttachmentShould
     {
@@ -206,6 +207,41 @@
                 // act
                 var attachment = new FilePathAttachment(string.Empty);
             });
+        }
+
+        #endregion
+
+        #region attachment equality
+
+        [Fact]
+        public void EqualsIfNameIsSame()
+        {
+            // arrange
+            var fileName = "test_file.txt";
+            var attachment1 = new Base64Attachement(fileName, MockData.TestFileBase64Value);
+            var attachment2 = new Base64Attachement(fileName, MockData.TestFileBase64Value);
+
+            // act
+            var equals = attachment1 == attachment2;
+
+            // assert
+            Assert.True(equals);
+        }
+
+        [Fact]
+        public void EqualsIfNameIsSameWithDifferentCase()
+        {
+            // arrange
+            var fileName1 = "test_file.txt";
+            var fileName2 = "test_File.txt";
+            var attachment1 = new Base64Attachement(fileName1, MockData.TestFileBase64Value);
+            var attachment2 = new Base64Attachement(fileName2, MockData.TestFileBase64Value);
+
+            // act
+            var equals = attachment1 == attachment2;
+
+            // assert
+            Assert.True(equals);
         }
 
         #endregion
