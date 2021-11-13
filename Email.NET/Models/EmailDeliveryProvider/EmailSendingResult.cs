@@ -6,7 +6,33 @@
     /// <summary>
     /// the email sending result
     /// </summary>
-    public class EmailSendingResult
+    public partial class EmailSendingResult
+    {
+        /// <summary>
+        /// Get if the email has been sent successfully.
+        /// </summary>
+        public bool IsSuccess { get; }
+
+        /// <summary>
+        /// Get the name of the edp used to send the email.
+        /// </summary>
+        public string EdpName { get; }
+
+        /// <summary>
+        /// method data associated with this result if any.
+        /// </summary>
+        public IDictionary<string, object> MetaData { get; }
+
+        /// <summary>
+        /// Get the errors associated with the sending failure.
+        /// </summary>
+        public IEnumerable<EmailSendingError> Errors => _errors;
+    }
+
+    /// <summary>
+    /// the partial part for <see cref="EmailSendingResult"/>
+    /// </summary>
+    public partial class EmailSendingResult
     {
         private readonly HashSet<EmailSendingError> _errors;
 
@@ -23,26 +49,6 @@
             _errors = new HashSet<EmailSendingError>(errors);
             EdpName = edpName ?? throw new ArgumentNullException(nameof(edpName));
         }
-
-        /// <summary>
-        /// Get if the email has been sent successfully.
-        /// </summary>
-        public bool IsSuccess { get; }
-
-        /// <summary>
-        /// Get the name of the edp used to send the email.
-        /// </summary>
-        public string EdpName { get; }
-
-        /// <summary>
-        /// Get the errors associated with the sending failure.
-        /// </summary>
-        public IEnumerable<EmailSendingError> Errors => _errors;
-
-        /// <summary>
-        /// method data associated with this result if any.
-        /// </summary>
-        public IDictionary<string, object> MetaData { get; }
 
         /// <summary>
         /// add a new error to the errors list.
