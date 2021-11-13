@@ -62,14 +62,13 @@
         {
             // arrange
             EmailServiceOptions options = null;
-            var smtpEdp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions());
 
             // act
 
             // assert
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var service = new EmailService(new[] { smtpEdp }, options);
+                var service = new EmailService(new[] { _edp1 }, options);
             });
         }
 
@@ -78,14 +77,13 @@
         {
             // arrange
             var options = new EmailServiceOptions();
-            var smtpEdp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions());
 
             // act
 
             // assert
             Assert.Throws<RequiredOptionValueNotSpecifiedException<EmailServiceOptions>>(() =>
             {
-                var service = new EmailService(new[] { smtpEdp }, options);
+                var service = new EmailService(new[] { _edp1 }, options);
             });
         }
 
@@ -94,14 +92,13 @@
         {
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = "not_exist_edp" };
-            var smtpEdp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions());
 
             // act
 
             // assert
             Assert.Throws<EmailDeliveryProviderNotFoundException>(() =>
             {
-                var service = new EmailService(new[] { smtpEdp }, options);
+                var service = new EmailService(new[] { _edp1 }, options);
             });
         }
 
