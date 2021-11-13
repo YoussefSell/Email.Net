@@ -18,7 +18,7 @@
         {
             try
             {
-                using (var client = CreateSmtpClient(_options.SmtpOptions))
+                using (var client = CreateSmtpClient(GetSmtpOptions(data)))
                 using (var mailMessage = CreateMailMessage(message))
                 {
                     client.Send(mailMessage);
@@ -37,7 +37,7 @@
         {
             try
             {
-                using (var client = CreateSmtpClient(_options.SmtpOptions))
+                using (var client = CreateSmtpClient(GetSmtpOptions(data)))
                 using (var mailMessage = CreateMailMessage(message))
                 {
                     await client.SendMailAsync(mailMessage);
@@ -79,7 +79,33 @@
 
             // validate if the options are valid
             options.Validate();
-            this._options = options;
+            _options = options;
+        }
+
+        /// <summary>
+        /// get the smtp options, if the data list has any custom we will use that, if not we will return the smtp options specified in the EdpOptions
+        /// </summary>
+        /// <param name="data">the list of edp data</param>
+        /// <returns><see cref="SmtpOptions"/> instance</returns>
+        private SmtpOptions GetSmtpOptions(EdpData[] data)
+        {
+            // no data return the default options
+            if (data is null || !data.Any())
+                return _options.SmtpOptions;
+
+            // check if we have custom smtp options
+            var customSmptOptions = data.FirstOrDefault(e => e.Key == EdpData.Keys.SmtpOptions);
+            if (customSmptOptions.IsEmpty())
+                return _options.SmtpOptions;
+
+            // get the smtp options
+            var smptOptions = customSmptOptions.GetValue<SmtpOptions>();
+
+            // check if valid
+            smptOptions.Validate();
+
+            // all done
+            return smptOptions;
         }
 
         /// <summary>
