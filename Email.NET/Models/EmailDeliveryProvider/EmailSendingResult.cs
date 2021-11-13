@@ -112,5 +112,16 @@
         /// <returns>instance of <see cref="EmailSendingResult"/></returns>
         public static EmailSendingResult Failure(string edpName, params EmailSendingError[] errors)
             => new EmailSendingResult(false, edpName);
+
+        /// <summary>
+        /// this static class holds the keys names used in the email sending meta-data
+        /// </summary>
+        public static class MetaDataKeys
+        {
+            /// <summary>
+            /// key to indicate whether the sending is paused.
+            /// </summary>
+            public const string SendingPaused = "sending_paused";
+        }
     }
 }

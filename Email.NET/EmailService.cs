@@ -89,7 +89,7 @@
             if (Options.PauseSending)
             {
                 return EmailSendingResult.Success(provider.Name)
-                    .AddMetaData("sending_paused", true);
+                    .AddMetaData(EmailSendingResult.MetaDataKeys.SendingPaused, true);
             }
 
             // send the email message
