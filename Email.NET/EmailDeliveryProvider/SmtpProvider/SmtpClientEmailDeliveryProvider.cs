@@ -197,22 +197,19 @@
             {
                 if (file is ByteArrayAttachment byteArrayAttachment)
                 {
-                    using (var streamBitmap = new MemoryStream(byteArrayAttachment.File))
+                    var imageToInline = new LinkedResource(new MemoryStream(byteArrayAttachment.File))
                     {
-                        var imageToInline = new LinkedResource(streamBitmap)
-                        {
-                            ContentId = file.FileName,
-                            ContentType = new ContentType(file.FileType),
-                        };
+                        ContentId = file.FileName,
+                        ContentType = new ContentType(file.FileType),
+                    };
 
-                        var attachment = new Attachment(imageToInline.ContentStream, imageToInline.ContentType)
-                        {
-                            Name = file.FileName,
-                            TransferEncoding = TransferEncoding.Base64
-                        };
+                    var attachment = new Attachment(imageToInline.ContentStream, imageToInline.ContentType)
+                    {
+                        Name = file.FileName,
+                        TransferEncoding = TransferEncoding.Base64
+                    };
 
-                        message.Attachments.Add(attachment);
-                    }
+                    message.Attachments.Add(attachment);
                 }
                 else if (file is FilePathAttachment filePathAttachment)
                 {
