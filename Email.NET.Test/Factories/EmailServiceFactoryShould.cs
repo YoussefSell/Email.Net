@@ -5,9 +5,22 @@
     using Email.NET.EDP.Smtp;
     using System.Net.Mail;
     using Xunit;
+    using Email.NET.EDP;
+    using Moq;
 
     public class EmailServiceFactoryShould
     {
+        private const string _edp1_name = "mock1_edp";
+        private readonly IEmailDeliveryProvider _edp1;
+
+        public EmailServiceFactoryShould()
+        {
+            var edpMock1 = new Mock<IEmailDeliveryProvider>();
+            edpMock1.Setup(e => e.Name).Returns(_edp1_name);
+            edpMock1.Setup(e => e.Send(It.IsAny<Message>())).Returns(EmailSendingResult.Success(_edp1_name));
+            _edp1 = edpMock1.Object;
+        }
+
         [Fact]
         public void CreateEmailServiceWithOptionsAndSmtpEdp()
         {
@@ -21,15 +34,15 @@
                 {
                     options.PauseSending = false;
                     options.DefaultFrom = defaultEmail;
-                    options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+                    options.DefaultEmailDeliveryProvider = _edp1_name;
                 })
-                .UseEDP(new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()))
+                .UseEDP(_edp1)
                 .Create();
 
             // assert
             Assert.Single(service.Edps);
+            Assert.Equal(_edp1_name, service.DefaultEdp.Name);
             Assert.Equal(defaultEmail, service.Options.DefaultFrom);
-            Assert.Equal(SmtpEmailDeliveryProvider.Name, service.DefaultEdp.Name);
         }
 
         [Fact]
