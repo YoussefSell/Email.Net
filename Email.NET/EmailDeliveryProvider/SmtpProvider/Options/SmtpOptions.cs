@@ -1,5 +1,7 @@
 ﻿namespace Email.NET.EDP.Smtp
 {
+    using Exceptions;
+    using Utilities;
     using System.Net;
     using System.Net.Mail;
 
@@ -55,7 +57,7 @@
         /// <summary>
         /// Specifies how outgoing email messages will be handled.
         /// </summary>
-        /// <returns>An System.Net.Mail.SmtpDeliveryMethod that indicates how email messages are delivered.</returns>
+        /// <returns>An System.Net.Mail.SmtpDeliveryMethod that indicates how email messages are delivered. The default is <see cref="SmtpDeliveryMethod.Network"/></returns>
         public SmtpDeliveryMethod DeliveryMethod { get; set; } = SmtpDeliveryMethod.Network;
 
         /// <summary>
@@ -80,5 +82,22 @@
         /// </returns>
         /// <exception cref="System.InvalidOperationException">You cannot change the value of this property when an email is being sent.</exception>
         public ICredentialsByHost Credentials { get; set; }
+
+        /// <summary>
+        /// validate if the smtp options are all set correctly
+        /// </summary>
+        internal void Validate()
+        {
+            if (DeliveryMethod == SmtpDeliveryMethod.Network)
+            {
+                if (!Host.IsValid())
+                    throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
+                        $"{nameof(Host)}", "the given SmtpOptions.Host value is null or empty.");
+
+                if (Port <= 0)
+                    throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
+                        $"{nameof(Port)}", "the given SmtpOptions.Port value less then or equals to Zero.");
+            }
+        }
     }
 }
