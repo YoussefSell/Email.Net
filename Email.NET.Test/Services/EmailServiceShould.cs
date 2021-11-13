@@ -121,6 +121,174 @@
             Assert.Equal(_edp1_name, result.EdpName);
         }
 
+        [Fact]
+        public void SendMessageWithProviderOfGivenName()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1, _edp2 }, options);
+            var message = Message.Compose()
+                .From("from@email.net")
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
 
+            // act
+            var result = service.Send(message, _edp2_name);
+
+            // assert
+            Assert.Equal(_edp2_name, result.EdpName);
+        }
+
+        [Fact]
+        public void ThrowIfGivenEdpNameForSendMessageNotExist()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1 }, options);
+            var message = Message.Compose()
+                .From("from@email.net")
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // assert
+            Assert.Throws<EmailDeliveryProviderNotFoundException>(() =>
+            {
+                // act
+                var result = service.Send(message, _edp2_name);
+            });
+        }
+
+        [Fact]
+        public void ThrowIfGivenEdpNameForSendMessageIsNull()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1 }, options);
+            var message = Message.Compose()
+                .From("from@email.net")
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // act
+                var result = service.Send(message, providerName: null);
+            });
+        }
+
+        [Fact]
+        public void SendMessageWithTheGivenProviderInstance()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1 }, options);
+            var message = Message.Compose()
+                .From("from@email.net")
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // act
+            var result = service.Send(message, _edp2);
+
+            // assert
+            Assert.Equal(_edp2_name, result.EdpName);
+        }
+
+        [Fact]
+        public void ThrowIfGivenEdpInstanceForSendIsNull()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1 }, options);
+            var message = Message.Compose()
+                .From("from@email.net")
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // act
+                var result = service.Send(message, provider: null);
+            });
+        }
+
+        [Fact]
+        public void ThrowOnSendWhenMessageInstanceIsNull()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1 }, options);
+
+            // assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // act
+                var result = service.Send(null);
+            });
+        }
+
+        [Fact]
+        public void UseDefaultSenderEmailSetInEmailServiceOptions()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name, DefaultFrom = new System.Net.Mail.MailAddress("default@email.net") };
+            var service = new EmailService(new[] { _edp1 }, options);
+            var message = Message.Compose()
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // act
+            var result = service.Send(message);
+
+            // assert
+            Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public void ThrowIfSenderEmailIsNotSetNeitherInOptionsOrMessage()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
+            var service = new EmailService(new[] { _edp1 }, options);
+
+            var message = Message.Compose()
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // act
+                var result = service.Send(message);
+            });
+        }
+
+        [Fact]
+        public void NotSendIfSendingIsPaused()
+        {
+            // arrange
+            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name, PauseSending = true };
+            var service = new EmailService(new[] { _edp1 }, options);
+            var message = Message.Compose()
+                .From("from@email.net")
+                .To("to@email.net")
+                .Content(new PlainTextContent())
+                .Build();
+
+            // act
+            var result = service.Send(message);
+
+            // assert
+            Assert.True(result.GetMetaData<bool>(EmailSendingResult.MetaDataKeys.SendingPaused));
+        }
     }
 }
