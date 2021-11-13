@@ -1,7 +1,7 @@
 ﻿namespace Email.NET.Test.Services
 {
+    using Email.NET.EDP;
     using Email.NET.Exceptions;
-    using Email.NET.Providers.SmtpClient;
     using Moq;
     using System;
     using Xunit;

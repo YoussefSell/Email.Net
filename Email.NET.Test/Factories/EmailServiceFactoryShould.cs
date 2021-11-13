@@ -2,7 +2,7 @@
 {
     using Email.NET.Exceptions;
     using Email.NET.Factories;
-    using Email.NET.Providers.SmtpClient;
+    using Email.NET.EDP.Smtp;
     using System.Net.Mail;
     using Xunit;
 

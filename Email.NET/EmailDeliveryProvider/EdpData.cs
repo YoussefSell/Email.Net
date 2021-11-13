@@ -1,6 +1,6 @@
-﻿namespace Email.NET
+﻿namespace Email.NET.EDP
 {
-    using Email.NET.Utilities;
+    using Utilities;
     using System;
     using System.Collections.Generic;
 

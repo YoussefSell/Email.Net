@@ -1,13 +1,12 @@
-﻿namespace Email.NET.Providers.SmtpClient
+﻿namespace Email.NET.EDP.Smtp
 {
-    using System.Net.Mail;
     using System.Net;
-    using System.Security.Cryptography.X509Certificates;
+    using System.Net.Mail;
 
     /// <summary>
     /// the SMTP Options
     /// </summary>
-    public class SmtpClientOptions
+    public class SmtpOptions
     {
         /// <summary>
         /// Gets or sets a value that specifies the amount of time after which a synchronous Overload:System.Net.Mail.SmtpClient.Send call times out.
@@ -23,7 +22,7 @@
         /// the name of the Target
         /// </summary>
         public string TargetName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the port used for SMTP transactions.
         /// </summary>

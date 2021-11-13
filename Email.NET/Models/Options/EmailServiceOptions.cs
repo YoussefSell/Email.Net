@@ -1,9 +1,9 @@
 ﻿namespace Email.NET
 {
-    using Email.NET.Exceptions;
-    using Email.NET.Utilities;
-    using Providers.SmtpClient;
+    using EDP.Smtp;
+    using Exceptions;
     using System.Net.Mail;
+    using Utilities;
 
     /// <summary>
     /// the options for configuring the email service

@@ -1,4 +1,4 @@
-﻿namespace Email.NET
+﻿namespace Email.NET.EDP
 {
     using System.Threading.Tasks;
 

@@ -1,6 +1,7 @@
 ﻿namespace Email.NET
 {
-    using Email.NET.Exceptions;
+    using EDP;
+    using Exceptions;
     using System;
     using System.Collections.Generic;
     using System.Linq;

@@ -1,5 +1,6 @@
 ﻿namespace Email.NET.Test.Models
 {
+    using Email.NET.EDP;
     using Xunit;
 
     public class EdpDataShould

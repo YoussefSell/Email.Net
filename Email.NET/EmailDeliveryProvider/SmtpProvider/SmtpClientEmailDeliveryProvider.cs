@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Providers.SmtpClient
+﻿namespace Email.NET.EDP.Smtp
 {
     using System;
     using System.Collections.Generic;
@@ -11,14 +11,14 @@
     /// <summary>
     /// the smtp client email delivery provider
     /// </summary>
-    public partial class SmtpEmailDeliveryProvider : IEmailDeliveryProvider
+    public partial class SmtpEmailDeliveryProvider : ISmtpEmailDeliveryProvider
     {
         /// <inheritdoc/>
         public EmailSendingResult Send(Message message, params EdpData[] data)
         {
             try
             {
-                using (var client = CreateSmtpClient(_options.SmtpClientOptions))
+                using (var client = CreateSmtpClient(_options.SmtpOptions))
                 using (var mailMessage = CreateMailMessage(message))
                 {
                     client.Send(mailMessage);
@@ -37,7 +37,7 @@
         {
             try
             {
-                using (var client = CreateSmtpClient(_options.SmtpClientOptions))
+                using (var client = CreateSmtpClient(_options.SmtpOptions))
                 using (var mailMessage = CreateMailMessage(message))
                 {
                     await client.SendMailAsync(mailMessage);
@@ -83,11 +83,11 @@
         }
 
         /// <summary>
-        /// create an <see cref="SmtpClient"/> instance using the given <see cref="SmtpClientOptions"/>, 
+        /// create an <see cref="SmtpClient"/> instance using the given <see cref="SmtpOptions"/>, 
         /// </summary>
-        /// <param name="options">the <see cref="SmtpClientOptions"/> instance</param>
+        /// <param name="options">the <see cref="SmtpOptions"/> instance</param>
         /// <returns><see cref="SmtpClient"/> instance</returns>
-        public SmtpClient CreateSmtpClient(SmtpClientOptions options)
+        public SmtpClient CreateSmtpClient(SmtpOptions options)
         {
             return new SmtpClient(options.Host, options.Port)
             {
