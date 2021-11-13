@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="value">the string value to be checked</param>
         /// <returns>true if valid, false if not</returns>
-        public static bool IsValid(this string value)
+        internal static bool IsValid(this string value)
             => !(string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value));
     }
 }

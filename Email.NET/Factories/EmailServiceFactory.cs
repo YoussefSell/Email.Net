@@ -1,6 +1,6 @@
 ﻿namespace Email.NET.Factories
 {
-    using Email.NET.EDP;
+    using EDP;
     using System;
     using System.Collections.Generic;
 
