@@ -82,6 +82,21 @@
         }
 
         /// <summary>
+        /// get the meta-data with the given key, if not found default will be returned
+        /// </summary>
+        /// <typeparam name="TValue">the type of the value</typeparam>
+        /// <param name="key">the meta data key</param>
+        /// <param name="defaultValue">the default value to return if noting found, by default is it set to "default"</param>
+        /// <returns>instance of the value for the given key, or default if not found</returns>
+        public TValue GetMetaData<TValue>(string key, TValue defaultValue = default)
+        {
+            if (MetaData.TryGetValue(key, out object value))
+                return (TValue)value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
         /// create an instance of <see cref="EmailSendingResult"/> with a success state.
         /// </summary>
         /// <param name="edpName">the name of the edp used to send the email.</param>
