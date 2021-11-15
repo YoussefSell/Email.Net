@@ -17,9 +17,19 @@
         public Priority Priority { get; }
 
         /// <summary>
-        /// the content of the message
+        /// the subject of the message
         /// </summary>
-        public IMessageContent Content { get; set; }
+        public MessageSubject Subject { get; set; }
+
+        /// <summary>
+        /// Get message HMTL body.
+        /// </summary>
+        public MessageBody HtmlBody { get; }
+        
+        /// <summary>
+        /// Get message plain text body.
+        /// </summary>
+        public MessageBody PlainTextBody { get; }
 
         /// <summary>
         /// the email address to send From it
@@ -69,7 +79,9 @@
         /// <summary>
         /// create instance of <see cref="Message"/> with all properties
         /// </summary>
-        /// <param name="content">message content</param>
+        /// <param name="subject">the message subject</param>
+        /// <param name="plainTextBody">the message plan text body</param>
+        /// <param name="htmlBody">the message HTML body</param>
         /// <param name="from">the from mail address</param>
         /// <param name="to">the recipient email address</param>
         /// <param name="priority">message priority</param>
@@ -78,11 +90,8 @@
         /// <param name="cc">cc mail addresses</param>
         /// <param name="attachments">attachments list</param>
         /// <param name="headers">headers collection</param>
-        public Message(IMessageContent content, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers)
+        public Message(MessageSubject subject, MessageBody plainTextBody, MessageBody htmlBody, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers)
         {
-            if (content is null)
-                throw new ArgumentNullException(nameof(content));
-
             if (to is null)
                 throw new ArgumentNullException(nameof(to));
 
@@ -91,8 +100,11 @@
 
             To = to;
             From = from;
-            Content = content;
             Priority = priority;
+
+            Subject = subject;
+            HtmlBody = htmlBody;
+            PlainTextBody = plainTextBody;
 
             Cc = cc ?? new HashSet<MailAddress>();
             Bcc = bcc ?? new HashSet<MailAddress>();

@@ -136,15 +136,26 @@
         /// <exception cref="ArgumentNullException">if the <paramref name="message"/>is null</exception>
         public MailMessage CreateMailMessage(Message message)
         {
-            var mailMessage = new MailMessage
+            var mailMessage = new MailMessage { From = message.From, };
+
+            if (!(message.Subject is null))
             {
-                From = message.From,
-                Body = message.Content.GetBody(),
-                Subject = message.Content.GetSubject(),
-                BodyEncoding = message.Content.GetBodyEncoding(),
-                SubjectEncoding = message.Content.GetSubjectEncoding(),
-                IsBodyHtml = message.Content.GetBodyType() == MessageBodyType.Html,
-            };
+                mailMessage.Subject = message.Subject.Content;
+                mailMessage.BodyEncoding = message.Subject.Encoding;
+            }
+
+            if (!(message.HtmlBody is null))
+            {
+                mailMessage.IsBodyHtml = true;
+                mailMessage.Body = message.HtmlBody.Content;
+                mailMessage.BodyEncoding = message.HtmlBody.Encoding;
+            }
+            else if (!(message.PlainTextBody is null))
+            {
+                mailMessage.IsBodyHtml = false;
+                mailMessage.Body = message.PlainTextBody.Content;
+                mailMessage.BodyEncoding = message.PlainTextBody.Encoding;
+            }
 
             switch (message.Priority)
             {

@@ -18,7 +18,6 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
                 .To("to@email.net", "to")
                 .From("from@email.net", "from")
                 .ReplyTo("replayto@email.net", "replayto")
@@ -31,8 +30,6 @@
             var message = composser.Build();
 
             // assert
-            Assert.IsType<PlainTextContent>(message.Content);
-            
             Assert.Equal(1, message.To.Count);
             Assert.Equal("to", message.To.First().DisplayName);
             Assert.Equal("to@email.net", message.To.First().Address);
@@ -66,11 +63,12 @@
 
             // act
             var message = composser
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // assert
-            Assert.IsType<PlainTextContent>(message.Content);
+            Assert.Equal("test content", message.PlainTextBody.Content);
+            Assert.Null(message.HtmlBody);
         }
 
         [Fact]
@@ -81,38 +79,12 @@
 
             // act
             var message = composser
-                .Content(new HtmlContent())
+                .WithHtmlContent("<p>test content</p>")
                 .Build();
 
             // assert
-            Assert.IsType<HtmlContent>(message.Content);
-        }
-
-        [Fact]
-        public void ThrowExceptionIfNoContent()
-        {
-            // arrange
-            var composser = Message.Compose().To("to@email.net");
-
-            // act
-
-            // assert
-            Assert.Throws<ArgumentNullException>(() => composser.Build());
-        }
-
-        [Fact]
-        public void ThrowExceptionIfContentAlreadySet()
-        {
-            // arrange
-            var composser = Message.Compose()
-                .To("to@email.net")
-                .Content(new PlainTextContent());
-
-            // act
-
-            // assert
-            Assert.Throws<ArgumentException>(()
-                => composser.Content(new PlainTextContent()).Build());
+            Assert.Equal("<p>test content</p>", message.HtmlBody.Content);
+            Assert.Null(message.PlainTextBody);
         }
 
         #endregion
@@ -124,7 +96,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("test@email.net");
 
             var expected = "example@email.net";
@@ -143,7 +115,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("test@email.net");
 
             var expectedEmail = "example@email.net";
@@ -164,7 +136,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To(new MailAddress("test@email.net"));
 
             var expected = "example@email.net";
@@ -183,7 +155,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("test@email.net");
 
             var expectedEmail = "example@email.net";
@@ -209,7 +181,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent());
+                .WithPlainTextContent("test content");
 
             // act
 
@@ -221,7 +193,7 @@
         public void CreateMessageWithTo_FromString()
         {
             // arrange
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expected = "example@email.net";
 
             // act
@@ -238,7 +210,7 @@
         public void CreateMessageWithToHasName_FromString()
         {
             // arrange
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expectedEmail = "example@email.net";
             var expectedName = "user";
 
@@ -257,7 +229,7 @@
         public void CreateMessageWithMultipleTo_FromString()
         {
             // arrange 
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expected1 = "example1@email.net";
             var expected2 = "example2@email.net";
             var expected3 = "example3@email.net";
@@ -278,7 +250,7 @@
         public void CreateMessageWithMultipleToFromStringWithCustomSeparator()
         {
             // arrange 
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expected1 = "example1@email.net";
             var expected2 = "example2@email.net";
             var expected3 = "example3@email.net";
@@ -299,7 +271,7 @@
         public void CreateMessageWithTo_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expected = "example@email.net";
 
             // act
@@ -316,7 +288,7 @@
         public void CreateMessageWithToHasName_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expectedEmail = "example@email.net";
             var expectedName = "user";
 
@@ -335,7 +307,7 @@
         public void CreateMessageWithMultipleTo_FromMailAddress()
         {
             // arrange 
-            var composser = Message.Compose().Content(new PlainTextContent());
+            var composser = Message.Compose().WithPlainTextContent("test content");
             var expected1 = "example1@email.net";
             var expected2 = "example2@email.net";
             var expected3 = "example3@email.net";
@@ -365,7 +337,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected = "example@email.net";
@@ -385,7 +357,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expectedEmail = "example@email.net";
@@ -407,7 +379,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -431,7 +403,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -455,7 +427,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected = "example@email.net";
@@ -475,7 +447,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expectedEmail = "example@email.net";
@@ -497,7 +469,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -529,7 +501,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected = "example@email.net";
@@ -549,7 +521,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expectedEmail = "example@email.net";
@@ -571,7 +543,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -595,7 +567,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -619,7 +591,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected = "example@email.net";
@@ -639,7 +611,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expectedEmail = "example@email.net";
@@ -661,7 +633,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -693,7 +665,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected = "example@email.net";
@@ -713,7 +685,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expectedEmail = "example@email.net";
@@ -735,7 +707,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -759,7 +731,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -783,7 +755,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected = "example@email.net";
@@ -803,7 +775,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expectedEmail = "example@email.net";
@@ -825,7 +797,7 @@
         {
             // arrange 
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var expected1 = "example1@email.net";
@@ -857,7 +829,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var attachment = new ByteArrayAttachment(@"test_file.txt", MockData.TestFileAsByteArray());
@@ -877,7 +849,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var attachment = new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value);
@@ -897,7 +869,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var attachment = new FilePathAttachment(MockData.TestFilePath);
@@ -917,7 +889,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             var filePath = @"C:\Email.Net\test_file.txt";
@@ -949,7 +921,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             // act
@@ -968,7 +940,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             // act
@@ -1003,7 +975,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             // act
@@ -1020,7 +992,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             // act
@@ -1037,7 +1009,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .To("to@email.net");
 
             // act
@@ -1058,7 +1030,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent());
+                .WithPlainTextContent("test content");
 
             // act
             var message = composser
@@ -1076,7 +1048,7 @@
         {
             // arrange
             var composser = Message.Compose()
-                .Content(new PlainTextContent());
+                .WithPlainTextContent("test content");
 
             // assert
             Assert.Throws<FormatException>(() =>

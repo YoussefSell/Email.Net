@@ -111,7 +111,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // act
@@ -130,7 +130,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // act
@@ -149,7 +149,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // assert
@@ -169,7 +169,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // assert
@@ -189,7 +189,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // act
@@ -208,7 +208,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // assert
@@ -242,7 +242,7 @@
             var service = new EmailService(new[] { _edp1 }, options);
             var message = Message.Compose()
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // act
@@ -261,7 +261,7 @@
 
             var message = Message.Compose()
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // assert
@@ -281,7 +281,7 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .Content(new PlainTextContent())
+                .WithPlainTextContent("test content")
                 .Build();
 
             // act

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Net.Mail;
+    using System.Text;
 
     /// <summary>
     /// a factory for creating the mail message.
@@ -10,8 +11,10 @@
     public partial class MessageComposer
     {
         private Priority _priority;
-        private IMessageContent _content;
-        
+        private MessageBody _htmlBodyContent;
+        private MessageSubject _subjectContent;
+        private MessageBody _plainTextBodyContent;
+
         private readonly HashSet<MailAddress> _to;
         private readonly HashSet<MailAddress> _bcc;
         private readonly HashSet<MailAddress> _cc;
@@ -33,22 +36,39 @@
         }
 
         /// <summary>
-        /// set the message content.
+        /// set the message subject content.
         /// </summary>
-        /// <param name="content">the message content.</param>
+        /// <param name="subject">the message subject content</param>
+        /// <param name="encoding">the message subject content encoding</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public MessageComposer Content(IMessageContent content)
+        public MessageComposer WithSubject(string subject, Encoding encoding = null)
         {
-            if (content is null)
-                throw new ArgumentNullException(nameof(content));
+            _subjectContent = new MessageSubject(subject, encoding);
+            return this;
+        }
 
-            if (_content is null)
-            {
-                _content = content;
-                return this;
-            }
+        /// <summary>
+        /// set the message HTML content.
+        /// </summary>
+        /// <param name="htmlBody">the message HTML content</param>
+        /// <param name="encoding">the message HTML content encoding</param>
+        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
+        public MessageComposer WithHtmlContent(string htmlBody, Encoding encoding = null)
+        {
+            _htmlBodyContent = new MessageBody(htmlBody, encoding);
+            return this;
+        }
 
-            throw new ArgumentException("the message content already set.");
+        /// <summary>
+        /// set the message plain text content.
+        /// </summary>
+        /// <param name="plainTextBody">the message plain text content</param>
+        /// <param name="encoding">the plain text body content encoding.</param>
+        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
+        public MessageComposer WithPlainTextContent(string plainTextBody, Encoding encoding = null)
+        {
+            _plainTextBodyContent = new MessageBody(plainTextBody, encoding);
+            return this;
         }
 
         /// <summary>
@@ -339,7 +359,8 @@
         /// build the <see cref="Message"/> instance.
         /// </summary>
         /// <returns>Instance of <see cref="Message"/>.</returns>
-        public Message Build() 
-            => new Message(_content, _from, _to, _priority, _replyTo, _bcc, _cc, _attachments, _headers);
+        public Message Build()
+            => new Message(_subjectContent, _plainTextBodyContent, _htmlBodyContent, 
+                _from, _to, _priority, _replyTo, _bcc, _cc, _attachments, _headers);
     }
 }

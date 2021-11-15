@@ -109,17 +109,19 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .WithPlainTextContent("test", "this is a test")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
                 .Build();
 
             // act
             var mailMessage = edp.CreateMailMessage(message);
 
             // assert
-            Assert.Equal(message.Content.GetSubject(), mailMessage.Subject);
-            Assert.Equal(message.Content.GetBody(), mailMessage.Body);
+            Assert.Equal(message.Subject.Content, mailMessage.Subject);
+            Assert.Equal(message.PlainTextBody.Content, mailMessage.Body);
             Assert.Equal(message.From, mailMessage.From);
             Assert.Equal(message.To, mailMessage.To);
+            Assert.Null(message.HtmlBody);
         }
 
         [Fact]
@@ -138,7 +140,8 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .WithPlainTextContent("test", "this is a test")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
                 .Build();
 
             // act
@@ -166,7 +169,8 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .WithPlainTextContent("test", "this is a test")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
                 .Build();
 
             // act
@@ -199,7 +203,8 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .WithPlainTextContent("test", "this is a test")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
                 .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value))
                 .Build();
 
@@ -228,7 +233,8 @@
             var message = Message.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
-                .WithPlainTextContent("test", "this is a test")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
                 .IncludeAttachment(new FilePathAttachment(MockData.TestFilePath))
                 .Build();
 
