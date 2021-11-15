@@ -172,6 +172,7 @@
         /// </summary>
         /// <param name="emailAddress">Bcc email address.</param>
         /// <param name="displayName">name of the Bcc user.</param>
+        /// <param name="delimiter">if the email address is a list of email you can supply the delimiter of emails., by default is set to ";"</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
         public MessageComposer WithBcc(string emailAddress, string displayName = "", char delimiter = ';')
         {
@@ -219,6 +220,7 @@
         /// </summary>
         /// <param name="emailAddress">Cc email address.</param>
         /// <param name="displayName">name of the Cc user.</param>
+        /// <param name="delimiter">if the email address is a list of email you can supply the delimiter of emails., by default is set to ";"</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
         public MessageComposer WithCc(string emailAddress, string displayName = "", char delimiter = ';')
         {

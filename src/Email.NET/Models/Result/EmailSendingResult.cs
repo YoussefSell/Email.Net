@@ -77,7 +77,8 @@
         /// <summary>
         /// add a new error to the errors list.
         /// </summary>
-        /// <param name="error">the error to add.</param>
+        /// <param name="key">the key of the meta-data.</param>
+        /// <param name="value">the value of the meta-data.</param>
         /// <returns>the <see cref="EmailSendingResult"/> instance to enable methods chaining.</returns>
         /// <exception cref="ArgumentNullException">the key is null</exception>
         /// <exception cref="ArgumentException">key is empty, or An element with the same key already exists</exception>

@@ -67,43 +67,6 @@
     public partial class Message
     {
         /// <summary>
-        /// create instance of <see cref="Message"/> with a content and to, from will be set to the default value.
-        /// </summary>
-        /// <param name="content">message content</param>
-        /// <param name="to">the recipient email address</param>
-        public Message(IMessageContent content, ICollection<MailAddress> to)
-            : this(content, null, to) { }
-
-        /// <summary>
-        /// create instance of <see cref="Message"/> with a content, from and to
-        /// </summary>
-        /// <param name="content">message content</param>
-        /// <param name="from">the from mail address</param>
-        /// <param name="to">the recipient email address</param>
-        public Message(IMessageContent content, MailAddress from, ICollection<MailAddress> to)
-            : this(content, from, to, Priority.Normal) { }
-
-        /// <summary>
-        /// create instance of <see cref="Message"/> with a content, to and priority
-        /// </summary>
-        /// <param name="content">message content</param>
-        /// <param name="from">the from mail address</param>
-        /// <param name="to">the recipient email address</param>
-        /// <param name="priority">message priority</param>
-        public Message(IMessageContent content, ICollection<MailAddress> to, Priority priority)
-            : this(content, null, to, priority) { }
-
-        /// <summary>
-        /// create instance of <see cref="Message"/> with a content, from, to and priority
-        /// </summary>
-        /// <param name="content">message content</param>
-        /// <param name="from">the from mail address</param>
-        /// <param name="to">the recipient email address</param>
-        /// <param name="priority">message priority</param>
-        public Message(IMessageContent content, MailAddress from, ICollection<MailAddress> to, Priority priority)
-            : this(content, from, to, priority, new HashSet<MailAddress>(), new HashSet<MailAddress>(), new HashSet<MailAddress>(), new HashSet<Attachment>(), new Dictionary<string, string>()) { }
-
-        /// <summary>
         /// create instance of <see cref="Message"/> with all properties
         /// </summary>
         /// <param name="content">message content</param>
