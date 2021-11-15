@@ -129,12 +129,11 @@
         }
 
         /// <summary>
-        /// create a <see cref="MailMessage"/> instance from the <see cref="SendEmailOptions"/> instance
+        /// create a <see cref="MailMessage"/> instance from the <see cref="Message"/> instance
         /// </summary>
         /// <param name="message">the <see cref="Message"/> instance</param>
-        /// <param name="emailSettings">the <see cref="EmailSettings"/> instance</param>
         /// <returns>an instance of <see cref="MailMessage"/></returns>
-        /// <exception cref="ArgumentNullException">if the <paramref name="emailSettings"/>is null</exception>
+        /// <exception cref="ArgumentNullException">if the <paramref name="message"/>is null</exception>
         public MailMessage CreateMailMessage(Message message)
         {
             var mailMessage = new MailMessage
