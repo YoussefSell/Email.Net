@@ -8,4 +8,8 @@
     <PackageReference Include="AWSSDK.SimpleEmail" Version="3.7.0.97" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Email.NET\Email.NET.csproj" />
+  </ItemGroup>
+
 </Project>

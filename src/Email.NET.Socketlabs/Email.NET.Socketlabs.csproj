@@ -8,4 +8,8 @@
     <PackageReference Include="SocketLabs.EmailDelivery" Version="1.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Email.NET\Email.NET.csproj" />
+  </ItemGroup>
+
 </Project>
