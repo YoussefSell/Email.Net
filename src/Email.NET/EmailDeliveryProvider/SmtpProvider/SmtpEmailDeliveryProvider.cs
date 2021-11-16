@@ -141,7 +141,7 @@
             if (!(message.Subject is null))
             {
                 mailMessage.Subject = message.Subject.Content;
-                mailMessage.BodyEncoding = message.Subject.Encoding;
+                mailMessage.SubjectEncoding = message.Subject.Encoding;
             }
 
             if (!(message.HtmlBody is null))
