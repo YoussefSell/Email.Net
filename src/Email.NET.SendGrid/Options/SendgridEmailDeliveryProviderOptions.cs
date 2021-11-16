@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.Sendgrid
+﻿namespace Email.NET.EDP.SendGrid
 {
     /// <summary>
     /// the options for configuring the Smtp email delivery provider

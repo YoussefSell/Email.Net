@@ -1,7 +1,7 @@
-﻿namespace Email.NET.EDP.Sendgrid
+﻿namespace Email.NET.EDP.SendGrid
 {
     /// <summary>
-    /// the Sendgrid email delivery provider
+    /// the SendGrid email delivery provider
     /// </summary>
     public interface ISendgridEmailDeliveryProvider : IEmailDeliveryProvider { }
 }
