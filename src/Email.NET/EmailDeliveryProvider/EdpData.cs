@@ -7,7 +7,7 @@
     /// <summary>
     /// the email delivery provider data
     /// </summary>
-    public partial struct EdpData : IEquatable<EdpData>
+    public partial struct EdpData
     {
         /// <summary>
         /// Gets the key of the data.
@@ -106,9 +106,19 @@
         public static class Keys
         {
             /// <summary>
-            /// edp data for the smtp options
+            /// edp data for smtp options.
             /// </summary>
             public const string SmtpOptions = "smtp_options";
+            
+            /// <summary>
+            /// edp data for ApiKey.
+            /// </summary>
+            public const string ApiKey = "api_key";
+
+            /// <summary>
+            /// edp data for ServerId.
+            /// </summary>
+            public const string ServerId = "server_id";
         }
     }
 }
