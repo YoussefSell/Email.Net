@@ -22,12 +22,18 @@
             if (!file.Any())
                 throw new ArgumentException("the file array is empty", nameof(file));
 
-            File = file;
+            ByteArrayFileContent = file;
         }
 
         /// <summary>
         /// the file as a byte[]
         /// </summary>
-        public byte[] File { get; }
+        public byte[] ByteArrayFileContent { get; }
+
+        /// <inheritdoc/>
+        public override byte[] GetAsByteArray() => ByteArrayFileContent;
+
+        /// <inheritdoc/>
+        public override string GetAsBase64() => Convert.ToBase64String(ByteArrayFileContent);
     }
 }

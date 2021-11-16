@@ -44,6 +44,18 @@
         /// the mime-type of the file
         /// </summary>
         public string FileType { get; }
+
+        /// <summary>
+        /// get the file content as a byte array
+        /// </summary>
+        /// <returns>the file content as a byte array</returns>
+        public abstract byte[] GetAsByteArray();
+
+        /// <summary>
+        /// get the file content as base64
+        /// </summary>
+        /// <returns>the file content as base64</returns>
+        public abstract string GetAsBase64();
     }
 
     /// <summary>

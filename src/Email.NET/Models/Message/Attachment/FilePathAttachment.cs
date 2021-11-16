@@ -34,5 +34,13 @@
         /// the path to the file this attachment is referring to
         /// </summary>
         public string FilePath { get; }
+
+        /// <inheritdoc/>
+        public override string GetAsBase64()
+            => Convert.ToBase64String(GetAsByteArray());
+
+        /// <inheritdoc/>
+        public override byte[] GetAsByteArray()
+            => File.ReadAllBytes(FilePath);
     }
 }
