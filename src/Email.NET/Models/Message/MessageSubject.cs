@@ -27,5 +27,12 @@
         /// Get the message subject encoding
         /// </summary>
         public Encoding Encoding { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => Content;
+
+        /// <inheritdoc/>
+        public static implicit operator MessageSubject(string subject)
+            => new MessageSubject(subject);
     }
 }

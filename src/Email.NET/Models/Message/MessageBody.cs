@@ -27,5 +27,12 @@
         /// Get the message body encoding
         /// </summary>
         public Encoding Encoding { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => Content;
+
+        /// <inheritdoc/>
+        public static implicit operator MessageBody(string body)
+            => new MessageBody(body);
     }
 }
