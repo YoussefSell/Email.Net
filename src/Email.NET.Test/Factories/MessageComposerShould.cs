@@ -21,6 +21,9 @@
                 .To("to@email.net", "to")
                 .From("from@email.net", "from")
                 .ReplyTo("replayto@email.net", "replayto")
+                .WithSubject("test subject")
+                .WithHtmlContent("<p>test content</p>")
+                .WithPlainTextContent("test content")
                 .WithBcc("bcc@email.net", "bcc")
                 .WithCc("cc@email.net", "cc")
                 .WithHeader("key", "value")
@@ -30,6 +33,15 @@
             var message = composser.Build();
 
             // assert
+            Assert.Equal("test subject", message.Subject.Content);
+            Assert.Null(message.Subject.Encoding);
+
+            Assert.Equal("<p>test content</p>", message.HtmlBody.Content);
+            Assert.Null(message.HtmlBody.Encoding);
+
+            Assert.Equal("test content", message.PlainTextBody.Content);
+            Assert.Null(message.PlainTextBody.Encoding);
+
             Assert.Equal(1, message.To.Count);
             Assert.Equal("to", message.To.First().DisplayName);
             Assert.Equal("to@email.net", message.To.First().Address);
