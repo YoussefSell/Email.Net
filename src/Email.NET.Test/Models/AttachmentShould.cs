@@ -65,7 +65,8 @@ using System.Net.Mail;
             Assert.Equal("test_file.txt", attachment.FileName);
             Assert.Equal("text/plain", attachment.FileType);
             Assert.Equal(".txt", attachment.Extension);
-            Assert.Equal(expectedfileArrayData, attachment.File);
+            Assert.Equal(expectedfileArrayData, attachment.GetAsByteArray());
+            Assert.Equal(MockData.TestFileBase64Value, attachment.Base64FileContent);
         }
 
         [Fact]
@@ -116,7 +117,7 @@ using System.Net.Mail;
             Assert.Equal("test_file.txt", attachment.FileName);
             Assert.Equal("text/plain", attachment.FileType);
             Assert.Equal(".txt", attachment.Extension);
-            Assert.Equal(expectedfileArrayData, attachment.File);
+            Assert.Equal(expectedfileArrayData, attachment.ByteArrayFileContent);
         }
 
         [Fact]

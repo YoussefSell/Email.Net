@@ -207,7 +207,7 @@
             {
                 if (file is ByteArrayAttachment byteArrayAttachment)
                 {
-                    var imageToInline = new LinkedResource(new MemoryStream(byteArrayAttachment.File))
+                    var imageToInline = new LinkedResource(new MemoryStream(byteArrayAttachment.ByteArrayFileContent))
                     {
                         ContentId = file.FileName,
                         ContentType = new ContentType(file.FileType),

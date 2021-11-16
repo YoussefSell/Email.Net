@@ -180,9 +180,13 @@
 
             foreach (var attachment in attachments)
             {
-                if (attachment is ByteArrayAttachment byteArrayAttachment)
+                if (attachment is Base64Attachement base64Attachement)
                 {
-                    message.Attachments.Add(attachment.FileName, attachment.FileType, byteArrayAttachment.File);
+                    message.Attachments.Add(attachment.FileName, attachment.FileType, base64Attachement.GetAsByteArray());
+                }
+                else if (attachment is ByteArrayAttachment byteArrayAttachment)
+                {
+                    message.Attachments.Add(attachment.FileName, attachment.FileType, byteArrayAttachment.ByteArrayFileContent);
                 }
                 else if (attachment is FilePathAttachment filePathAttachment)
                 {
