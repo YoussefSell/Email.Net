@@ -119,6 +119,16 @@
             /// edp data for ServerId.
             /// </summary>
             public const string ServerId = "server_id";
+
+            /// <summary>
+            /// edp data for messageId.
+            /// </summary>
+            public const string MessageId = "message_id";
+
+            /// <summary>
+            /// edp data for mailingId.
+            /// </summary>
+            public const string MailingId = "mailing_id";
         }
     }
 }
