@@ -125,6 +125,12 @@
             foreach (var email in message.To)
                 mailMessage.AddTo(email.Address, email.DisplayName);
 
+            if (!(message.ReplyTo is null) && message.ReplyTo.Any())
+            {
+                var replayTo = message.ReplyTo.First();
+                mailMessage.ReplyTo = new EmailAddress(replayTo.Address, replayTo.DisplayName);
+            }
+
             if (!(message.Bcc is null) && message.Bcc.Any())
             {
                 foreach (var email in message.Bcc)

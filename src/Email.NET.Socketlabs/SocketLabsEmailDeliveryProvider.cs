@@ -142,6 +142,12 @@
                 MailingId = !mailingIdEdpData.IsEmpty() ? mailingIdEdpData.GetValue<string>() : string.Empty,
             };
 
+            if (!(message.ReplyTo is null) && message.ReplyTo.Any())
+            {
+                var replayTo = message.ReplyTo.First();
+                mailMessage.ReplyTo = new EmailAddress(replayTo.Address, replayTo.DisplayName);
+            }
+
             foreach (var email in message.To)
                 mailMessage.To.Add(new EmailAddress(email.Address, email.DisplayName));
 

@@ -170,6 +170,12 @@
             foreach (var email in message.To)
                 mailMessage.To.Add(email);
 
+            if (!(message.ReplyTo is null) && message.ReplyTo.Any())
+            {
+                foreach (var email in message.ReplyTo)
+                    mailMessage.ReplyToList.Add(email);
+            }
+
             if (!(message.Bcc is null) && message.Bcc.Any())
             {
                 foreach (var email in message.Bcc)

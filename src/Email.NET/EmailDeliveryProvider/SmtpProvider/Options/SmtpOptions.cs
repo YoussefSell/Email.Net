@@ -86,7 +86,7 @@
         /// <summary>
         /// validate if the smtp options are all set correctly
         /// </summary>
-        internal void Validate()
+        public void Validate()
         {
             if (DeliveryMethod == SmtpDeliveryMethod.Network)
             {
