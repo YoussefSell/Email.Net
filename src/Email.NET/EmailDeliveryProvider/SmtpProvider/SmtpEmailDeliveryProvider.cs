@@ -18,8 +18,8 @@
         {
             try
             {
-                using (var client = CreateSmtpClient(GetSmtpOptions(data)))
-                using (var mailMessage = CreateMailMessage(message))
+                using (var client = CreateClient(GetSmtpOptions(data)))
+                using (var mailMessage = CreateMessage(message))
                 {
                     client.Send(mailMessage);
                 }
@@ -37,8 +37,8 @@
         {
             try
             {
-                using (var client = CreateSmtpClient(GetSmtpOptions(data)))
-                using (var mailMessage = CreateMailMessage(message))
+                using (var client = CreateClient(GetSmtpOptions(data)))
+                using (var mailMessage = CreateMessage(message))
                 {
                     await client.SendMailAsync(mailMessage);
                 }
@@ -113,7 +113,7 @@
         /// </summary>
         /// <param name="options">the <see cref="SmtpOptions"/> instance</param>
         /// <returns><see cref="SmtpClient"/> instance</returns>
-        public SmtpClient CreateSmtpClient(SmtpOptions options)
+        public SmtpClient CreateClient(SmtpOptions options)
         {
             return new SmtpClient(options.Host, options.Port)
             {
@@ -134,7 +134,7 @@
         /// <param name="message">the <see cref="Message"/> instance</param>
         /// <returns>an instance of <see cref="MailMessage"/></returns>
         /// <exception cref="ArgumentNullException">if the <paramref name="message"/>is null</exception>
-        public MailMessage CreateMailMessage(Message message)
+        public MailMessage CreateMessage(Message message)
         {
             var mailMessage = new MailMessage { From = message.From, };
 

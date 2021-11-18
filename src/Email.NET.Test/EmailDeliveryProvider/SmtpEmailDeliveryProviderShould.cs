@@ -114,7 +114,7 @@
                 .Build();
 
             // act
-            var mailMessage = edp.CreateMailMessage(message);
+            var mailMessage = edp.CreateMessage(message);
 
             // assert
             Assert.Equal(message.Subject.Content, mailMessage.Subject);

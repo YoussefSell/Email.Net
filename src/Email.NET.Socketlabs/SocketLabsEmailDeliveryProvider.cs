@@ -18,10 +18,10 @@
             try
             {
                 // create the basic message
-                var basicMessage = CreateBasicMessage(message, data);
+                var basicMessage = CreateMessage(message, data);
 
                 // create the client
-                var client = CreateSocketLabsClient(data);
+                var client = CreateClient(data);
 
                 // send the message
                 var result = client.Send(basicMessage);
@@ -41,10 +41,10 @@
             try
             {
                 // create the basic message
-                var basicMessage = CreateBasicMessage(message, data);
+                var basicMessage = CreateMessage(message, data);
 
                 // create the client
-                var client = CreateSocketLabsClient(data);
+                var client = CreateClient(data);
 
                 // send the message
                 var result = await client.SendAsync(basicMessage, default);
@@ -84,7 +84,7 @@
             _options = options;
         }
 
-        private SocketLabsClient CreateSocketLabsClient(EdpData[] data)
+        private SocketLabsClient CreateClient(EdpData[] data)
         {
             var apiKey = _options.ApiKey;
             var serverId = _options.DefaultServerId;
@@ -127,7 +127,7 @@
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public BasicMessage CreateBasicMessage(Message message, EdpData[] data)
+        public BasicMessage CreateMessage(Message message, EdpData[] data)
         {
             var messageIdEdpData = data.GetData(EdpData.Keys.MessageId);
             var mailingIdEdpData = data.GetData(EdpData.Keys.MailingId);
