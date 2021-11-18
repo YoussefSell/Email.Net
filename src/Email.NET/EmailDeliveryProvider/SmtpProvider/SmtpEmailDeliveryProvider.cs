@@ -204,33 +204,32 @@
         /// </summary>
         /// <param name="message">the <see cref="MailMessage"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        public void SetAttachments(MailMessage message, IEnumerable<NET.Attachment> attachments)
+        private void SetAttachments(MailMessage message, IEnumerable<NET.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;
 
             foreach (var file in attachments)
             {
-                if (file is ByteArrayAttachment byteArrayAttachment)
-                {
-                    var imageToInline = new LinkedResource(new MemoryStream(byteArrayAttachment.ByteArrayFileContent))
-                    {
-                        ContentId = file.FileName,
-                        ContentType = new ContentType(file.FileType),
-                    };
-
-                    var attachment = new Attachment(imageToInline.ContentStream, imageToInline.ContentType)
-                    {
-                        Name = file.FileName,
-                        TransferEncoding = TransferEncoding.Base64
-                    };
-
-                    message.Attachments.Add(attachment);
-                }
-                else if (file is FilePathAttachment filePathAttachment)
+                if (file is FilePathAttachment filePathAttachment)
                 {
                     message.Attachments.Add(new Attachment(filePathAttachment.FilePath));
+                    continue;
                 }
+
+                var imageToInline = new LinkedResource(new MemoryStream(file.GetAsByteArray()))
+                {
+                    ContentId = file.FileName,
+                    ContentType = new ContentType(file.FileType),
+                };
+
+                var attachment = new Attachment(imageToInline.ContentStream, imageToInline.ContentType)
+                {
+                    Name = file.FileName,
+                    TransferEncoding = TransferEncoding.Base64
+                };
+
+                message.Attachments.Add(attachment);
             }
         }
     }

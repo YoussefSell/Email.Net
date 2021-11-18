@@ -159,7 +159,7 @@
         /// </summary>
         /// <param name="message">the <see cref="SendGridMessage"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        public void SetAttachments(SendGridMessage message, IEnumerable<NET.Attachment> attachments)
+        private void SetAttachments(SendGridMessage message, IEnumerable<NET.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;

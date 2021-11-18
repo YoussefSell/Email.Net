@@ -179,25 +179,20 @@
         /// </summary>
         /// <param name="message">the <see cref="BasicMessage"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        public void SetAttachments(BasicMessage message, IEnumerable<NET.Attachment> attachments)
+        private void SetAttachments(BasicMessage message, IEnumerable<NET.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;
 
             foreach (var attachment in attachments)
             {
-                if (attachment is Base64Attachement base64Attachement)
-                {
-                    message.Attachments.Add(attachment.FileName, attachment.FileType, base64Attachement.GetAsByteArray());
-                }
-                else if (attachment is ByteArrayAttachment byteArrayAttachment)
-                {
-                    message.Attachments.Add(attachment.FileName, attachment.FileType, byteArrayAttachment.ByteArrayFileContent);
-                }
-                else if (attachment is FilePathAttachment filePathAttachment)
+                if (attachment is FilePathAttachment filePathAttachment)
                 {
                     message.Attachments.Add(attachment.FileName, attachment.FileType, filePathAttachment.FilePath);
+                    continue;
                 }
+
+                message.Attachments.Add(attachment.FileName, attachment.FileType, attachment.GetAsByteArray());
             }
         }
     }
