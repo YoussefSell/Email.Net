@@ -14,24 +14,7 @@
     {
         /// <inheritdoc/>
         public EmailSendingResult Send(Message message, params EdpData[] data)
-        {
-            try
-            {
-                var client = CreateClient(data);
-                var mailMessage = CreateMessage(message, data);
-
-                var response = client.SendEmailAsync(mailMessage)
-                    .ConfigureAwait(false)
-                    .GetAwaiter().GetResult();
-
-                // build the result object and return
-                return BuildResultObject(response);
-            }
-            catch (Exception ex)
-            {
-                return EmailSendingResult.Failure(Name).AddError(ex);
-            }
-        }
+            => SendAsync(message, data).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
         public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
