@@ -21,7 +21,7 @@
         {
             if (string.IsNullOrWhiteSpace(ApiKey))
                 throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
-                    $"{nameof(ApiKey)}", "the given RequiredOptionValueNotSpecifiedException.ApiKey value is null or empty.");
+                    $"{nameof(ApiKey)}", "the given SendgridEmailDeliveryProviderOptions.ApiKey value is null or empty.");
         }
     }
 }

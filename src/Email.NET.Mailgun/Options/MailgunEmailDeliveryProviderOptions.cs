@@ -1,5 +1,7 @@
 ﻿namespace Email.NET.EDP.Mailgun
 {
+    using Exceptions;
+
     /// <summary>
     /// the options for configuring the Mailgun email delivery provider
     /// </summary>
@@ -30,7 +32,17 @@
         /// </summary>
         internal void Validate()
         {
-            
+            if (string.IsNullOrWhiteSpace(ApiKey))
+                throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
+                    $"{nameof(ApiKey)}", "the given MailgunEmailDeliveryProviderOptions.ApiKey value is null or empty.");
+
+            if (string.IsNullOrWhiteSpace(BaseUrl))
+                throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
+                    $"{nameof(BaseUrl)}", "the given MailgunEmailDeliveryProviderOptions.BaseUrl value is null or empty.");
+
+            if (string.IsNullOrWhiteSpace(Domain))
+                throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
+                    $"{nameof(Domain)}", "the given MailgunEmailDeliveryProviderOptions.Domain value is null or empty.");
         }
     }
 }

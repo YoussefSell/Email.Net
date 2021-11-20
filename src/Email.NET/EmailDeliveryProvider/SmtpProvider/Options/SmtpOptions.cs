@@ -98,6 +98,13 @@
                     throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
                         $"{nameof(Port)}", "the given SmtpOptions.Port value less then or equals to Zero.");
             }
+
+            if (DeliveryMethod == SmtpDeliveryMethod.SpecifiedPickupDirectory)
+            {
+                if (string.IsNullOrEmpty(PickupDirectoryLocation))
+                    throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
+                        $"{nameof(Host)}", "you must supply a SmtpOptions.PickupDirectoryLocation in order to deliver with SmtpDeliveryMethod.SpecifiedPickupDirectory.");
+            }
         }
     }
 }

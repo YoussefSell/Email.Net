@@ -19,7 +19,7 @@
         {
             if (SmtpOptions is null)
                 throw new RequiredOptionValueNotSpecifiedException<EmailServiceOptions>(
-                    nameof(SmtpOptions), "you must provide the SmtpOptions.");
+                    nameof(SmtpOptions), "the given SmtpEmailDeliveryProviderOptions.SmtpOptions are null, you must supply a valid smtpOptions.");
 
             SmtpOptions.Validate();
         }
