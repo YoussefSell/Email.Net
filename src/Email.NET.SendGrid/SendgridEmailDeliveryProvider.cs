@@ -105,6 +105,10 @@
                 From = new EmailAddress(message.From.Address, message.From.DisplayName),
             };
 
+            var trackingSettingsEDP = data.GetData("sendgrid_tracking_settings");
+            if (!trackingSettingsEDP.IsEmpty())
+                mailMessage.TrackingSettings = trackingSettingsEDP.GetValue<TrackingSettings>();
+
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
                 var replayTo = message.ReplyTo.First();

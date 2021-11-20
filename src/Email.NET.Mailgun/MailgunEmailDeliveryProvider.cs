@@ -154,6 +154,10 @@
                 }
             }
 
+            var enableTrackingEdp = data.GetData("tracking");
+            if (!enableTrackingEdp.IsEmpty())
+                content.Add(new StringContent($"o:tracking"), enableTrackingEdp.GetValue<bool>().ToString());
+
             return content;
         }
     }
