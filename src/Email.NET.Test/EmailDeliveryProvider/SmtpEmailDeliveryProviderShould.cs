@@ -117,8 +117,8 @@
             var mailMessage = edp.CreateMessage(message);
 
             // assert
-            Assert.Equal(message.Subject.Content, mailMessage.Subject);
-            Assert.Equal(message.PlainTextBody.Content, mailMessage.Body);
+            Assert.Equal(message.Subject, mailMessage.Subject);
+            Assert.Equal(message.PlainTextBody, mailMessage.Body);
             Assert.Equal(message.From, mailMessage.From);
             Assert.Equal(message.To, mailMessage.To);
             Assert.Null(message.HtmlBody);

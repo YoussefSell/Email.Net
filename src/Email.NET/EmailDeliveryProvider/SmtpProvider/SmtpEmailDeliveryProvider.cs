@@ -139,42 +139,34 @@
             var mailMessage = new MailMessage { From = message.From, };
 
             if (!(message.Subject is null))
-            {
-                mailMessage.Subject = message.Subject.Content;
-                mailMessage.SubjectEncoding = message.Subject.Encoding;
-            }
+                mailMessage.Subject = message.Subject;
 
             if (!(message.HtmlBody is null))
             {
                 mailMessage.IsBodyHtml = true;
-                mailMessage.Body = message.HtmlBody.Content;
-                mailMessage.BodyEncoding = message.HtmlBody.Encoding;
+                mailMessage.Body = message.HtmlBody;
             }
             else if (!(message.PlainTextBody is null))
             {
                 mailMessage.IsBodyHtml = false;
-                mailMessage.Body = message.PlainTextBody.Content;
-                mailMessage.BodyEncoding = message.PlainTextBody.Encoding;
+                mailMessage.Body = message.PlainTextBody;
             }
 
-            switch (message.Priority)
+            var encoding = message.GetEncodingFromCharset();
+            if (!(encoding is null))
             {
-                case Priority.Low:
-                    mailMessage.Priority = MailPriority.Low; break;
-                case Priority.High:
-                    mailMessage.Priority = MailPriority.High; break;
-                default:
-                    mailMessage.Priority = MailPriority.Normal; break;
+                mailMessage.BodyEncoding = encoding;
+                mailMessage.SubjectEncoding = encoding;
             }
-
-            foreach (var email in message.To)
-                mailMessage.To.Add(email);
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
                 foreach (var email in message.ReplyTo)
                     mailMessage.ReplyToList.Add(email);
             }
+
+            foreach (var email in message.To)
+                mailMessage.To.Add(email);
 
             if (!(message.Bcc is null) && message.Bcc.Any())
             {
@@ -192,6 +184,16 @@
             {
                 foreach (var header in message.Headers)
                     mailMessage.Headers.Add(header.Key, header.Value);
+            }
+
+            switch (message.Priority)
+            {
+                case Priority.Low:
+                    mailMessage.Priority = MailPriority.Low; break;
+                case Priority.High:
+                    mailMessage.Priority = MailPriority.High; break;
+                default:
+                    mailMessage.Priority = MailPriority.Normal; break;
             }
 
             SetAttachments(mailMessage, message.Attachments);

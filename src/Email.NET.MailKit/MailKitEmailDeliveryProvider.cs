@@ -186,28 +186,18 @@ using System.IO;
 
             if (!(message.Subject is null))
             {
-                mailMessage.Subject = message.Subject.Content;
+                mailMessage.Subject = message.Subject;
             }
 
             var bodyBuilder = new BodyBuilder();
 
             if (!(message.HtmlBody is null))
             {
-                bodyBuilder.HtmlBody = message.HtmlBody.Content;
+                bodyBuilder.HtmlBody = message.HtmlBody;
             }
             else if (!(message.PlainTextBody is null))
             {
-                bodyBuilder.TextBody = message.PlainTextBody.Content;
-            }
-
-            switch (message.Priority)
-            {
-                case Priority.Low:
-                    mailMessage.Priority = MessagePriority.NonUrgent; break;
-                case Priority.High:
-                    mailMessage.Priority = MessagePriority.Urgent; break;
-                default:
-                    mailMessage.Priority = MessagePriority.Normal; break;
+                bodyBuilder.TextBody = message.PlainTextBody;
             }
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
@@ -235,6 +225,16 @@ using System.IO;
             {
                 foreach (var header in message.Headers)
                     mailMessage.Headers.Add(header.Key, header.Value);
+            }
+
+            switch (message.Priority)
+            {
+                case Priority.Low:
+                    mailMessage.Priority = MessagePriority.NonUrgent; break;
+                case Priority.High:
+                    mailMessage.Priority = MessagePriority.Urgent; break;
+                default:
+                    mailMessage.Priority = MessagePriority.Normal; break;
             }
 
             SetAttachments(bodyBuilder, message.Attachments);

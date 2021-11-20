@@ -111,15 +111,15 @@
             };
 
             if (!(message.Subject is null))
-                mailMessage.Message.Subject = new Content(message.Subject.Content);
+                mailMessage.Message.Subject = new Content(message.Subject);
 
             mailMessage.Message.Body = new Body();
 
             if (!(message.HtmlBody is null))
-                mailMessage.Message.Body.Html = new Content(message.HtmlBody.Content);
+                mailMessage.Message.Body.Html = new Content(message.HtmlBody);
 
             if (!(message.PlainTextBody is null))
-                mailMessage.Message.Body.Text = new Content(message.PlainTextBody.Content);
+                mailMessage.Message.Body.Text = new Content(message.PlainTextBody);
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {

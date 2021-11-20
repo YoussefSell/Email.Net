@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mail;
+    using System.Text;
 
     /// <summary>
     /// defines the mail message.
@@ -19,17 +20,22 @@
         /// <summary>
         /// the subject of the message
         /// </summary>
-        public MessageSubject Subject { get; set; }
+        public string Subject { get; set; }
 
         /// <summary>
         /// Get message HMTL body.
         /// </summary>
-        public MessageBody HtmlBody { get; }
+        public string HtmlBody { get; }
         
         /// <summary>
         /// Get message plain text body.
         /// </summary>
-        public MessageBody PlainTextBody { get; }
+        public string PlainTextBody { get; }
+
+        /// <summary>
+        /// Get or set the optional character set for your message.
+        /// </summary>
+        public string Charset { get; set; }
 
         /// <summary>
         /// the email address to send From it
@@ -82,6 +88,7 @@
         /// <param name="subject">the message subject</param>
         /// <param name="plainTextBody">the message plan text body</param>
         /// <param name="htmlBody">the message HTML body</param>
+        /// <param name="charset"></param>
         /// <param name="from">the from mail address</param>
         /// <param name="to">the recipient email address</param>
         /// <param name="priority">message priority</param>
@@ -90,7 +97,7 @@
         /// <param name="cc">cc mail addresses</param>
         /// <param name="attachments">attachments list</param>
         /// <param name="headers">headers collection</param>
-        public Message(MessageSubject subject, MessageBody plainTextBody, MessageBody htmlBody, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers)
+        public Message(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers)
         {
             if (to is null)
                 throw new ArgumentNullException(nameof(to));
@@ -102,6 +109,7 @@
             From = from;
             Priority = priority;
 
+            Charset = charset;
             Subject = subject;
             HtmlBody = htmlBody;
             PlainTextBody = plainTextBody;
@@ -119,6 +127,25 @@
         /// <param name="from">the from mail address</param>
         internal void SetFrom(MailAddress from)
             => From = from;
+
+        /// <summary>
+        /// get the encoding instance from the given charset
+        /// </summary>
+        /// <returns>the encoding instance, or null</returns>
+        internal Encoding GetEncodingFromCharset()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Charset))
+                    return null;
+
+                return Encoding.GetEncoding(Charset);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// create an instance of <see cref="MessageComposer"/> to start composing the message data.

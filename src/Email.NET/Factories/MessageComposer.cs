@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Net.Mail;
-    using System.Text;
 
     /// <summary>
     /// a factory for creating the mail message.
@@ -11,9 +10,11 @@
     public partial class MessageComposer
     {
         private Priority _priority;
-        private MessageBody _htmlBodyContent;
-        private MessageSubject _subjectContent;
-        private MessageBody _plainTextBodyContent;
+        
+        private string _charset;
+        private string _subjectContent;
+        private string _htmlBodyContent;
+        private string _plainTextBodyContent;
 
         private readonly HashSet<MailAddress> _to;
         private readonly HashSet<MailAddress> _bcc;
@@ -41,9 +42,9 @@
         /// <param name="subject">the message subject content</param>
         /// <param name="encoding">the message subject content encoding</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public MessageComposer WithSubject(string subject, Encoding encoding = null)
+        public MessageComposer WithSubject(string subject)
         {
-            _subjectContent = new MessageSubject(subject, encoding);
+            _subjectContent = subject;
             return this;
         }
 
@@ -53,9 +54,9 @@
         /// <param name="htmlBody">the message HTML content</param>
         /// <param name="encoding">the message HTML content encoding</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public MessageComposer WithHtmlContent(string htmlBody, Encoding encoding = null)
+        public MessageComposer WithHtmlContent(string htmlBody)
         {
-            _htmlBodyContent = new MessageBody(htmlBody, encoding);
+            _htmlBodyContent = htmlBody;
             return this;
         }
 
@@ -65,9 +66,20 @@
         /// <param name="plainTextBody">the message plain text content</param>
         /// <param name="encoding">the plain text body content encoding.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public MessageComposer WithPlainTextContent(string plainTextBody, Encoding encoding = null)
+        public MessageComposer WithPlainTextContent(string plainTextBody)
         {
-            _plainTextBodyContent = new MessageBody(plainTextBody, encoding);
+            _plainTextBodyContent = plainTextBody;
+            return this;
+        }
+
+        /// <summary>
+        /// set the character set for your message.
+        /// </summary>
+        /// <param name="charset">the charset.</param>
+        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
+        public MessageComposer SetCharsetTo(string charset)
+        {
+            _charset = charset;
             return this;
         }
 
@@ -360,7 +372,9 @@
         /// </summary>
         /// <returns>Instance of <see cref="Message"/>.</returns>
         public Message Build()
-            => new Message(_subjectContent, _plainTextBodyContent, _htmlBodyContent, 
-                _from, _to, _priority, _replyTo, _bcc, _cc, _attachments, _headers);
+            => new Message(
+                _subjectContent, _plainTextBodyContent, _htmlBodyContent, _charset,
+                _from, _to, _priority, _replyTo, _bcc, _cc, _attachments, _headers
+            );
     }
 }

@@ -82,13 +82,13 @@
             var content = new MultipartFormDataContent();
 
             if (!(message.Subject is null))
-                content.Add(new StringContent("subject"), message.Subject.Content);
+                content.Add(new StringContent("subject"), message.Subject);
 
             if (!(message.HtmlBody is null))
-                content.Add(new StringContent("html"), message.HtmlBody.Content);
+                content.Add(new StringContent("html"), message.HtmlBody);
 
             if (!(message.PlainTextBody is null))
-                content.Add(new StringContent("text"), message.PlainTextBody.Content);
+                content.Add(new StringContent("text"), message.PlainTextBody);
 
             var campaignId = data.GetData(EdpData.Keys.CampaignId);
             if (!campaignId.IsEmpty())
@@ -99,20 +99,6 @@
             else
                 content.Add(new StringContent("from"), message.From.Address);
 
-            if (!(message.Headers is null && message.Headers.Any()))
-            {
-                foreach (var header in message.Headers)
-                    content.Add(new StringContent($"h:{header.Key}"), header.Value);
-            }
-
-            foreach (var email in message.To)
-            {
-                if (!string.IsNullOrEmpty(email.DisplayName))
-                    content.Add(new StringContent("to"), $"{email.DisplayName} <{email.Address}>");
-                else
-                    content.Add(new StringContent("to"), email.Address);
-            }
-
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
                 foreach (var email in message.ReplyTo)
@@ -122,6 +108,14 @@
                     else
                         content.Add(new StringContent("h:Reply-To"), email.Address);
                 }
+            }
+
+            foreach (var email in message.To)
+            {
+                if (!string.IsNullOrEmpty(email.DisplayName))
+                    content.Add(new StringContent("to"), $"{email.DisplayName} <{email.Address}>");
+                else
+                    content.Add(new StringContent("to"), email.Address);
             }
 
             if (!(message.Bcc is null) && message.Bcc.Any())
@@ -144,6 +138,12 @@
                     else
                         content.Add(new StringContent("cc"), email.Address);
                 }
+            }
+
+            if (!(message.Headers is null && message.Headers.Any()))
+            {
+                foreach (var header in message.Headers)
+                    content.Add(new StringContent($"h:{header.Key}"), header.Value);
             }
 
             if (!(message.Attachments is null) && message.Attachments.Any())

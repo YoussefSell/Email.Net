@@ -99,20 +99,20 @@
         {
             var mailMessage = new SendGridMessage
             {
-                Subject = message.Subject?.Content,
-                HtmlContent = message.HtmlBody?.Content,
-                PlainTextContent = message.PlainTextBody?.Content,
+                Subject = message.Subject,
+                HtmlContent = message.HtmlBody,
+                PlainTextContent = message.PlainTextBody,
                 From = new EmailAddress(message.From.Address, message.From.DisplayName),
             };
-
-            foreach (var email in message.To)
-                mailMessage.AddTo(email.Address, email.DisplayName);
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
                 var replayTo = message.ReplyTo.First();
                 mailMessage.ReplyTo = new EmailAddress(replayTo.Address, replayTo.DisplayName);
             }
+
+            foreach (var email in message.To)
+                mailMessage.AddTo(email.Address, email.DisplayName);
 
             if (!(message.Bcc is null) && message.Bcc.Any())
             {

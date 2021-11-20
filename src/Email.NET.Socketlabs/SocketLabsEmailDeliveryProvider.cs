@@ -21,13 +21,14 @@
                 var basicMessage = CreateMessage(message, data);
 
                 // create the client
-                var client = CreateClient(data);
+                using (var client = CreateClient(data))
+                {
+                    // send the message
+                    var result = client.Send(basicMessage);
 
-                // send the message
-                var result = client.Send(basicMessage);
-
-                // build the result object and return
-                return BuildResultObject(result);
+                    // build the result object and return
+                    return BuildResultObject(result);
+                }
             }
             catch (Exception ex)
             {
@@ -44,13 +45,14 @@
                 var basicMessage = CreateMessage(message, data);
 
                 // create the client
-                var client = CreateClient(data);
+                using (var client = CreateClient(data))
+                {
+                    // send the message
+                    var result = await client.SendAsync(basicMessage, default);
 
-                // send the message
-                var result = await client.SendAsync(basicMessage, default);
-
-                // build the result object and return
-                return BuildResultObject(result);
+                    // build the result object and return
+                    return BuildResultObject(result);
+                }
             }
             catch (Exception ex)
             {
@@ -134,13 +136,16 @@
 
             var mailMessage = new BasicMessage
             {
-                Subject = message.Subject?.Content,
-                HtmlBody = message.HtmlBody?.Content,
-                PlainTextBody = message.PlainTextBody?.Content,
+                Subject = message.Subject,
+                HtmlBody = message.HtmlBody,
+                PlainTextBody = message.PlainTextBody,
                 From = new EmailAddress(message.From.Address, message.From.DisplayName),
                 MessageId = !messageIdEdpData.IsEmpty() ? messageIdEdpData.GetValue<string>() : string.Empty,
                 MailingId = !mailingIdEdpData.IsEmpty() ? mailingIdEdpData.GetValue<string>() : string.Empty,
             };
+
+            if (!string.IsNullOrEmpty(message.Charset))
+                mailMessage.CharSet = message.Charset;
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
