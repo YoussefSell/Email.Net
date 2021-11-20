@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.SendGrid\Email.NET.SendGrid.csproj" />
     <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Email.NET.SendGrid\Email.NET.SendGrid.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Email.NET\Email.NET.csproj" />
-  </ItemGroup>
+    <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
+  </ItemGroup>    
 
 </Project>

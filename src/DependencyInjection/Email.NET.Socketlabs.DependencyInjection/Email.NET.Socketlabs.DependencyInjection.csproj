@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Email.NET.AmazonSES\Email.NET.AmazonSES.csproj" />
+    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.Socketlabs\Email.NET.Socketlabs.csproj" />
     <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
   </ItemGroup>
 

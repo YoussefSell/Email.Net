@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.Mailgun\Email.NET.Mailgun.csproj" />
     <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Email.NET.MailKit\Email.NET.MailKit.csproj" />
   </ItemGroup>
 
 </Project>

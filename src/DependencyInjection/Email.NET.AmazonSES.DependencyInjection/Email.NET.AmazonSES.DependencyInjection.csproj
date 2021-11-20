@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.AmazonSES\Email.NET.AmazonSES.csproj" />
     <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Email.NET.Socketlabs\Email.NET.Socketlabs.csproj" />
   </ItemGroup>
 
 </Project>

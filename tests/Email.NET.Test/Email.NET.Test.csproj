@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\src\Core\Email.NET\Email.NET.csproj" />
   </ItemGroup>
 
   <ItemGroup>

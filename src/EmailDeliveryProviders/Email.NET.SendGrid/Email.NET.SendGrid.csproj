@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="2.10.1" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
   </ItemGroup>
-  
+
 </Project>
