@@ -12,28 +12,15 @@
     /// </summary>
     public partial class EmailService
     {
-        /// <summary>
-        /// Sends the specified email message using the default <see cref="IEmailDeliveryProvider"/>.
-        /// </summary>
-        /// <param name="message">the email message to be send</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
+        /// <inheritdoc/>
         public EmailSendingResult Send(Message message, params EdpData[] data)
             => Send(message, _defaultProvider, data);
 
-        /// <summary>
-        /// Sends the specified email message using the default <see cref="IEmailDeliveryProvider"/>.
-        /// </summary>
-        /// <param name="message">the email message to be send</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
+        /// <inheritdoc/>
         public Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
             => SendAsync(message, _defaultProvider, data);
 
-        /// <summary>
-        /// Sends the specified email message using the email delivery provider with the given name.
-        /// </summary>
-        /// <param name="message">the email message to be send</param>
-        /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
+        /// <inheritdoc/>
         public EmailSendingResult Send(Message message, string providerName, params EdpData[] data)
         {
             // check if the provider name is valid
@@ -48,12 +35,7 @@
             return Send(message, provider, data);
         }
 
-        /// <summary>
-        /// Sends the specified email message using the email delivery provider with the given name.
-        /// </summary>
-        /// <param name="message">the email message to be send</param>
-        /// <param name="providerName">the name of the email delivery provider used for sending the email message.</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
+        /// <inheritdoc/>
         public Task<EmailSendingResult> SendAsync(Message message, string providerName, params EdpData[] data)
         {
             // check if the provider name is valid
@@ -68,12 +50,7 @@
             return SendAsync(message, provider, data);
         }
 
-        /// <summary>
-        /// Sends the specified email message using the given email delivery provider.
-        /// </summary>
-        /// <param name="message">the email message to be send</param>
-        /// <param name="provider">the email delivery provider used for sending the email message.</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
+        /// <inheritdoc/>
         public EmailSendingResult Send(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
         {
             // check if given params are not null.
@@ -97,12 +74,7 @@
             return provider.Send(message, data);
         }
 
-        /// <summary>
-        /// Sends the specified email message using the given email delivery provider.
-        /// </summary>
-        /// <param name="message">the email message to be send</param>
-        /// <param name="provider">the email delivery provider used for sending the email message.</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
+        /// <inheritdoc/>
         public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
         {
             // check if given params are not null.
@@ -130,7 +102,7 @@
     /// <summary>
     /// partial part for <see cref="EmailService"/>
     /// </summary>
-    public partial class EmailService
+    public partial class EmailService : IEmailService
     {
         private readonly IDictionary<string, IEmailDeliveryProvider> _providers;
         private readonly IEmailDeliveryProvider _defaultProvider;
