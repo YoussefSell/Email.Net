@@ -40,7 +40,6 @@
         /// set the message subject content.
         /// </summary>
         /// <param name="subject">the message subject content</param>
-        /// <param name="encoding">the message subject content encoding</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
         public MessageComposer WithSubject(string subject)
         {
@@ -52,7 +51,6 @@
         /// set the message HTML content.
         /// </summary>
         /// <param name="htmlBody">the message HTML content</param>
-        /// <param name="encoding">the message HTML content encoding</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
         public MessageComposer WithHtmlContent(string htmlBody)
         {
@@ -64,7 +62,6 @@
         /// set the message plain text content.
         /// </summary>
         /// <param name="plainTextBody">the message plain text content</param>
-        /// <param name="encoding">the plain text body content encoding.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
         public MessageComposer WithPlainTextContent(string plainTextBody)
         {

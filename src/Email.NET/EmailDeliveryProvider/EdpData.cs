@@ -131,7 +131,7 @@
             public const string MailingId = "mailing_id";
 
             /// <summary>
-            /// edp data for campainId
+            /// edp data for campainId.
             /// </summary>
             public const string CampaignId = "campaign_id";
         }
