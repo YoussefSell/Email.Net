@@ -21,7 +21,7 @@
         /// <summary>
         /// validate if the options are all set correctly
         /// </summary>
-        internal void Validate()
+        public void Validate()
         {
             if (DefaultServerId <= 0)
                 throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(

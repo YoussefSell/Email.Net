@@ -30,7 +30,7 @@
         /// <summary>
         /// validate if the options are all set correctly
         /// </summary>
-        internal void Validate()
+        public void Validate()
         {
             if (string.IsNullOrWhiteSpace(ApiKey))
                 throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
