@@ -45,9 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{E910BB4C-7688-4422-BAA9-59DBE6487147}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.NET.Samples.Console", "Email.NET.Samples.Console\Email.NET.Samples.Console.csproj", "{7FD6770C-4F1F-4706-9023-D0CD1C694B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.NET.Samples.Console", "samples\Email.NET.Samples.Console\Email.NET.Samples.Console.csproj", "{7FD6770C-4F1F-4706-9023-D0CD1C694B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.NET.Samples.ASPCore", "Email.NET.Samples.ASPCore\Email.NET.Samples.ASPCore.csproj", "{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.NET.Samples.ASPCore", "samples\Email.NET.Samples.ASPCore\Email.NET.Samples.ASPCore.csproj", "{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
