@@ -2,7 +2,6 @@
 {
     using Email.NET.EDP.Smtp;
     using Email.NET.Exceptions;
-    using System.Collections.Generic;
 
     /// <summary>
     /// the options for configuring the Smtp email delivery provider

@@ -25,7 +25,7 @@
         /// <summary>
         /// Get or set The mailgun working domain to use. 
         /// </summary>
-        public string Domain { get; internal set; }
+        public string Domain { get; set; }
 
         /// <summary>
         /// validate if the options are all set correctly
