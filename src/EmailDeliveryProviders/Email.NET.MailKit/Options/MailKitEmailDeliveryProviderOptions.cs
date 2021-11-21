@@ -1,10 +1,11 @@
 ﻿namespace Email.NET.EDP.MailKit
 {
     using Email.NET.Exceptions;
+using System.Net;
 
-    /// <summary>
-    /// the options for configuring the MailKit email delivery provider
-    /// </summary>
+/// <summary>
+/// the options for configuring the MailKit email delivery provider
+/// </summary>
     public class MailKitEmailDeliveryProviderOptions
     {
         /// <summary>
@@ -22,6 +23,53 @@
                     nameof(SmtpOptions), "the given MailKitEmailDeliveryProviderOptions.SmtpOptions are null, you must supply a valid smtpOptions.");
 
             SmtpOptions.Validate();
+        }
+
+        /// <summary>
+        /// set the <see cref="SmtpOptions"/> to use the Gmail Smtp configuration.
+        /// </summary>
+        /// <param name="email">your Gamil email.</param>
+        /// <param name="password">your Gamil password.</param>
+        /// <remarks>
+        /// this will set the following properties:
+        /// <para><see cref="SmtpOptions.Host"/> => smtp.gmail.com</para>
+        /// <para><see cref="SmtpOptions.Port"/> => 587</para>
+        /// <para><see cref="SmtpOptions.EnableSsl"/> => true</para>
+        /// <para>don't forget to allow less secure apps, to be able to send emails from your Gmail account. from info check this <see href="https://support.google.com/accounts/answer/6010255?hl=en">link</see></para>
+        /// </remarks>
+        public void UseGmailSmtp(string email, string password)
+        {
+            SmtpOptions = new SmtpOptions
+            {
+                Port = 587,
+                EnableSsl = true,
+                Host = "smtp.gmail.com",
+                UserName = email,
+                Password = password,
+            };
+        }
+
+        /// <summary>
+        /// set the <see cref="SmtpOptions"/> to use the Outlook Smtp configuration.
+        /// </summary>
+        /// <param name="email">your outlook email.</param>
+        /// <param name="password">your outlook password.</param>
+        /// <remarks>
+        /// this will set the following properties:
+        /// <para><see cref="SmtpOptions.Host"/> => smtp-mail.outlook.com</para>
+        /// <para><see cref="SmtpOptions.Port"/> => 587</para>
+        /// <para><see cref="SmtpOptions.EnableSsl"/> => true</para>
+        /// </remarks>
+        public void UseOutlookSmtp(string email, string password)
+        {
+            SmtpOptions = new SmtpOptions
+            {
+                Port = 587,
+                EnableSsl = true,
+                Host = "smtp-mail.outlook.com",
+                UserName = email,
+                Password = password,
+            };
         }
     }
 }
