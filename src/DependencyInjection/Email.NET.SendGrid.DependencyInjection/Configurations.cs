@@ -13,6 +13,15 @@
         /// add the SendGrid EDP to be used with your email service.
         /// </summary>
         /// <param name="builder">the emailNet builder instance.</param>
+        /// <param name="apiKey">set your Twilio SendGrid Api key.</param>
+        /// <returns>instance of <see cref="EmailNetBuilder"/> to enable methods chaining.</returns>
+        public static EmailNetBuilder UseSendGrid(this EmailNetBuilder builder, string apiKey)
+            => builder.UseSendGrid(op => op.ApiKey = apiKey);
+
+        /// <summary>
+        /// add the SendGrid EDP to be used with your email service.
+        /// </summary>
+        /// <param name="builder">the emailNet builder instance.</param>
         /// <param name="config">the configuration builder instance.</param>
         /// <returns>instance of <see cref="EmailNetBuilder"/> to enable methods chaining.</returns>
         public static EmailNetBuilder UseSendGrid(this EmailNetBuilder builder, Action<SendgridEmailDeliveryProviderOptions> config)
