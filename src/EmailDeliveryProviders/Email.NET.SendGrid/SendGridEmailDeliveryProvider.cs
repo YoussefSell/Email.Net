@@ -95,7 +95,7 @@
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public SendGridMessage CreateMessage(Message message, EdpData[] data)
+        public SendGridMessage CreateMessage(Message message, params EdpData[] data)
         {
             var mailMessage = new SendGridMessage
             {
@@ -127,13 +127,12 @@
             if (!(message.Cc is null) && message.Cc.Any())
             {
                 foreach (var email in message.Cc)
-                    mailMessage.AddBcc(email.Address, email.DisplayName);
+                    mailMessage.AddCc(email.Address, email.DisplayName);
             }
 
             if (!(message.Headers is null && message.Headers.Any()))
             {
-                foreach (var header in message.Headers)
-                    mailMessage.AddHeader(header.Key, header.Value);
+                mailMessage.Headers = (Dictionary<string, string>)message.Headers;
             }
 
             SetAttachments(mailMessage, message.Attachments);
