@@ -189,16 +189,11 @@ using System.IO;
                 mailMessage.Subject = message.Subject;
             }
 
-            var bodyBuilder = new BodyBuilder();
-
-            if (!(message.HtmlBody is null))
+            var bodyBuilder = new BodyBuilder
             {
-                bodyBuilder.HtmlBody = message.HtmlBody;
-            }
-            else if (!(message.PlainTextBody is null))
-            {
-                bodyBuilder.TextBody = message.PlainTextBody;
-            }
+                HtmlBody = message.HtmlBody,
+                TextBody = message.PlainTextBody,
+            };
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
@@ -236,8 +231,9 @@ using System.IO;
                 default:
                     mailMessage.Priority = MessagePriority.Normal; break;
             }
-
+            
             SetAttachments(bodyBuilder, message.Attachments);
+            mailMessage.Body = bodyBuilder.ToMessageBody();
 
             return mailMessage;
         }
@@ -256,7 +252,7 @@ using System.IO;
             {
                 if (attachment is FilePathAttachment filePathAttachment)
                 {
-                    message.Attachments.Add(attachment.FileName);
+                    message.Attachments.Add(filePathAttachment.FilePath);
                     continue;
                 }
 
