@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.Samples.Console",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.Samples.ASPCore", "samples\Email.NET.Samples.ASPCore\Email.NET.Samples.ASPCore.csproj", "{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.NET.EDPs.Test", "tests\Email.NET.EDPs.Test\Email.NET.EDPs.Test.csproj", "{D777598B-337A-42B2-8C41-A1EBC31863A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +143,7 @@ Global
 		{0930193A-95C0-4335-9804-DEF41482C766} = {419A6ACE-0419-4315-A6FB-B0E63D39432E}
 		{7FD6770C-4F1F-4706-9023-D0CD1C694B66} = {E910BB4C-7688-4422-BAA9-59DBE6487147}
 		{9C7C4B0B-833E-43D2-B2D9-F9A813938F42} = {E910BB4C-7688-4422-BAA9-59DBE6487147}
+		{D777598B-337A-42B2-8C41-A1EBC31863A2} = {15EA4737-125B-4E6E-A806-E13B7EBCDCCF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C27CF27-51F3-4DC8-8B72-1F7C6FA3D9E9}
