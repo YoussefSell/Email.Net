@@ -1,6 +1,5 @@
 ﻿namespace Email.NET.EDP.SendGrid
 {
-    using Email.NET.EDP.Smtp;
     using Email.NET.Exceptions;
 
     /// <summary>
@@ -19,7 +18,7 @@
         public void Validate()
         {
             if (string.IsNullOrWhiteSpace(ApiKey))
-                throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
+                throw new RequiredOptionValueNotSpecifiedException<SendgridEmailDeliveryProviderOptions>(
                     $"{nameof(ApiKey)}", "the given SendgridEmailDeliveryProviderOptions.ApiKey value is null or empty.");
         }
     }
