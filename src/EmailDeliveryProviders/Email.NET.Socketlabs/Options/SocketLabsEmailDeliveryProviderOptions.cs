@@ -24,11 +24,11 @@
         public void Validate()
         {
             if (DefaultServerId <= 0)
-                throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
+                throw new RequiredOptionValueNotSpecifiedException<SocketLabsEmailDeliveryProviderOptions>(
                     $"{nameof(DefaultServerId)}", "the given SocketLabsEmailDeliveryProviderOptions.DefaultServerId value less then or equals to Zero.");
 
             if (string.IsNullOrWhiteSpace(ApiKey))
-                throw new RequiredOptionValueNotSpecifiedException<SmtpOptions>(
+                throw new RequiredOptionValueNotSpecifiedException<SocketLabsEmailDeliveryProviderOptions>(
                     $"{nameof(ApiKey)}", "the given SocketLabsEmailDeliveryProviderOptions.ApiKey value is null or empty.");
         }
     }
