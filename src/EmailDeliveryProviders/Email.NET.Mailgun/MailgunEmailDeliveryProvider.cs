@@ -36,7 +36,15 @@
                     var response = await client.PostAsync(buildUri.ToString(), CreateMessage(message, data))
                         .ConfigureAwait(false);
 
-                    return EmailSendingResult.Success(Name);
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        return EmailSendingResult.Success(Name)
+                            .AddMetaData("api_response", content);
+
+                    return EmailSendingResult.Failure(Name)
+                        .AddError(new EmailSendingError(((int)response.StatusCode).ToString(), response.StatusCode.ToString()))
+                        .AddMetaData("api_response", content);
                 }
             }
             catch (Exception ex)
@@ -77,7 +85,7 @@
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public HttpContent CreateMessage(Message message, EdpData[] data)
+        public HttpContent CreateMessage(Message message, params EdpData[] data)
         {
             var content = new MultipartFormDataContent();
 
