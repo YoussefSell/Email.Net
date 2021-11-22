@@ -96,12 +96,12 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
+        /// create an instance of <see cref="SendEmailRequest"/> from the given <see cref="Message"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
-        /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public SendEmailRequest CreateMessage(NET.Message message, EdpData[] data)
+        /// <returns>instance of <see cref="SendEmailRequest"/></returns>
+        public SendEmailRequest CreateMessage(NET.Message message, params EdpData[] data)
         {
             var mailMessage = new SendEmailRequest
             {
@@ -121,9 +121,16 @@
             if (!(message.PlainTextBody is null))
                 mailMessage.Message.Body.Text = new Content(message.PlainTextBody);
 
+            if (!string.IsNullOrEmpty(message.Charset))
+            {
+                mailMessage.Message.Subject.Charset = message.Charset;
+                mailMessage.Message.Body.Html.Charset = message.Charset;
+                mailMessage.Message.Body.Text.Charset = message.Charset;
+            }
+
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
-                foreach (var email in message.Bcc)
+                foreach (var email in message.ReplyTo)
                     mailMessage.ReplyToAddresses.Add(email.Address);
             }
 
