@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// the email sending result
@@ -48,6 +49,25 @@
             MetaData = new Dictionary<string, object>();
             _errors = new HashSet<EmailSendingError>(errors);
             EdpName = edpName ?? throw new ArgumentNullException(nameof(edpName));
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var stringbuilder = new StringBuilder($"{EdpName} -> sending: ");
+
+            if (IsSuccess)
+                stringbuilder.Append("Succeeded");
+            else
+                stringbuilder.Append("Failed");
+
+            if (!(_errors is null) && _errors.Count != 0)
+                stringbuilder.Append($" | {_errors.Count} errors");
+
+            if (MetaData.Count != 0)
+                stringbuilder.Append($" | {MetaData.Count} meta-data");
+
+            return stringbuilder.ToString();
         }
 
         /// <summary>
