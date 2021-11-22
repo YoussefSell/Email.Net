@@ -1,12 +1,11 @@
 ﻿namespace Email.NET.Test.Factories
 {
+    using Email.NET.EDP;
     using Email.NET.Exceptions;
     using Email.NET.Factories;
-    using Email.NET.EDP.Smtp;
+    using Moq;
     using System.Net.Mail;
     using Xunit;
-    using Email.NET.EDP;
-    using Moq;
 
     public class EmailServiceFactoryShould
     {
