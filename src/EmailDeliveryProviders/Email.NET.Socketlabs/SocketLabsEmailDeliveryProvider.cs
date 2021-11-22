@@ -129,7 +129,7 @@
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public BasicMessage CreateMessage(Message message, EdpData[] data)
+        public BasicMessage CreateMessage(Message message, params EdpData[] data)
         {
             var messageIdEdpData = data.GetData(EdpData.Keys.MessageId);
             var mailingIdEdpData = data.GetData(EdpData.Keys.MailingId);
