@@ -35,14 +35,14 @@
             if (string.IsNullOrWhiteSpace(ApiKey))
                 throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
                     $"{nameof(ApiKey)}", "the given MailgunEmailDeliveryProviderOptions.ApiKey value is null or empty.");
+            
+            if (string.IsNullOrWhiteSpace(Domain))
+                throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
+                    $"{nameof(Domain)}", "the given MailgunEmailDeliveryProviderOptions.Domain value is null or empty.");
 
             if (string.IsNullOrWhiteSpace(BaseUrl))
                 throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
                     $"{nameof(BaseUrl)}", "the given MailgunEmailDeliveryProviderOptions.BaseUrl value is null or empty.");
-
-            if (string.IsNullOrWhiteSpace(Domain))
-                throw new RequiredOptionValueNotSpecifiedException<MailgunEmailDeliveryProviderOptions>(
-                    $"{nameof(Domain)}", "the given MailgunEmailDeliveryProviderOptions.Domain value is null or empty.");
         }
     }
 }
