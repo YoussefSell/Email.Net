@@ -5,6 +5,7 @@
     using Email.NET.Exceptions;
     using System;
     using System.IO;
+using System.Linq;
     using Xunit;
     using Xunit.Sdk;
 
@@ -28,7 +29,7 @@
         public void ThorwIfOptionsIsNull()
         {
             // arrange
-            SmtpEmailDeliveryProviderOptions options = null;
+            SmtpEmailDeliveryProviderOptions? options = null;
 
             // assert
             Assert.Throws<ArgumentNullException>(() =>
@@ -108,20 +109,134 @@
 
             var message = Message.Compose()
                 .From("from@email.net")
+                .ReplyTo("replayto@email.net")
                 .To("to@email.net")
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
+                .WithHtmlContent("<p>this is a test</p>")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value")
                 .Build();
 
             // act
             var mailMessage = edp.CreateMessage(message);
 
             // assert
+            Assert.Equal(message.From.Address, mailMessage.From?.Address);
+            Assert.Equal(message.From.DisplayName, mailMessage.From?.DisplayName);
+            Assert.Equal(message.ReplyTo.First().Address, mailMessage.ReplyToList.First().Address);
+            Assert.Equal(message.ReplyTo.First().DisplayName, mailMessage.ReplyToList.First().DisplayName);
+            Assert.Equal(message.To.First().Address, mailMessage.To.First().Address);
+            Assert.Equal(message.To.First().DisplayName, mailMessage.To.First().DisplayName);
             Assert.Equal(message.Subject, mailMessage.Subject);
             Assert.Equal(message.PlainTextBody, mailMessage.Body);
-            Assert.Equal(message.From, mailMessage.From);
-            Assert.Equal(message.To, mailMessage.To);
-            Assert.Null(message.HtmlBody);
+            Assert.False(mailMessage.IsBodyHtml);
+            Assert.Equal("text/html", mailMessage.AlternateViews.First().ContentType.MediaType);
+            Assert.Equal(message.Charset, mailMessage.BodyEncoding?.BodyName);
+            Assert.Equal(message.Charset, mailMessage.SubjectEncoding?.BodyName);
+            Assert.Equal(message.Bcc.First().Address, mailMessage.Bcc.First().Address);
+            Assert.Equal(message.Bcc.First().DisplayName, mailMessage.Bcc.First().DisplayName);
+            Assert.Equal(message.Cc.First().Address, mailMessage.CC.First().Address);
+            Assert.Equal(message.Cc.First().DisplayName, mailMessage.CC.First().DisplayName);
+            Assert.Equal(message.Headers.First().Value, mailMessage.Headers["key"]);
+        }
+
+        [Fact]
+        public void CreateMailMessageFromMessage_WithHtmlContnetOnly()
+        {
+            // arrange
+            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            {
+                SmtpOptions = new SmtpOptions
+                {
+                    PickupDirectoryLocation = tempOutDirectory,
+                    DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory
+                }
+            });
+
+            var message = Message.Compose()
+                .From("from@email.net")
+                .ReplyTo("replayto@email.net")
+                .To("to@email.net")
+                .WithSubject("test subject")
+                .WithHtmlContent("<p>this is a test</p>")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value")
+                .Build();
+
+            // act
+            var mailMessage = edp.CreateMessage(message);
+
+            // assert
+            Assert.Equal(message.From.Address, mailMessage.From?.Address);
+            Assert.Equal(message.From.DisplayName, mailMessage.From?.DisplayName);
+            Assert.Equal(message.ReplyTo.First().Address, mailMessage.ReplyToList.First().Address);
+            Assert.Equal(message.ReplyTo.First().DisplayName, mailMessage.ReplyToList.First().DisplayName);
+            Assert.Equal(message.To.First().Address, mailMessage.To.First().Address);
+            Assert.Equal(message.To.First().DisplayName, mailMessage.To.First().DisplayName);
+            Assert.Equal(message.Subject, mailMessage.Subject);
+            Assert.Equal(message.HtmlBody, mailMessage.Body);
+            Assert.True(mailMessage.IsBodyHtml);
+            Assert.Empty(mailMessage.AlternateViews);
+            Assert.Equal(message.Charset, mailMessage.BodyEncoding?.BodyName);
+            Assert.Equal(message.Charset, mailMessage.SubjectEncoding?.BodyName);
+            Assert.Equal(message.Bcc.First().Address, mailMessage.Bcc.First().Address);
+            Assert.Equal(message.Bcc.First().DisplayName, mailMessage.Bcc.First().DisplayName);
+            Assert.Equal(message.Cc.First().Address, mailMessage.CC.First().Address);
+            Assert.Equal(message.Cc.First().DisplayName, mailMessage.CC.First().DisplayName);
+            Assert.Equal(message.Headers.First().Value, mailMessage.Headers["key"]);
+        }
+
+        [Fact]
+        public void CreateMailMessageFromMessage_WithPlainTextContnetOnly()
+        {
+            // arrange
+            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            {
+                SmtpOptions = new SmtpOptions
+                {
+                    PickupDirectoryLocation = tempOutDirectory,
+                    DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory
+                }
+            });
+
+            var message = Message.Compose()
+                .From("from@email.net")
+                .ReplyTo("replayto@email.net")
+                .To("to@email.net")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value")
+                .Build();
+
+            // act
+            var mailMessage = edp.CreateMessage(message);
+
+            // assert
+            Assert.Equal(message.From.Address, mailMessage.From?.Address);
+            Assert.Equal(message.From.DisplayName, mailMessage.From?.DisplayName);
+            Assert.Equal(message.ReplyTo.First().Address, mailMessage.ReplyToList.First().Address);
+            Assert.Equal(message.ReplyTo.First().DisplayName, mailMessage.ReplyToList.First().DisplayName);
+            Assert.Equal(message.To.First().Address, mailMessage.To.First().Address);
+            Assert.Equal(message.To.First().DisplayName, mailMessage.To.First().DisplayName);
+            Assert.Equal(message.Subject, mailMessage.Subject);
+            Assert.Equal(message.PlainTextBody, mailMessage.Body);
+            Assert.False(mailMessage.IsBodyHtml);
+            Assert.Empty(mailMessage.AlternateViews);
+            Assert.Equal(message.Charset, mailMessage.BodyEncoding?.BodyName);
+            Assert.Equal(message.Charset, mailMessage.SubjectEncoding?.BodyName);
+            Assert.Equal(message.Bcc.First().Address, mailMessage.Bcc.First().Address);
+            Assert.Equal(message.Bcc.First().DisplayName, mailMessage.Bcc.First().DisplayName);
+            Assert.Equal(message.Cc.First().Address, mailMessage.CC.First().Address);
+            Assert.Equal(message.Cc.First().DisplayName, mailMessage.CC.First().DisplayName);
+            Assert.Equal(message.Headers.First().Value, mailMessage.Headers["key"]);
         }
 
         [Fact]
@@ -139,9 +254,15 @@
 
             var message = Message.Compose()
                 .From("from@email.net")
+                .ReplyTo("replayto@email.net")
                 .To("to@email.net")
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
+                .WithHtmlContent("<p>this is a test</p>")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value")
                 .Build();
 
             // act
@@ -202,9 +323,15 @@
 
             var message = Message.Compose()
                 .From("from@email.net")
+                .ReplyTo("replayto@email.net")
                 .To("to@email.net")
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
+                .WithHtmlContent("<p>this is a test</p>")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value")
                 .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value))
                 .Build();
 
@@ -232,9 +359,15 @@
 
             var message = Message.Compose()
                 .From("from@email.net")
+                .ReplyTo("replayto@email.net")
                 .To("to@email.net")
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
+                .WithHtmlContent("<p>this is a test</p>")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value")
                 .IncludeAttachment(new FilePathAttachment(MockData.TestFilePath))
                 .Build();
 
