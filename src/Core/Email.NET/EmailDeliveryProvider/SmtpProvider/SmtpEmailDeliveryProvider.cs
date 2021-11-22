@@ -136,12 +136,21 @@
         /// <exception cref="ArgumentNullException">if the <paramref name="message"/>is null</exception>
         public MailMessage CreateMessage(Message message)
         {
-            var mailMessage = new MailMessage { From = message.From, };
+            var mailMessage = new MailMessage
+            {
+                From = message.From,
+                Subject = message.Subject
+            };
 
-            if (!(message.Subject is null))
-                mailMessage.Subject = message.Subject;
+            if (!string.IsNullOrEmpty(message.HtmlBody) && !string.IsNullOrEmpty(message.PlainTextBody))
+            {
+                mailMessage.Body = message.PlainTextBody;
+                mailMessage.IsBodyHtml = false;
 
-            if (!(message.HtmlBody is null))
+                mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(
+                    message.HtmlBody, new ContentType("text/html; charset=UTF-8")));
+            }
+            else if (!(message.HtmlBody is null))
             {
                 mailMessage.IsBodyHtml = true;
                 mailMessage.Body = message.HtmlBody;
