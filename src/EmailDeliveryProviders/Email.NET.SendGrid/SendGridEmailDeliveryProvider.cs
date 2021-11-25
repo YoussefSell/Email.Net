@@ -2,6 +2,7 @@
 {
     using global::SendGrid;
     using global::SendGrid.Helpers.Mail;
+using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -28,7 +29,8 @@
                     .ConfigureAwait(false);
 
                 // build the result object and return
-                return BuildResultObject(response);
+                return await BuildResultObjectAsync(response)
+                    .ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -75,7 +77,7 @@
             return new SendGridClient(apiKey);
         }
 
-        private static EmailSendingResult BuildResultObject(Response result)
+        private static async Task<EmailSendingResult> BuildResultObjectAsync(Response result)
         {
             // check if we have success operations
             if (result.IsSuccessStatusCode)
@@ -85,8 +87,20 @@
             }
 
             // create the failure result & return the result
-            return EmailSendingResult.Failure(Name)
+            var emailSendingResult = EmailSendingResult.Failure(Name)
                 .AddMetaData("status_code", result.StatusCode.ToString());
+
+            var content = await result.Body.ReadAsStringAsync();
+            var response = JsonConvert.DeserializeObject<SendGridResponse>(content);
+
+            foreach (var error in response.Errors)
+            {
+                emailSendingResult.AddError(new EmailSendingError(
+                    code: error.Field,
+                    message: error.Message));
+            }
+
+            return emailSendingResult;
         }
 
         /// <summary>
@@ -154,6 +168,24 @@
             {
                 message.AddAttachment(attachment.FileName, attachment.GetAsBase64(), type: attachment.FileType);
             }
+        }
+
+        private class SendGridResponse
+        {
+            [JsonProperty("errors")]
+            public List<Error> Errors { get; set; }
+        }
+
+        private class Error
+        {
+            [JsonProperty("message")]
+            public string Message { get; set; }
+
+            [JsonProperty("field")]
+            public string Field { get; set; }
+
+            [JsonProperty("help")]
+            public object Help { get; set; }
         }
     }
 }
