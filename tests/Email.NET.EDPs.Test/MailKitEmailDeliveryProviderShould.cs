@@ -3,11 +3,10 @@ namespace Email.NET.MailKit.Test
     using Email.NET.EDP;
     using Email.NET.EDP.MailKit;
     using Email.NET.Exceptions;
-using MimeKit;
+    using MimeKit;
     using System;
     using System.IO;
     using System.Linq;
-using System.Xml.Linq;
     using Xunit;
 
     public class MailKitEmailDeliveryProviderShould : IDisposable
