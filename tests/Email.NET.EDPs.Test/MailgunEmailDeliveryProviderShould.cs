@@ -1,5 +1,6 @@
 namespace Email.NET.Mailgun.Test
 {
+    using Email.NET.EDP;
     using Email.NET.EDP.Mailgun;
     using Email.NET.Exceptions;
     using System;
@@ -8,8 +9,10 @@ namespace Email.NET.Mailgun.Test
 
     public class MailgunEmailDeliveryProviderShould
     {
-        const string TEST_API_KEY = "KEY-";
-        const string TEST_DOMAIN = "youssefsellami.com";
+        static string TEST_To_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestToEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static string TEST_FROM_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestFromEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static string TEST_DOMAIN = Environment.GetEnvironmentVariable("EmailNET_MailgunDomain", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static string TEST_API_KEY = Environment.GetEnvironmentVariable("EmailNET_MailgunApiKey", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -159,8 +162,6 @@ namespace Email.NET.Mailgun.Test
             // act
             var mailMessage = edp.CreateMessage(message);
 
-            var sd =await  mailMessage.ReadAsStringAsync();
-
             // assert
             //Assert.Equal(message.From.Address, mailMessage.From.Email);
             //Assert.Equal(message.From.DisplayName, mailMessage.From.FriendlyName);
@@ -191,9 +192,9 @@ namespace Email.NET.Mailgun.Test
             });
 
             var message = Message.Compose()
-                .From("from@email.net")
+                .From(TEST_FROM_EMAI)
                 .ReplyTo("replayto@email.net")
-                .To("to@email.net")
+                .To(TEST_To_EMAI)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -201,6 +202,7 @@ namespace Email.NET.Mailgun.Test
                 .WithBcc("bcc@email.net")
                 .WithCc("cc@email.net")
                 .WithHeader("key", "value")
+                .UseTestMode()
                 .Build();
 
             // act
@@ -221,9 +223,9 @@ namespace Email.NET.Mailgun.Test
             });
 
             var message = Message.Compose()
-                .From("from@email.net")
+                .From(TEST_FROM_EMAI)
                 .ReplyTo("replayto@email.net")
-                .To("to@email.net")
+                .To(TEST_To_EMAI)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -252,9 +254,9 @@ namespace Email.NET.Mailgun.Test
             });
 
             var message = Message.Compose()
-                .From("from@email.net")
+                .From(TEST_FROM_EMAI)
                 .ReplyTo("replayto@email.net")
-                .To("to@email.net")
+                .To(TEST_To_EMAI)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
