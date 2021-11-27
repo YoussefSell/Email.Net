@@ -1,13 +1,11 @@
 ﻿namespace Email.NET.Test.EDP
 {
-    using Email.NET.EDP;
     using Email.NET.EDP.Smtp;
     using Email.NET.Exceptions;
     using System;
     using System.IO;
-using System.Linq;
+    using System.Linq;
     using Xunit;
-    using Xunit.Sdk;
 
     public class SmtpEmailDeliveryProviderShould : IDisposable
     {
@@ -292,14 +290,15 @@ using System.Linq;
                 .To("to@email.net")
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
+                .UseCustomSmtpOptions(new SmtpOptions
+                {
+                    PickupDirectoryLocation = tempOutDirectory,
+                    DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory
+                })
                 .Build();
 
             // act
-            var result = edp.Send(message, new EdpData(EdpData.Keys.SmtpOptions, new SmtpOptions
-            {
-                PickupDirectoryLocation = tempOutDirectory,
-                DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory
-            }));
+            var result = edp.Send(message);
 
             var files = Directory.EnumerateFiles(tempOutDirectory, "*.eml");
 

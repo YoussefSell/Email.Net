@@ -1,18 +1,17 @@
 namespace Email.NET.Socketlabs.Test
 {
-using Email.NET.EDP.Smtp;
-using Email.NET.EDP;
     using Email.NET.EDP.SocketLabs;
     using Email.NET.Exceptions;
     using System;
-    using System.IO;
     using System.Linq;
     using Xunit;
 
     public class SocketLabsEmailDeliveryProviderShould
     {
-        const int TEST_SERVER = 123456;
-        const string TEST_API_KEY = "KEY-";
+        static string TEST_To_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestToEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static string TEST_FROM_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestFromEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static string TEST_API_KEY = Environment.GetEnvironmentVariable("EmailNET_SocketlabsApiKey", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static int TEST_SERVER = int.Parse(Environment.GetEnvironmentVariable("EmailNET_SocketlabsServer", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException());
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -150,9 +149,9 @@ using Email.NET.EDP;
             });
 
             var message = Message.Compose()
-                .From("from@email.net")
+                .From(TEST_FROM_EMAI)
                 .ReplyTo("replayto@email.net")
-                .To("to@email.net")
+                .To(TEST_To_EMAI)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -180,9 +179,9 @@ using Email.NET.EDP;
             });
 
             var message = Message.Compose()
-                .From("from@email.net")
+                .From(TEST_FROM_EMAI)
                 .ReplyTo("replayto@email.net")
-                .To("to@email.net")
+                .To(TEST_To_EMAI)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -211,9 +210,9 @@ using Email.NET.EDP;
             });
 
             var message = Message.Compose()
-                .From("from@email.net")
+                .From(TEST_FROM_EMAI)
                 .ReplyTo("replayto@email.net")
-                .To("to@email.net")
+                .To(TEST_To_EMAI)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")

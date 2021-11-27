@@ -131,11 +131,6 @@ namespace Email.NET.MailKit.Test
             Assert.Equal(message.To.First().Address, ((MailboxAddress)mailMessage.To.First()).Address);
             Assert.Equal(message.To.First().DisplayName, ((MailboxAddress)mailMessage.To.First()).Name);
             Assert.Equal(message.Subject, mailMessage.Subject);
-            //Assert.Equal(message.PlainTextBody, mailMessage.BodyParts);
-            //Assert.False(mailMessage.IsBodyHtml);
-            //Assert.Equal("text/html", mailMessage.AlternateViews.First().ContentType.MediaType);
-            //Assert.Equal(message.Charset, mailMessage.BodyEncoding?.BodyName);
-            //Assert.Equal(message.Charset, mailMessage.SubjectEncoding?.BodyName);
             Assert.Equal(message.Bcc.First().Address, ((MailboxAddress)mailMessage.Bcc.First()).Address);
             Assert.Equal(message.Bcc.First().DisplayName, ((MailboxAddress)mailMessage.Bcc.First()).Name);
             Assert.Equal(message.Cc.First().Address, ((MailboxAddress)mailMessage.Cc.First()).Address);
@@ -196,14 +191,15 @@ namespace Email.NET.MailKit.Test
                 .To("to@email.net")
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
+                .PassEdpData(new EdpData(EdpData.Keys.SmtpOptions, new SmtpOptions
+                {
+                    PickupDirectoryLocation = tempOutDirectory,
+                    DeliveryMethod = MailKitDeliveryMethod.SpecifiedPickupDirectory
+                }))
                 .Build();
 
             // act
-            var result = edp.Send(message, new EdpData(EdpData.Keys.SmtpOptions, new SmtpOptions
-            {
-                PickupDirectoryLocation = tempOutDirectory,
-                DeliveryMethod = MailKitDeliveryMethod.SpecifiedPickupDirectory
-            }));
+            var result = edp.Send(message);
 
             var files = Directory.EnumerateFiles(tempOutDirectory, "*.eml");
 

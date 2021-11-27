@@ -1,5 +1,6 @@
 ﻿namespace Email.NET.Test.Factories
 {
+    using Email.NET.EDP;
     using Email.NET.Factories;
     using System;
     using System.Collections.Generic;
@@ -28,6 +29,7 @@
                 .WithBcc("bcc@email.net", "bcc")
                 .WithCc("cc@email.net", "cc")
                 .WithHeader("key", "value")
+                .UseCustomApiKey("KEY-1")
                 .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value));
 
             // act
@@ -62,6 +64,10 @@
 
             Assert.Equal(1, message.Attachments.Count);
             Assert.Equal("test_file.txt", message.Attachments.First().FileName);
+
+            Assert.Equal(1, message.EdpData.Count);
+            Assert.Equal(EdpData.Keys.ApiKey, message.EdpData.First().Key);
+            Assert.Equal("KEY-1", message.EdpData.First().Value);
         }
 
         #region Message "Content" value test
@@ -904,8 +910,13 @@
                 .To("to@email.net");
 
             var filePath = @"C:\Email.Net\test_file.txt";
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());
+            var dirName = Path.GetDirectoryName(filePath);
+
+            if (dirName is not null)
+            {
+                Directory.CreateDirectory(dirName);
+                File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());
+            }
 
             // act
             var message = composser
@@ -920,7 +931,9 @@
             Assert.Equal(3, message.Attachments.Count);
 
             File.Delete(filePath);
-            Directory.Delete(Path.GetDirectoryName(filePath));
+            
+            if (dirName is not null)
+                Directory.Delete(dirName);
         }
 
         #endregion
@@ -975,6 +988,91 @@
 
             Assert.Equal("key3", message.Headers.Skip(2).First().Key);
             Assert.Equal("value", message.Headers.Skip(2).First().Value);
+        }
+
+        #endregion
+
+        #region Message "EdpData" value tests
+
+        [Fact]
+        public void CreateMessageWithEdpData_FromKeyValue()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .WithPlainTextContent("test content")
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .PassEdpData("key", "value")
+                .Build();
+
+            // assert
+            Assert.Equal(1, message.EdpData.Count);
+            Assert.Equal("key", message.EdpData.First().Key);
+            Assert.Equal("value", message.EdpData.First().Value);
+        }
+
+        [Fact]
+        public void CreateMessageWithEdpData_FromInstance()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .WithPlainTextContent("test content")
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .PassEdpData(new EdpData("key", "value"))
+                .Build();
+
+            // assert
+            Assert.Equal(1, message.EdpData.Count);
+            Assert.Equal("key", message.EdpData.First().Key);
+            Assert.Equal("value", message.EdpData.First().Value);
+        }
+
+        [Fact]
+        public void CreateMessageWithEdpData_FromListInstance()
+        {
+            // arrange 
+            var composser = Message.Compose()
+                .WithPlainTextContent("test content")
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .PassEdpData(new[] { new EdpData("key1", "value"), new EdpData("key2", "value") })
+                .Build();
+
+            // assert
+            Assert.Equal(2, message.EdpData.Count);
+            Assert.Equal("key1", message.EdpData.First().Key);
+            Assert.Equal("value", message.EdpData.First().Value);
+            Assert.Equal("key2", message.EdpData.Skip(1).First().Key);
+            Assert.Equal("value", message.EdpData.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void CreateMessageWithEdpData_FromExtensionMethods()
+        {
+            // arrange 
+            var composser = Message.Compose()
+                .WithPlainTextContent("test content")
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .UseCustomApiKey("API-KEY")
+                .SetMailingId("messageId")
+                .Build();
+
+            // assert
+            Assert.Equal(2, message.EdpData.Count);
+            Assert.Equal(EdpData.Keys.ApiKey, message.EdpData.First().Key);
+            Assert.Equal("API-KEY", message.EdpData.First().Value);
+            Assert.Equal(EdpData.Keys.MailingId, message.EdpData.Skip(1).First().Key);
+            Assert.Equal("messageId", message.EdpData.Skip(1).First().Value);
         }
 
         #endregion
