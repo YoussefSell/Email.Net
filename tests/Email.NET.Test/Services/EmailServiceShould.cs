@@ -61,7 +61,7 @@
         public void ThorwIfOptionsAreNull()
         {
             // arrange
-            EmailServiceOptions options = null;
+            EmailServiceOptions? options = null;
 
             // act
 
