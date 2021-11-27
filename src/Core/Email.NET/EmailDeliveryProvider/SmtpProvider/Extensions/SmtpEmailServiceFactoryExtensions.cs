@@ -15,7 +15,7 @@
         /// <param name="builder">the <see cref="EmailServiceFactory"/> instance.</param>
         /// <param name="config">the configuration builder instance.</param>
         /// <returns>instance of <see cref="EmailServiceFactory"/> to enable methods chaining.</returns>
-        public static EmailServiceFactory UseMailKit(this EmailServiceFactory builder, Action<SmtpEmailDeliveryProviderOptions> config)
+        public static EmailServiceFactory UseSmtp(this EmailServiceFactory builder, Action<SmtpEmailDeliveryProviderOptions> config)
         {
             // load the configuration
             var configuration = new SmtpEmailDeliveryProviderOptions();
