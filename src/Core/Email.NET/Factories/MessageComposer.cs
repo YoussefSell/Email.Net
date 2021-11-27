@@ -24,6 +24,7 @@
 
         private MailAddress _from;
         private Dictionary<string, string> _headers;
+        private readonly HashSet<EDP.EdpData> _edpData;
 
         internal MessageComposer()
         {
@@ -32,6 +33,7 @@
             _cc = new HashSet<MailAddress>();
             _bcc = new HashSet<MailAddress>();
             _replyTo = new HashSet<MailAddress>();
+            _edpData = new HashSet<EDP.EdpData>();
             _attachments = new HashSet<NET.Attachment>();
             _headers = new Dictionary<string, string>();
         }
@@ -352,6 +354,28 @@
         }
 
         /// <summary>
+        /// add the data to be passed to the edp.
+        /// </summary>
+        /// <param name="key">the data key.</param>
+        /// <param name="value">the data value.</param>
+        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
+        public MessageComposer PassEdpData(string key, object value)
+            => PassEdpData(EDP.EdpData.New(key, value));
+
+        /// <summary>
+        /// add the data to be passed to the edp.
+        /// </summary>
+        /// <param name="data">the data instance.</param>
+        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
+        public MessageComposer PassEdpData(params EDP.EdpData[] data)
+        {
+            foreach (var item in data)
+                _edpData.Add(item);
+
+            return this;
+        }
+
+        /// <summary>
         /// add the attachments to the message.
         /// </summary>
         /// <param name="attachments">the list of attachments</param>
@@ -370,8 +394,9 @@
         /// <returns>Instance of <see cref="Message"/>.</returns>
         public Message Build()
             => new Message(
-                _subjectContent, _plainTextBodyContent, _htmlBodyContent, _charset,
-                _from, _to, _priority, _replyTo, _bcc, _cc, _attachments, _headers
+                _subjectContent, _plainTextBodyContent, _htmlBodyContent, 
+                _charset, _from, _to, _priority, _replyTo, _bcc, _cc, 
+                _attachments, _headers, _edpData
             );
     }
 }

@@ -13,15 +13,15 @@
     public partial class EmailService
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EdpData[] data)
-            => Send(message, _defaultProvider, data);
+        public EmailSendingResult Send(Message message)
+            => Send(message, _defaultProvider);
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
-            => SendAsync(message, _defaultProvider, data);
+        public Task<EmailSendingResult> SendAsync(Message message)
+            => SendAsync(message, _defaultProvider);
 
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, string providerName, params EdpData[] data)
+        public EmailSendingResult Send(Message message, string providerName)
         {
             // check if the provider name is valid
             if (providerName is null)
@@ -32,11 +32,11 @@
                 throw new EmailDeliveryProviderNotFoundException(providerName);
 
             // send the email message
-            return Send(message, provider, data);
+            return Send(message, provider);
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, string providerName, params EdpData[] data)
+        public Task<EmailSendingResult> SendAsync(Message message, string providerName)
         {
             // check if the provider name is valid
             if (providerName is null)
@@ -47,11 +47,11 @@
                 throw new EmailDeliveryProviderNotFoundException(providerName);
 
             // send the email message
-            return SendAsync(message, provider, data);
+            return SendAsync(message, provider);
         }
 
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
+        public EmailSendingResult Send(Message message, IEmailDeliveryProvider provider)
         {
             // check if given params are not null.
             if (message is null)
@@ -71,11 +71,11 @@
             }
 
             // send the email message
-            return provider.Send(message, data);
+            return provider.Send(message);
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider provider, params EdpData[] data)
+        public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider provider)
         {
             // check if given params are not null.
             if (message is null)
@@ -95,7 +95,7 @@
             }
 
             // send the email message
-            return provider.SendAsync(message, data);
+            return provider.SendAsync(message);
         }
     }
 

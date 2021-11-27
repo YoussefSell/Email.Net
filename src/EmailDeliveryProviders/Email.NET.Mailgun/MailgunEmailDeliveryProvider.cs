@@ -13,11 +13,11 @@
     public partial class MailgunEmailDeliveryProvider : IMailgunEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EdpData[] data)
-            => SendAsync(message, data).ConfigureAwait(false).GetAwaiter().GetResult();
+        public EmailSendingResult Send(Message message)
+            => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(Message message)
         {
             try
             {
@@ -33,18 +33,15 @@
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                         Convert.ToBase64String(Encoding.UTF8.GetBytes($"api:{_options.ApiKey}")));
 
-                    var response = await client.PostAsync(buildUri.ToString(), CreateMessage(message, data))
+                    var response = await client.PostAsync(buildUri.ToString(), CreateMessage(message))
                         .ConfigureAwait(false);
 
-                    var content = await response.Content.ReadAsStringAsync();
-
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        return EmailSendingResult.Success(Name)
-                            .AddMetaData("api_response", content);
+                        return EmailSendingResult.Success(Name);
 
                     return EmailSendingResult.Failure(Name)
                         .AddError(new EmailSendingError(((int)response.StatusCode).ToString(), response.StatusCode.ToString()))
-                        .AddMetaData("api_response", content);
+                        .AddMetaData("api_response", await response.Content.ReadAsStringAsync());
                 }
             }
             catch (Exception ex)
@@ -85,45 +82,45 @@
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public HttpContent CreateMessage(Message message, params EdpData[] data)
+        public HttpContent CreateMessage(Message message)
         {
             var content = new MultipartFormDataContent();
 
             if (!(message.Subject is null))
-                content.Add(new StringContent("subject"), message.Subject);
+                content.Add(new StringContent(message.Subject), "subject");
 
             if (!(message.HtmlBody is null))
-                content.Add(new StringContent("html"), message.HtmlBody);
+                content.Add(new StringContent(message.HtmlBody), "html");
 
             if (!(message.PlainTextBody is null))
-                content.Add(new StringContent("text"), message.PlainTextBody);
+                content.Add(new StringContent(message.PlainTextBody), "text");
 
-            var campaignId = data.GetData(EdpData.Keys.CampaignId);
+            var campaignId = message.EdpData.GetData(EdpData.Keys.CampaignId);
             if (!campaignId.IsEmpty())
-                content.Add(new StringContent("o:campaign"), campaignId.GetValue<string>());
+                content.Add(new StringContent(campaignId.GetValue<string>()), "o:campaign");
 
             if (!string.IsNullOrEmpty(message.From.DisplayName))
-                content.Add(new StringContent("from"), $"{message.From.DisplayName} <{message.From.Address}>");
+                content.Add(new StringContent($"{message.From.DisplayName} <{message.From.Address}>"), "from");
             else
-                content.Add(new StringContent("from"), message.From.Address);
+                content.Add(new StringContent(message.From.Address), "from");
 
             if (!(message.ReplyTo is null) && message.ReplyTo.Any())
             {
                 foreach (var email in message.ReplyTo)
                 {
                     if (!string.IsNullOrEmpty(email.DisplayName))
-                        content.Add(new StringContent("h:Reply-To"), $"{email.DisplayName} <{email.Address}>");
+                        content.Add(new StringContent($"{email.DisplayName} <{email.Address}>"), "h:Reply-To");
                     else
-                        content.Add(new StringContent("h:Reply-To"), email.Address);
+                        content.Add(new StringContent(email.Address), "h:Reply-To");
                 }
             }
 
             foreach (var email in message.To)
             {
                 if (!string.IsNullOrEmpty(email.DisplayName))
-                    content.Add(new StringContent("to"), $"{email.DisplayName} <{email.Address}>");
+                    content.Add(new StringContent($"{email.DisplayName} <{email.Address}>"), "to");
                 else
-                    content.Add(new StringContent("to"), email.Address);
+                    content.Add(new StringContent(email.Address), "to");
             }
 
             if (!(message.Bcc is null) && message.Bcc.Any())
@@ -131,9 +128,9 @@
                 foreach (var email in message.Bcc)
                 {
                     if (!string.IsNullOrEmpty(email.DisplayName))
-                        content.Add(new StringContent("bcc"), $"{email.DisplayName} <{email.Address}>");
+                        content.Add(new StringContent($"{email.DisplayName} <{email.Address}>"), "bcc");
                     else
-                        content.Add(new StringContent("bcc"), email.Address);
+                        content.Add(new StringContent(email.Address), "bcc");
                 }
             }
 
@@ -142,16 +139,16 @@
                 foreach (var email in message.Cc)
                 {
                     if (!string.IsNullOrEmpty(email.DisplayName))
-                        content.Add(new StringContent("cc"), $"{email.DisplayName} <{email.Address}>");
+                        content.Add(new StringContent($"{email.DisplayName} <{email.Address}>"), "cc");
                     else
-                        content.Add(new StringContent("cc"), email.Address);
+                        content.Add(new StringContent(email.Address), "cc");
                 }
             }
 
             if (!(message.Headers is null && message.Headers.Any()))
             {
                 foreach (var header in message.Headers)
-                    content.Add(new StringContent($"h:{header.Key}"), header.Value);
+                    content.Add(new StringContent(header.Value), $"h:{header.Key}");
             }
 
             if (!(message.Attachments is null) && message.Attachments.Any())
@@ -162,9 +159,13 @@
                 }
             }
 
-            var enableTrackingEdp = data.GetData("tracking");
+            var enableTrackingEdp = message.EdpData.GetData("enable_tracking");
             if (!enableTrackingEdp.IsEmpty())
-                content.Add(new StringContent($"o:tracking"), enableTrackingEdp.GetValue<bool>().ToString());
+                content.Add(new StringContent(enableTrackingEdp.GetValue<bool>().ToYesNoString()), "o:tracking");
+
+            var testModeEdp = message.EdpData.GetData("test_mode");
+            if (!testModeEdp.IsEmpty())
+                content.Add(new StringContent(testModeEdp.GetValue<bool>().ToYesNoString()), "o:testmode");
 
             return content;
         }

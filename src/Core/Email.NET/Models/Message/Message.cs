@@ -75,6 +75,11 @@
         /// Gets the e-mail headers that are transmitted with this e-mail message.
         /// </summary>
         public IDictionary<string, string> Headers { get; }
+
+        /// <summary>
+        /// get the collection of additional data need to be passed to the email provider for further configuration
+        /// </summary>
+        public ICollection<EDP.EdpData> EdpData { get; set; }
     }
 
     /// <summary>
@@ -97,7 +102,8 @@
         /// <param name="cc">cc mail addresses</param>
         /// <param name="attachments">attachments list</param>
         /// <param name="headers">headers collection</param>
-        public Message(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers)
+        /// <param name="edpData">the list of edp data</param>
+        public Message(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers, ICollection<EDP.EdpData> edpData)
         {
             if (to is null)
                 throw new ArgumentNullException(nameof(to));
@@ -117,6 +123,7 @@
             Cc = cc ?? new HashSet<MailAddress>();
             Bcc = bcc ?? new HashSet<MailAddress>();
             ReplyTo = replyTo ?? new HashSet<MailAddress>();
+            EdpData = edpData ?? new HashSet<EDP.EdpData>();
             Headers = headers ?? new Dictionary<string, string>();
             Attachments = attachments ?? new HashSet<Attachment>();
         }

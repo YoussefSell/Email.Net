@@ -13,15 +13,15 @@
     public partial class SocketLabsEmailDeliveryProvider : ISocketLabsEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EdpData[] data)
+        public EmailSendingResult Send(Message message)
         {
             try
             {
                 // create the basic message
-                var basicMessage = CreateMessage(message, data);
+                var basicMessage = CreateMessage(message);
 
                 // create the client
-                using (var client = CreateClient(data))
+                using (var client = CreateClient(message.EdpData))
                 {
                     // send the message
                     var result = client.Send(basicMessage);
@@ -37,15 +37,15 @@
         }
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(Message message)
         {
             try
             {
                 // create the basic message
-                var basicMessage = CreateMessage(message, data);
+                var basicMessage = CreateMessage(message);
 
                 // create the client
-                using (var client = CreateClient(data))
+                using (var client = CreateClient(message.EdpData))
                 {
                     // send the message
                     var result = await client.SendAsync(basicMessage, default);
@@ -86,14 +86,14 @@
             _options = options;
         }
 
-        private SocketLabsClient CreateClient(EdpData[] data)
+        private SocketLabsClient CreateClient(IEnumerable<EdpData> data)
         {
             var apiKey = _options.ApiKey;
             var serverId = _options.DefaultServerId;
 
             // get the apiKey & serverId from the data list if any.
             var apikeyEdpData = data.GetData(EdpData.Keys.ApiKey);
-            var serverIdEdpData = data.GetData(EdpData.Keys.ServerId);
+            var serverIdEdpData = data.GetData("server_id");
 
             if (!apikeyEdpData.IsEmpty())
                 apiKey = apikeyEdpData.GetValue<string>();
@@ -129,10 +129,10 @@
         /// <param name="message">the message instance</param>
         /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public BasicMessage CreateMessage(Message message, params EdpData[] data)
+        public BasicMessage CreateMessage(Message message)
         {
-            var messageIdEdpData = data.GetData(EdpData.Keys.MessageId);
-            var mailingIdEdpData = data.GetData(EdpData.Keys.MailingId);
+            var messageIdEdpData = message.EdpData.GetData(EdpData.Keys.MessageId);
+            var mailingIdEdpData = message.EdpData.GetData(EdpData.Keys.MailingId);
 
             var mailMessage = new BasicMessage
             {

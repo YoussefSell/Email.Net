@@ -2,7 +2,7 @@
 {
     using global::SendGrid;
     using global::SendGrid.Helpers.Mail;
-using Newtonsoft.Json;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,16 +14,16 @@ using Newtonsoft.Json;
     public partial class SendgridEmailDeliveryProvider : ISendgridEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EdpData[] data)
-            => SendAsync(message, data).ConfigureAwait(false).GetAwaiter().GetResult();
+        public EmailSendingResult Send(Message message)
+            => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(Message message)
         {
             try
             {
-                var client = CreateClient(data);
-                var mailMessage = CreateMessage(message, data);
+                var client = CreateClient(message.EdpData);
+                var mailMessage = CreateMessage(message);
 
                 var response = await client.SendEmailAsync(mailMessage)
                     .ConfigureAwait(false);
@@ -64,7 +64,7 @@ using Newtonsoft.Json;
             _options = options;
         }
 
-        private SendGridClient CreateClient(EdpData[] data)
+        private SendGridClient CreateClient(IEnumerable<EdpData> data)
         {
             var apiKey = _options.ApiKey;
 
@@ -107,9 +107,8 @@ using Newtonsoft.Json;
         /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
-        /// <param name="data">the edp data instance</param>
-        /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public SendGridMessage CreateMessage(Message message, params EdpData[] data)
+        /// <returns>instance of <see cref="SendGridMessage"/></returns>
+        public SendGridMessage CreateMessage(Message message)
         {
             var mailMessage = new SendGridMessage
             {
@@ -119,7 +118,7 @@ using Newtonsoft.Json;
                 From = new EmailAddress(message.From.Address, message.From.DisplayName),
             };
 
-            var trackingSettingsEDP = data.GetData("sendgrid_tracking_settings");
+            var trackingSettingsEDP = message.EdpData.GetData("sendgrid_tracking_settings");
             if (!trackingSettingsEDP.IsEmpty())
                 mailMessage.TrackingSettings = trackingSettingsEDP.GetValue<TrackingSettings>();
 

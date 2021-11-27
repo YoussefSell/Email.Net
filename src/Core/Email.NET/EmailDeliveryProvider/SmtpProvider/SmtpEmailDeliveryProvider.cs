@@ -14,11 +14,11 @@
     public partial class SmtpEmailDeliveryProvider : ISmtpEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EdpData[] data)
+        public EmailSendingResult Send(Message message)
         {
             try
             {
-                using (var client = CreateClient(GetSmtpOptions(data)))
+                using (var client = CreateClient(GetSmtpOptions(message.EdpData)))
                 using (var mailMessage = CreateMessage(message))
                 {
                     client.Send(mailMessage);
@@ -33,11 +33,11 @@
         }
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(Message message)
         {
             try
             {
-                using (var client = CreateClient(GetSmtpOptions(data)))
+                using (var client = CreateClient(GetSmtpOptions(message.EdpData)))
                 using (var mailMessage = CreateMessage(message))
                 {
                     await client.SendMailAsync(mailMessage);
@@ -87,19 +87,19 @@
         /// </summary>
         /// <param name="data">the list of edp data</param>
         /// <returns><see cref="SmtpOptions"/> instance</returns>
-        private SmtpOptions GetSmtpOptions(EdpData[] data)
+        private SmtpOptions GetSmtpOptions(IEnumerable<EdpData> data)
         {
             // no data return the default options
             if (data is null || !data.Any())
                 return _options.SmtpOptions;
 
             // check if we have custom smtp options
-            var customSmptOptions = data.FirstOrDefault(e => e.Key == EdpData.Keys.SmtpOptions);
-            if (customSmptOptions.IsEmpty())
+            var customSmptOptionsEdp = data.GetData(EdpData.Keys.SmtpOptions);
+            if (customSmptOptionsEdp.IsEmpty())
                 return _options.SmtpOptions;
 
             // get the smtp options
-            var smptOptions = customSmptOptions.GetValue<SmtpOptions>();
+            var smptOptions = customSmptOptionsEdp.GetValue<SmtpOptions>();
 
             // check if valid
             smptOptions.Validate();

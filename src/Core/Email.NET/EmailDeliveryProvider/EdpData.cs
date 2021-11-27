@@ -116,11 +116,6 @@
             public const string ApiKey = "api_key";
 
             /// <summary>
-            /// edp data for ServerId.
-            /// </summary>
-            public const string ServerId = "server_id";
-
-            /// <summary>
             /// edp data for messageId.
             /// </summary>
             public const string MessageId = "message_id";

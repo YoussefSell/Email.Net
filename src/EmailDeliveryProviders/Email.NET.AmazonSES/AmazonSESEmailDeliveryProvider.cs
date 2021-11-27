@@ -12,17 +12,17 @@
     public partial class AmazonSESEmailDeliveryProvider : IAmazonSESEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(NET.Message message, params EdpData[] data)
-            => SendAsync(message, data).ConfigureAwait(false).GetAwaiter().GetResult();
+        public EmailSendingResult Send(NET.Message message)
+            => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(NET.Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(NET.Message message)
         {
             try
             {
-                using (var client = CreateClient(data))
+                using (var client = CreateClient())
                 {
-                    var response = await client.SendEmailAsync(CreateMessage(message, data))
+                    var response = await client.SendEmailAsync(CreateMessage(message))
                         .ConfigureAwait(false);
 
                     if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
@@ -31,7 +31,7 @@
                             .AddMetaData("message_id", response.MessageId)
                             .AddMetaData("request_id", response.ResponseMetadata?.RequestId);
                     }
-                    
+
                     var result = EmailSendingResult.Failure(Name)
                         .AddMetaData("message_id", response.MessageId)
                         .AddMetaData("request_id", response.ResponseMetadata?.RequestId);
@@ -77,7 +77,7 @@
             _options = options;
         }
 
-        private AmazonSimpleEmailServiceClient CreateClient(EdpData[] data)
+        private AmazonSimpleEmailServiceClient CreateClient()
         {
             if (!string.IsNullOrEmpty(_options.AwsAccessKeyId)
                 && !string.IsNullOrEmpty(_options.AwsSecretAccessKey)
@@ -99,9 +99,8 @@
         /// create an instance of <see cref="SendEmailRequest"/> from the given <see cref="Message"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
-        /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="SendEmailRequest"/></returns>
-        public SendEmailRequest CreateMessage(NET.Message message, params EdpData[] data)
+        public SendEmailRequest CreateMessage(NET.Message message)
         {
             var mailMessage = new SendEmailRequest
             {

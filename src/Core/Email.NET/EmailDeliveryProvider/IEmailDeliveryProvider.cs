@@ -16,14 +16,12 @@
         /// Sends the specified email message.
         /// </summary>
         /// <param name="message">the email message to be send</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        EmailSendingResult Send(Message message, params EdpData[] data);
+        EmailSendingResult Send(Message message);
 
         /// <summary>
         /// Sends the specified email message.
         /// </summary>
         /// <param name="message">the email message to be send</param>
-        /// <param name="data">any additional data need to be passed to the email provider for further configuration</param>
-        Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data);
+        Task<EmailSendingResult> SendAsync(Message message);
     }
 }

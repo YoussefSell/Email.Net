@@ -5,7 +5,7 @@
     using MimeKit;
     using System;
     using System.Collections.Generic;
-using System.IO;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -15,12 +15,12 @@ using System.IO;
     public partial class MailKitEmailDeliveryProvider : IMailKitEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, params EdpData[] data)
+        public EmailSendingResult Send(Message message)
         {
             try
             {
                 // get the smtp options & build message
-                var smtpOptions = GetSmtpOptions(data);
+                var smtpOptions = GetSmtpOptions(message.EdpData);
                 var mailMessage = CreateMessage(message);
 
                 if (smtpOptions.DeliveryMethod == MailKitDeliveryMethod.SpecifiedPickupDirectory)
@@ -68,12 +68,12 @@ using System.IO;
         }
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message, params EdpData[] data)
+        public async Task<EmailSendingResult> SendAsync(Message message)
         {
             try
             {
                 // get the smtp options & build message
-                var smtpOptions = GetSmtpOptions(data);
+                var smtpOptions = GetSmtpOptions(message.EdpData);
                 var mailMessage = CreateMessage(message);
 
                 if (smtpOptions.DeliveryMethod == MailKitDeliveryMethod.SpecifiedPickupDirectory)
@@ -151,14 +151,14 @@ using System.IO;
         /// </summary>
         /// <param name="data">the list of edp data</param>
         /// <returns><see cref="SmtpOptions"/> instance</returns>
-        private SmtpOptions GetSmtpOptions(EdpData[] data)
+        private SmtpOptions GetSmtpOptions(IEnumerable<EdpData> data)
         {
             // no data return the default options
             if (data is null || !data.Any())
                 return _options.SmtpOptions;
 
             // check if we have custom smtp options
-            var customSmptOptions = data.FirstOrDefault(e => e.Key == EdpData.Keys.SmtpOptions);
+            var customSmptOptions = data.GetData(EdpData.Keys.SmtpOptions);
             if (customSmptOptions.IsEmpty())
                 return _options.SmtpOptions;
 
@@ -231,7 +231,7 @@ using System.IO;
                 default:
                     mailMessage.Priority = MessagePriority.Normal; break;
             }
-            
+
             SetAttachments(bodyBuilder, message.Attachments);
             mailMessage.Body = bodyBuilder.ToMessageBody();
 
