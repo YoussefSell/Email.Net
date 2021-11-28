@@ -177,8 +177,18 @@ public class IndexModel : PageModel
 
         /* send the message, this will use the default EDP set in the option */
         var result = _emailService.Send(message);
+
+        /* log the result */
+        _logger.LogInformation("sent: {result}", result.IsSuccess);
     }
 }
 ```
+
+## Samples
+
+here are some samples of how you can integrate Email.Net with different app types:
+
+- [Console app](https://github.com/YoussefSell/Email.NET/tree/master/samples/Email.NET.Samples.Console)
+- [ASP Core app](https://github.com/YoussefSell/Email.NET/tree/master/samples/Email.NET.Samples.ASPCore)
 
 for full documentation check the [Wiki](https://github.com/YoussefSell/Email.Net/wiki) page.
