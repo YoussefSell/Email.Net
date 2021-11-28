@@ -1,18 +1,16 @@
 namespace Email.NET.Mailgun.Test
 {
-    using Email.NET.EDP;
     using Email.NET.EDP.Mailgun;
     using Email.NET.Exceptions;
     using System;
-    using System.Linq;
     using Xunit;
 
     public class MailgunEmailDeliveryProviderShould
     {
-        static string TEST_To_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestToEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        static string TEST_FROM_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestFromEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        static string TEST_DOMAIN = Environment.GetEnvironmentVariable("EmailNET_MailgunDomain", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        static string TEST_API_KEY = Environment.GetEnvironmentVariable("EmailNET_MailgunApiKey", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_To_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestToEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_FROM_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestFromEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_DOMAIN = Environment.GetEnvironmentVariable("EmailNET_MailgunDomain", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_API_KEY = Environment.GetEnvironmentVariable("EmailNET_MailgunApiKey", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -125,7 +123,7 @@ namespace Email.NET.Mailgun.Test
             {
                 ApiKey = TEST_API_KEY,
                 Domain = TEST_DOMAIN,
-                BaseUrl= ""
+                BaseUrl = ""
             };
 
             // assert
@@ -137,7 +135,7 @@ namespace Email.NET.Mailgun.Test
         }
 
         [Fact]
-        public async void CreateMailMessageFromMessage()
+        public void CreateMailMessageFromMessage()
         {
             // arrange
             var edp = new MailgunEmailDeliveryProvider(new MailgunEmailDeliveryProviderOptions()
@@ -160,7 +158,7 @@ namespace Email.NET.Mailgun.Test
                 .Build();
 
             // act
-            var mailMessage = edp.CreateMessage(message);
+            _ = edp.CreateMessage(message);
 
             // assert
             //Assert.Equal(message.From.Address, mailMessage.From.Email);

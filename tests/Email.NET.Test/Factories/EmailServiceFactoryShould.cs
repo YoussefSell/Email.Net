@@ -36,12 +36,15 @@
                     options.DefaultEmailDeliveryProvider = _edp1_name;
                 })
                 .UseEDP(_edp1)
-                .Create();
+                .Create() as EmailService;
 
             // assert
-            Assert.Single(service.Edps);
-            Assert.Equal(_edp1_name, service.DefaultEdp.Name);
-            Assert.Equal(defaultEmail, service.Options.DefaultFrom);
+            if (service is not null)
+            {
+                Assert.Single(service.Edps);
+                Assert.Equal(_edp1_name, service.DefaultEdp.Name);
+                Assert.Equal(defaultEmail, service.Options.DefaultFrom);
+            }
         }
 
         [Fact]

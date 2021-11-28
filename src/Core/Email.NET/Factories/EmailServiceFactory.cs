@@ -50,7 +50,7 @@
         /// create the email service instance.
         /// </summary>
         /// <returns>instance of <see cref="EmailService"/></returns>
-        public EmailService Create() => new EmailService(_edps, _options);
+        public IEmailService Create() => new EmailService(_edps, _options);
     }
 
     /// <summary>

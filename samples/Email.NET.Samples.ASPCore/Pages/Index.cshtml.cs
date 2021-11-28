@@ -35,5 +35,7 @@ public class IndexModel : PageModel
          */
         //var myEdp = new SocketLabsEmailDeliveryProvider(new SocketLabsEmailDeliveryProviderOptions { ApiKey = "", DefaultServerId = 0});
         //var result = mailer.Send(message, myEdp);
+
+        _logger.LogInformation("sent: {result}", result.IsSuccess);
     }
 }

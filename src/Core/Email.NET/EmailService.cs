@@ -143,7 +143,7 @@
         }
 
         /// <summary>
-        /// the email service options instance
+        /// Get the email service options instance
         /// </summary>
         public EmailServiceOptions Options { get; }
 

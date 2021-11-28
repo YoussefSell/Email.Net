@@ -8,7 +8,7 @@
     [Serializable]
     public class EmailDeliveryProviderNotFoundException : Exception
     {
-        private static readonly string message = "there is no email delivery provider with the name {{name}}";
+        private static readonly string message = "there is no email delivery provider with the name {{name}}, make sure you have registered the EDP with the email service";
 
         /// <summary>
         /// the name of the email delivery provider
@@ -16,13 +16,16 @@
         public string EmailDeliveryProviderName { get; set; }
 
         /// <inheritdoc/>
-        public EmailDeliveryProviderNotFoundException(string emailDeliveryProviderName) 
+        public EmailDeliveryProviderNotFoundException(string emailDeliveryProviderName)
             : base(message.Replace("{{name}}", emailDeliveryProviderName)) { }
 
         /// <inheritdoc/>
-        public EmailDeliveryProviderNotFoundException(string message, string emailDeliveryProviderName) 
-            : base(message) { }
-        
+        public EmailDeliveryProviderNotFoundException(string message, string emailDeliveryProviderName)
+            : base(message)
+        {
+            EmailDeliveryProviderName = emailDeliveryProviderName;
+        }
+
         /// <inheritdoc/>
         protected EmailDeliveryProviderNotFoundException(
           System.Runtime.Serialization.SerializationInfo info,
