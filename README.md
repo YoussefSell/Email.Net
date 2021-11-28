@@ -105,6 +105,8 @@ starting with `UseOptions()` you can configure the `EmailService` options, there
 
 finally `Create()` will simply create an instance of the `EmailService`.
 
+you only need to create the email service once and reuse it in your app.
+
 now you have an instance of the `EmailService` you can start sending emails.
 
 ```csharp
@@ -130,6 +132,53 @@ var message = Message.Compose()
 
 // send the message
 var result = emailService.Send(message);
+```
+
+## working with Dependency Injection
+
+to register Email.NET with DI we need to use [**Email.NET.DependencyInjection**](https://www.nuget.org/packages/Email.NET.DependencyInjection/) package, this package contains an extension method on the `IServiceCollection` interface that register the `EmailService` as a Scoped service.
+
+once you have the package downloaded you can register Email.Net like so:
+
+```csharp
+// add Email.Net configuration
+services.AddEmailNet(options =>
+{
+    options.PauseSending = false;
+    options.DefaultFrom = new MailAddress("from@email.net");
+    options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+})
+.UseSmtp(options => options.UseGmailSmtp("your-email@gmail.com", "password"));
+```
+
+then you can inject the Email Service in your classes constructors using `IEmailService`
+
+```csharp
+public class IndexModel : PageModel
+{
+    private readonly ILogger<IndexModel> _logger;
+    private readonly IEmailService _emailService;
+
+    public IndexModel(ILogger<IndexModel> logger, IEmailService emailService)
+    {
+        _logger = logger;
+        _emailService = emailService;
+    }
+
+    public void OnGet()
+    {
+        /* compose the email message */
+        var message = Message.Compose()
+            .To("to@email.net")
+            .WithPlainTextContent("this is a test email")
+            .WithHtmlContent("<p>this is a test email</p>")
+            .WithHighPriority()
+            .Build();
+
+        /* send the message, this will use the default EDP set in the option */
+        var result = _emailService.Send(message);
+    }
+}
 ```
 
 for full documentation check the [Wiki](https://github.com/YoussefSell/Email.Net/wiki) page.
