@@ -8,13 +8,13 @@ to get started install the package using the [NuGet](https://www.nuget.org/packa
 
 ## Getting started
 
-for sending email there are three component to work with:
+when you will send an email, there are three component that you will interact with:
 
 - **Message**: the email message content to be sent.
 - **EmailService**: the email service.
 - **Edp**: the Email Delivery Provider.
 
-you first compose your message, than you pass the message to the email service, the service than will send the message using an EDP.
+you first compose your message, than you pass the message to the email service, than service will send the message using an EDP.
 
 ### 1. Message
 
@@ -39,14 +39,14 @@ now let see how can we compose a message:
 ```csharp
 var message = Message.Compose()
     .To("to@email.net")
-    .WithSubject("")
+    .WithSubject("test email")
     .WithPlainTextContent("this is a test email")
     .WithHtmlContent("<p>this is a test email</p>")
     .WithHighPriority()
     .Build();
 ```
 
-on the `Message` class you will find method called `Compose()`, this method will give you a fluent API to compose your email so use the `'.'` and intellisense to see all the available function to compose you message once you done you call `Build()` to create an instance of the `Message`.
+on the `Message` class you will find a method called `Compose()`, this method will give you a fluent API to compose your email so use the `'.'` and intellisense to see all the available function to compose you message, once you're done, call `Build()` to create an instance of the `Message`.
 
 now we have a message let's try to send it.
 
@@ -62,7 +62,7 @@ we have also other EDPs that you can use, but they exist in a separate packages:
 - **[Email.NET.Mailgun](https://www.nuget.org/packages/Email.Net.Mailgun/):** to send emails using Mailgun.
 - **[Email.NET.AmazonSES](https://www.nuget.org/packages/Email.Net.AmazonSES/):** to send emails using AmazonSES.
 
-and we will be adding more in the future, and if you want to create your own EDP you can follow this [tutorial](#) and you will learn how to build one.
+and we will be adding more in the future, but if you want to create your own EDP you can follow this [tutorial](#) and you will learn how to build one.
 
 ### 3- EmailService
 
@@ -89,23 +89,23 @@ var emailService = EmailServiceFactory.Instance
     .Create();
 ```
 
-on the `EmailServiceFactory` class you will find static a property `Instance` that give you an instance of the factory, than you will have access to three methods on the factory:
+on the `EmailServiceFactory` class you will find a static property `Instance` that give you an instance of the factory, than you will have access to three methods on the factory:
 
 - **UseOptions():** to configure the email service options.
 - **UseEDP():** to register the EDPs to be used for sending emails.
 - **Create():** to create an instance of the EmailService.
 
-starting with `UseOptions()` you can configure the EmailService, there are three options:
+starting with `UseOptions()` you can configure the `EmailService` options, there are three options:
 
 - **PauseSending:** to pause the sending of emails, if set to true nothing will be sent.
 - **DefaultFrom:** you can set the default Sender email, so that you don't have to do it each time on the message, note that if you have specified a Sender email on the message this value will be ignored.
 - **DefaultEmailDeliveryProvider:** specify the default EDP that should be used to send the emails, because you can configure multiple EDPs you should indicate which one you want to be used.
 
-`UseEDP()` takes an instance of the EDP, like so: `UseEDP(new SmtpEmailDeliveryProvider(configuration))`, but you're not going to use this method, instead you will use the extension method given to you by the EDPs as we seen on the example above, the SMTP EDP has an extension method `UseSmtp()` that will allow you to register it.
+`UseEDP()` takes an instance of the EDP, like so: `UseEDP(new SmtpEmailDeliveryProvider(configuration))`, but you're not going to use this method, instead you will use the extension methods given to you by the EDPs as we seen on the example above, the SMTP EDP has an extension method `UseSmtp()` that will allow you to register it.
 
-finally `Create()` will simply create an instance of the EmailService.
+finally `Create()` will simply create an instance of the `EmailService`.
 
-now you have an instance of the EmailService you can start sending emails.
+now you have an instance of the `EmailService` you can start sending emails.
 
 ```csharp
 // get the email service
@@ -122,7 +122,7 @@ var emailService = EmailServiceFactory.Instance
 // create the message
 var message = Message.Compose()
     .To("to@email.net")
-    .WithSubject("")
+    .WithSubject("test email")
     .WithPlainTextContent("this is a test email")
     .WithHtmlContent("<p>this is a test email</p>")
     .WithHighPriority()
@@ -131,3 +131,5 @@ var message = Message.Compose()
 // send the message
 var result = emailService.Send(message);
 ```
+
+for full documentation check the [Wiki](https://github.com/YoussefSell/Email.Net/wiki) page.
