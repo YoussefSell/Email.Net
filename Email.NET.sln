@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419A6ACE-0419-4315-A6FB-B0E63D39432E}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET", "src\Core\Email.NET\Email.NET.csproj", "{8B270DD8-E45A-4E06-8DC9-52FC58112395}"
 EndProject
@@ -49,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.Samples.Console",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.Samples.ASPCore", "samples\Email.NET.Samples.ASPCore\Email.NET.Samples.ASPCore.csproj", "{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.NET.EDPs.Test", "tests\Email.NET.EDPs.Test\Email.NET.EDPs.Test.csproj", "{D777598B-337A-42B2-8C41-A1EBC31863A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.EDPs.Test", "tests\Email.NET.EDPs.Test\Email.NET.EDPs.Test.csproj", "{D777598B-337A-42B2-8C41-A1EBC31863A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

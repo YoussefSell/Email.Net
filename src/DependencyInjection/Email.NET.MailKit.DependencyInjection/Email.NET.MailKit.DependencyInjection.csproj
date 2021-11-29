@@ -4,6 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Title>Email.Net - MailKit EDP</Title>
+    <PackageId>Email.NET.MailKit.DependencyInjection</PackageId>
+    <Description>MailKit email delivery provider for Email.Net.</Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.MailKit\Email.NET.MailKit.csproj" />
     <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />

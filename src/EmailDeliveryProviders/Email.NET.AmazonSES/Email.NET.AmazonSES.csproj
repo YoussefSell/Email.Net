@@ -4,6 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Title>Email.Net - AmazonSES EDP</Title>
+    <PackageId>Email.NET.AmazonSES</PackageId>
+    <Description>AmazonSES email delivery provider for Email.Net.</Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AWSSDK.SimpleEmail" Version="3.7.0.102" />
   </ItemGroup>

@@ -4,6 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Title>Email.Net - Mailgun EDP</Title>
+    <PackageId>Email.NET.Mailgun</PackageId>
+    <Description>Mailgun email delivery provider for Email.Net.</Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
   </ItemGroup>
