@@ -14,5 +14,9 @@
     <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.SendGrid\Email.NET.SendGrid.csproj" />
     <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+  </ItemGroup>
 
 </Project>

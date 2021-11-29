@@ -11,11 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.SimpleEmail" Version="3.7.0.102" />
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="3.7.0.103" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
   </ItemGroup>    
 
 </Project>
