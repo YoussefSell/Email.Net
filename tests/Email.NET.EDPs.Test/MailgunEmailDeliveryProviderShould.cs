@@ -179,7 +179,7 @@ namespace Email.NET.Mailgun.Test
             //Assert.Equal(message.Headers.First().Value, mailMessage.CustomHeaders.First().Value);
         }
 
-        [Fact]
+        [Fact(Skip = "no Mailgun account for testing")]
         public void SendEmail()
         {
             // arrange
@@ -210,7 +210,7 @@ namespace Email.NET.Mailgun.Test
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+        [Fact(Skip = "no Mailgun account for testing")]
         public void SendEmailWithBase64Attachement()
         {
             // arrange
@@ -241,7 +241,7 @@ namespace Email.NET.Mailgun.Test
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+        [Fact(Skip = "no Mailgun account for testing")]
         public void SendEmailWithFilePathAttachement()
         {
             // arrange

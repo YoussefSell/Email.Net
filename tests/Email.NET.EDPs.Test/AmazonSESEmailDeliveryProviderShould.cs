@@ -92,7 +92,7 @@ namespace Email.NET.AmazonSES.Test
             Assert.Equal(message.Cc.First().Address, mailMessage.Destination.CcAddresses.First());
         }
 
-        [Fact]
+        [Fact(Skip = "no Amazon account for testing")]
         public void SendEmail()
         {
             // arrange
@@ -121,7 +121,7 @@ namespace Email.NET.AmazonSES.Test
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+        [Fact(Skip = "no Amazon account for testing")]
         public void SendEmailWithBase64Attachement()
         {
             // arrange
@@ -151,7 +151,7 @@ namespace Email.NET.AmazonSES.Test
             Assert.True(result.IsSuccess);
         }
 
-        [Fact]
+        [Fact(Skip = "no Amazon account for testing")]
         public void SendEmailWithFilePathAttachement()
         {
             // arrange
