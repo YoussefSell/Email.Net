@@ -21,7 +21,7 @@
         public string AwsSecretAccessKey { get; set; }
 
         /// <summary>
-        /// Get or set the AWS session token. this property will be used only if you specified the <seealso cref="AwsSecretAccessKey"/> & <seealso cref="AwsAccessKeyId"/>.
+        /// Get or set the AWS session token. this property will be used only if you specified the <seealso cref="AwsSecretAccessKey"/> and <seealso cref="AwsAccessKeyId"/>.
         /// </summary>
         public string AwsSessionToken { get; set; }
 

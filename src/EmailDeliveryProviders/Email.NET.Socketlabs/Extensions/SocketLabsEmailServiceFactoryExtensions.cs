@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="builder">the <see cref="EmailServiceFactory"/> instance.</param>
         /// <param name="config">the configuration builder instance.</param>
-        /// <returns>instance of <see cref="EmailNetBuilder"/> to enable methods chaining.</returns>
+        /// <returns>instance of <see cref="EmailServiceFactory"/> to enable methods chaining.</returns>
         public static EmailServiceFactory UseSocketlabs(this EmailServiceFactory builder, Action<SocketLabsEmailDeliveryProviderOptions> config)
         {
             // load the configuration

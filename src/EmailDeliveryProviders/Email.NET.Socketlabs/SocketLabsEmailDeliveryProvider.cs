@@ -76,6 +76,11 @@
 
         private readonly SocketLabsEmailDeliveryProviderOptions _options;
 
+        /// <summary>
+        /// create an instance of <see cref="SocketLabsEmailDeliveryProvider"/>
+        /// </summary>
+        /// <param name="options">the edp options instance</param>
+        /// <exception cref="ArgumentNullException">if the given provider options is null</exception>
         public SocketLabsEmailDeliveryProvider(SocketLabsEmailDeliveryProviderOptions options)
         {
             if (options is null)
@@ -127,7 +132,6 @@
         /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
-        /// <param name="data">the edp data instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
         public BasicMessage CreateMessage(Message message)
         {

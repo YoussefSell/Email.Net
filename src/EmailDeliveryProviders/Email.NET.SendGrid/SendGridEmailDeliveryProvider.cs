@@ -54,6 +54,11 @@
 
         private readonly SendgridEmailDeliveryProviderOptions _options;
 
+        /// <summary>
+        /// create an instance of <see cref="SendgridEmailDeliveryProvider"/>
+        /// </summary>
+        /// <param name="options">the edp options instance</param>
+        /// <exception cref="ArgumentNullException">if the given provider options is null</exception>
         public SendgridEmailDeliveryProvider(SendgridEmailDeliveryProviderOptions options)
         {
             if (options is null)
@@ -104,7 +109,7 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
+        /// create an instance of <see cref="SendGridMessage"/> from the given <see cref="Message"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="SendGridMessage"/></returns>

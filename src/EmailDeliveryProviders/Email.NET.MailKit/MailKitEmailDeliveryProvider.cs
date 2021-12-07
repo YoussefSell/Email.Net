@@ -136,6 +136,11 @@
 
         private readonly MailKitEmailDeliveryProviderOptions _options;
 
+        /// <summary>
+        /// create an instance of <see cref="MailKitEmailDeliveryProvider"/>
+        /// </summary>
+        /// <param name="options">the edp options instance</param>
+        /// <exception cref="ArgumentNullException">if the given provider options is null</exception>
         public MailKitEmailDeliveryProvider(MailKitEmailDeliveryProviderOptions options)
         {
             if (options is null)
@@ -239,9 +244,9 @@
         }
 
         /// <summary>
-        /// add the given list of attachments to the <see cref="MailMessage"/> instance
+        /// add the given list of attachments to the <see cref="BodyBuilder"/> instance
         /// </summary>
-        /// <param name="message">the <see cref="MailMessage"/> instance</param>
+        /// <param name="message">the <see cref="BodyBuilder"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
         public void SetAttachments(BodyBuilder message, IEnumerable<NET.Attachment> attachments)
         {

@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
     using Email.NET;
-using Email.NET.EDP;
+    using Email.NET.EDP;
     using Email.NET.EDP.Smtp;
     using System;
 
@@ -11,7 +11,7 @@ using Email.NET.EDP;
     public static class Configurations
     {
         /// <summary>
-        /// add the Email.NET services & configuration.
+        /// add the Email.NET services and configuration.
         /// </summary>
         /// <param name="serviceCollection">the service collection instant</param>
         /// <param name="config">the configuration initializer.</param>

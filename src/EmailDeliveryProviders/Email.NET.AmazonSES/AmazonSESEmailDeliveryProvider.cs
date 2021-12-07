@@ -36,7 +36,7 @@
                         .AddMetaData("message_id", response.MessageId)
                         .AddMetaData("request_id", response.ResponseMetadata?.RequestId);
 
-                    if (!(response.ResponseMetadata is null) && response.ResponseMetadata.Metadata.Any())
+                    if (response.ResponseMetadata is not null && response.ResponseMetadata.Metadata.Any())
                     {
                         foreach (var metaData in response.ResponseMetadata.Metadata)
                             result.AddMetaData(metaData.Key, metaData.Value);
@@ -67,6 +67,11 @@
 
         private readonly AmazonSESEmailDeliveryProviderOptions _options;
 
+        /// <summary>
+        /// create an instance of <see cref="AmazonSESEmailDeliveryProvider"/>
+        /// </summary>
+        /// <param name="options">the options instance</param>
+        /// <exception cref="ArgumentNullException">the given options instance is null</exception>
         public AmazonSESEmailDeliveryProvider(AmazonSESEmailDeliveryProviderOptions options)
         {
             if (options is null)

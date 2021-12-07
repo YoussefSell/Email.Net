@@ -66,6 +66,11 @@
 
         private readonly MailgunEmailDeliveryProviderOptions _options;
 
+        /// <summary>
+        /// create an instance of <see cref="MailgunEmailDeliveryProvider"/>
+        /// </summary>
+        /// <param name="options">the edp options instance</param>
+        /// <exception cref="ArgumentNullException">if the given provider options is null</exception>
         public MailgunEmailDeliveryProvider(MailgunEmailDeliveryProviderOptions options)
         {
             if (options is null)
@@ -77,11 +82,10 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
+        /// create an instance of <see cref="HttpClient"/> from the given <see cref="HttpClient"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
-        /// <param name="data">the edp data instance</param>
-        /// <returns>instance of <see cref="BasicMessage"/></returns>
+        /// <returns>instance of <see cref="HttpClient"/></returns>
         public HttpContent CreateMessage(Message message)
         {
             var content = new MultipartFormDataContent();
