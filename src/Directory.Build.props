@@ -13,8 +13,8 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/YoussefSell/Email.Net</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/YoussefSell/Email.Net/releases</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/youssefsell/email.net</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/youssefsell/email.net/releases</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
