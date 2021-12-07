@@ -8,16 +8,9 @@ namespace Email.NET.Sendgrid.Test
 
     public class SendgridEmailDeliveryProviderShould
     {
-        static string TEST_API_KEY = "key-";
-        static string TEST_To_EMAI = "to@email.net";
-        static string TEST_FROM_EMAI = "from@email.net";
-
-        public SendgridEmailDeliveryProviderShould()
-        {
-            TEST_API_KEY = Environment.GetEnvironmentVariable("EmailNET_SendGridApiKey", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException("api key", "api key is null");
-            TEST_To_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestToEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-            TEST_FROM_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestFromEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        }
+        static readonly string TEST_TO_EMAIL = Environment.GetEnvironmentVariable("EMAIL_NET_TO_EMAIL", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_FROM_EMAIL = Environment.GetEnvironmentVariable("EMAIL_NET_FROM_EMAIL", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_API_KEY = Environment.GetEnvironmentVariable("EMAIL_NET_SENDGRID_API_KEY", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException("api key", "api key is null");
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -136,9 +129,9 @@ namespace Email.NET.Sendgrid.Test
             });
 
             var message = Message.Compose()
-                .From(TEST_FROM_EMAI)
+                .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
-                .To(TEST_To_EMAI)
+                .To(TEST_TO_EMAIL)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -165,9 +158,9 @@ namespace Email.NET.Sendgrid.Test
             });
 
             var message = Message.Compose()
-                .From(TEST_FROM_EMAI)
+                .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
-                .To(TEST_To_EMAI)
+                .To(TEST_TO_EMAIL)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -195,9 +188,9 @@ namespace Email.NET.Sendgrid.Test
             });
 
             var message = Message.Compose()
-                .From(TEST_FROM_EMAI)
+                .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
-                .To(TEST_To_EMAI)
+                .To(TEST_TO_EMAIL)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")

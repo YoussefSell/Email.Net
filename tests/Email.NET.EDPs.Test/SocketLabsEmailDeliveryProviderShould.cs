@@ -8,10 +8,10 @@ namespace Email.NET.Socketlabs.Test
 
     public class SocketLabsEmailDeliveryProviderShould
     {
-        static string TEST_To_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestToEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        static string TEST_FROM_EMAI = Environment.GetEnvironmentVariable("EmailNET_TestFromEmail", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        static string TEST_API_KEY = Environment.GetEnvironmentVariable("EmailNET_SocketlabsApiKey", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
-        static int TEST_SERVER = int.Parse(Environment.GetEnvironmentVariable("EmailNET_SocketlabsServer", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException());
+        static readonly string TEST_TO_EMAIL = Environment.GetEnvironmentVariable("EMAIL_NET_TO_EMAIL", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_FROM_EMAIL = Environment.GetEnvironmentVariable("EMAIL_NET_FROM_EMAIL", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly string TEST_API_KEY = Environment.GetEnvironmentVariable("EMAIL_NET_SOCKETLABS_API_KEY", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
+        static readonly int TEST_SERVER = int.Parse(Environment.GetEnvironmentVariable("EMAIL_NET_SOCKETLABS_SERVER", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException());
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -149,9 +149,9 @@ namespace Email.NET.Socketlabs.Test
             });
 
             var message = Message.Compose()
-                .From(TEST_FROM_EMAI)
+                .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
-                .To(TEST_To_EMAI)
+                .To(TEST_TO_EMAIL)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -179,9 +179,9 @@ namespace Email.NET.Socketlabs.Test
             });
 
             var message = Message.Compose()
-                .From(TEST_FROM_EMAI)
+                .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
-                .To(TEST_To_EMAI)
+                .To(TEST_TO_EMAIL)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
@@ -210,9 +210,9 @@ namespace Email.NET.Socketlabs.Test
             });
 
             var message = Message.Compose()
-                .From(TEST_FROM_EMAI)
+                .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
-                .To(TEST_To_EMAI)
+                .To(TEST_TO_EMAIL)
                 .WithSubject("test subject")
                 .WithPlainTextContent("this is a test")
                 .WithHtmlContent("<p>this is a test</p>")
