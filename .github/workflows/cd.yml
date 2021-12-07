@@ -31,7 +31,7 @@ jobs:
         run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.Mailgun/Email.NET.Mailgun.csproj -o .
       - name: Pack Email.NET.AmazonSES
         run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.AmazonSES/Email.NET.AmazonSES.csproj -o .
-     
+
       - name: Pack Email.Net.DependencyInjection
         run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.DependencyInjection/Email.NET.DependencyInjection.csproj -o .
       - name: Pack Email.NET.Socketlabs.DependencyInjection
@@ -48,7 +48,7 @@ jobs:
       - name: Push packages
         run: dotnet nuget push *.nupkg --api-key ${{secrets.NUGET_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
 
-        - name: Upload assets to release
+      - name: Upload assets to release
         run: |
           chmod +x ./publish-assets.sh
           ./publish-assets.sh ${{ github.event.release.tag_name }}
