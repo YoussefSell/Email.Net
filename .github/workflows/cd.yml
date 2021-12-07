@@ -1,0 +1,56 @@
+name: Publish Packages
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.*
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack Email.Net
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/Core/Email.NET/Email.NET.csproj -o .
+      - name: Pack Email.NET.Socketlabs
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.Socketlabs/Email.NET.Socketlabs.csproj -o .
+      - name: Pack Email.NET.SendGrid
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.SendGrid/Email.NET.SendGrid.csproj -o .
+      - name: Pack Email.NET.MailKit
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.MailKit/Email.NET.MailKit.csproj -o .
+      - name: Pack Email.NET.Mailgun
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.Mailgun/Email.NET.Mailgun.csproj -o .
+      - name: Pack Email.NET.AmazonSES
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.NET.AmazonSES/Email.NET.AmazonSES.csproj -o .
+     
+      - name: Pack Email.Net.DependencyInjection
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.DependencyInjection/Email.NET.DependencyInjection.csproj -o .
+      - name: Pack Email.NET.Socketlabs.DependencyInjection
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.Socketlabs.DependencyInjection/Email.NET.Socketlabs.DependencyInjection.csproj -o .
+      - name: Pack Email.NET.SendGrid.DependencyInjection
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.SendGrid.DependencyInjection/Email.NET.SendGrid.DependencyInjection.csproj -o .
+      - name: Pack Email.NET.MailKit.DependencyInjection
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.MailKit.DependencyInjection/Email.NET.MailKit.DependencyInjection.csproj -o .
+      - name: Pack Email.NET.Mailgun.DependencyInjection
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.Mailgun.DependencyInjection/Email.NET.Mailgun.DependencyInjection.csproj -o .
+      - name: Pack Email.NET.AmazonSES.DependencyInjection
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.NET.AmazonSES.DependencyInjection/Email.NET.AmazonSES.DependencyInjection.csproj -o .
+
+      - name: Push packages
+        run: dotnet nuget push *.nupkg --api-key ${{secrets.NUGET_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+        - name: Upload assets to release
+        run: |
+          chmod +x ./publish-assets.sh
+          ./publish-assets.sh ${{ github.event.release.tag_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
