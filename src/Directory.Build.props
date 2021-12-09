@@ -9,7 +9,6 @@
     <Product>Email.Net</Product>
     <Authors>Youssef Sellami</Authors>
     <Copyright>Copyright &#169; 2021 YoussefSell.</Copyright>
-    <PackageTags>Email.Net; Emails; smtp; MailKit; SendGrid; MailGun;</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
