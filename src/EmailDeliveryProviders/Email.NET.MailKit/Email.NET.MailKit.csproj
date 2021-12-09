@@ -7,6 +7,7 @@
   <PropertyGroup>
     <Title>Email.Net - MailKit EDP</Title>
     <PackageId>Email.NET.MailKit</PackageId>
+    <PackageTags>Email.Net; Emails; MailKit</PackageTags>
     <Description>MailKit email delivery provider for Email.Net.</Description>
   </PropertyGroup>
 

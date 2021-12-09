@@ -7,6 +7,7 @@
   <PropertyGroup>
     <Title>Email.Net - SendGrid EDP</Title>
     <PackageId>Email.NET.SendGrid.DependencyInjection</PackageId>
+    <PackageTags>Email.Net; Emails; SMTP; SendGrid</PackageTags>
     <Description>SendGrid email delivery provider for Email.Net.</Description>
   </PropertyGroup>
   

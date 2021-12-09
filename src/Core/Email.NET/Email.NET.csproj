@@ -7,6 +7,7 @@
   <PropertyGroup>
     <Title>Email.Net</Title>
     <PackageId>Email.Net</PackageId>
+    <PackageTags>Email.Net; Emails; SMTP; Socketlabs; MailKit; SendGrid; MailGun; AmazonSES</PackageTags>
     <Description>An email sender abstraction for .NET to decouple your email sending from the underlying provider, with access to different types of providers such as MailKit, SendGrid, MailGun, etc.</Description>
   </PropertyGroup>
 

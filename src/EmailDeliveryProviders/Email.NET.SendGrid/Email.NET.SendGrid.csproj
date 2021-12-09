@@ -7,6 +7,7 @@
   <PropertyGroup>
     <Title>Email.Net - SendGrid EDP</Title>
     <PackageId>Email.NET.SendGrid</PackageId>
+    <PackageTags>Email.Net; Emails; SendGrid</PackageTags>
     <Description>SendGrid email delivery provider for Email.Net.</Description>
   </PropertyGroup>
 
