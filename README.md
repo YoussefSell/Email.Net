@@ -27,7 +27,7 @@ the message contain your email content, which includes the following
 
 - **From:** the email address to be used as the sender.
 - **To:** the email addresses to be used as the recipients.
-- **ReplayTo:** the replay-to email addresses.
+- **ReplayTo:** the reply-to email addresses.
 - **Bcc:** the blind carbon copy email addresses.
 - **Cc:** the carbon copy email addresses.
 - **Subject:** the email subject.
