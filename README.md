@@ -1,5 +1,10 @@
 # Email.NET
 
+[![](https://img.shields.io/github/license/YoussefSell/Email.NET)](https://github.com/YoussefSell/Email.NET/blob/master/LICENSE)
+[![](https://img.shields.io/nuget/v/Email.NET)](https://www.nuget.org/packages/Email.NET/)
+![Build](https://github.com/YoussefSell/Email.NET/actions/workflows/ci.yml/badge.svg)
+
+
 Send emails from your .Net application with a flexible solution that guarantee clean architectures, and access to different types of providers.
 
 ## Quick setup
