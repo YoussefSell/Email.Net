@@ -1,11 +1,11 @@
 ﻿namespace Email.NET.EDP.Smtp
 {
     using Exceptions;
-using System.Net;
+    using System.Net;
 
-/// <summary>
-/// the options for configuring the Smtp email delivery provider
-/// </summary>
+    /// <summary>
+    /// the options for configuring the Smtp email delivery provider
+    /// </summary>
     public class SmtpEmailDeliveryProviderOptions
     {
         /// <summary>
