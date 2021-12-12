@@ -21,44 +21,44 @@
             => SendAsync(message, _defaultProvider);
 
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, string providerName)
+        public EmailSendingResult Send(Message message, string edp_name)
         {
             // check if the provider name is valid
-            if (providerName is null)
-                throw new ArgumentNullException(nameof(providerName));
+            if (edp_name is null)
+                throw new ArgumentNullException(nameof(edp_name));
 
             // check if the provider exist
-            if (!_providers.TryGetValue(providerName, out IEmailDeliveryProvider provider))
-                throw new EmailDeliveryProviderNotFoundException(providerName);
+            if (!_providers.TryGetValue(edp_name, out IEmailDeliveryProvider provider))
+                throw new EmailDeliveryProviderNotFoundException(edp_name);
 
             // send the email message
             return Send(message, provider);
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, string providerName)
+        public Task<EmailSendingResult> SendAsync(Message message, string edp_name)
         {
             // check if the provider name is valid
-            if (providerName is null)
-                throw new ArgumentNullException(nameof(providerName));
+            if (edp_name is null)
+                throw new ArgumentNullException(nameof(edp_name));
 
             // check if the provider exist
-            if (!_providers.TryGetValue(providerName, out IEmailDeliveryProvider provider))
-                throw new EmailDeliveryProviderNotFoundException(providerName);
+            if (!_providers.TryGetValue(edp_name, out IEmailDeliveryProvider provider))
+                throw new EmailDeliveryProviderNotFoundException(edp_name);
 
             // send the email message
             return SendAsync(message, provider);
         }
 
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, IEmailDeliveryProvider provider)
+        public EmailSendingResult Send(Message message, IEmailDeliveryProvider edp)
         {
             // check if given params are not null.
             if (message is null)
                 throw new ArgumentNullException(nameof(message));
 
-            if (provider is null)
-                throw new ArgumentNullException(nameof(provider));
+            if (edp is null)
+                throw new ArgumentNullException(nameof(edp));
 
             // check if the from is null
             CheckMessageFromValue(message);
@@ -66,23 +66,23 @@
             // check if the sending is paused
             if (Options.PauseSending)
             {
-                return EmailSendingResult.Success(provider.Name)
+                return EmailSendingResult.Success(edp.Name)
                     .AddMetaData(EmailSendingResult.MetaDataKeys.SendingPaused, true);
             }
 
             // send the email message
-            return provider.Send(message);
+            return edp.Send(message);
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider provider)
+        public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider edp)
         {
             // check if given params are not null.
             if (message is null)
                 throw new ArgumentNullException(nameof(message));
 
-            if (provider is null)
-                throw new ArgumentNullException(nameof(provider));
+            if (edp is null)
+                throw new ArgumentNullException(nameof(edp));
 
             // check if the from is null
             CheckMessageFromValue(message);
@@ -90,12 +90,12 @@
             // check if the sending is paused
             if (Options.PauseSending)
             {
-                return Task.FromResult(EmailSendingResult.Success(provider.Name)
+                return Task.FromResult(EmailSendingResult.Success(edp.Name)
                     .AddMetaData("sending_paused", true));
             }
 
             // send the email message
-            return provider.SendAsync(message);
+            return edp.SendAsync(message);
         }
     }
 

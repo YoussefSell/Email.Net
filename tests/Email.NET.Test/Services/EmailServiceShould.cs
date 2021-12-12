@@ -176,7 +176,7 @@
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // act
-                var result = service.Send(message, providerName: null);
+                var result = service.Send(message, edp_name: null);
             });
         }
 
@@ -215,7 +215,7 @@
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // act
-                var result = service.Send(message, provider: null);
+                var result = service.Send(message, edp: null);
             });
         }
 
