@@ -990,6 +990,41 @@
             Assert.Equal("value", message.Headers.Skip(2).First().Value);
         }
 
+        [Fact]
+        public void AddHeadersFromADictionaryAppendIntenalList()
+        {
+            // arrange
+            var composser = Message.Compose()
+                .WithPlainTextContent("test content")
+                .WithHeader("key0", "value0")
+                .To("to@email.net");
+
+            // act
+            var message = composser
+                .WithHeaders(new Dictionary<string, string>()
+                {
+                    { "key1", "value1" },
+                    { "key2", "value2" },
+                    { "key3", "value3" },
+                })
+                .Build();
+
+            // assert
+            Assert.Equal(4, message.Headers.Count);
+
+            Assert.Equal("key0", message.Headers.First().Key);
+            Assert.Equal("value0", message.Headers.First().Value);
+
+            Assert.Equal("key1", message.Headers.Skip(1).First().Key);
+            Assert.Equal("value1", message.Headers.Skip(1).First().Value);
+
+            Assert.Equal("key2", message.Headers.Skip(2).First().Key);
+            Assert.Equal("value2", message.Headers.Skip(2).First().Value);
+
+            Assert.Equal("key3", message.Headers.Skip(3).First().Key);
+            Assert.Equal("value3", message.Headers.Skip(3).First().Value);
+        }
+
         #endregion
 
         #region Message "EdpData" value tests

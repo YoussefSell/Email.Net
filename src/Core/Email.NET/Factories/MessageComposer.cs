@@ -319,7 +319,21 @@
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
         public MessageComposer WithHeaders(Dictionary<string, string> headers)
         {
-            _headers = headers;
+            if (headers is null)
+                throw new ArgumentNullException(nameof(headers));
+
+            foreach (var header in headers)
+            {
+                // if the header exist update the value
+                if (_headers.ContainsKey(header.Key))
+                {
+                    _headers[header.Key] = header.Value;
+                    continue;
+                }
+
+                _headers.Add(header.Key, header.Value);
+            }
+
             return this;
         }
 
