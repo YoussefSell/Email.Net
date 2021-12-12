@@ -103,7 +103,7 @@
         /// <param name="attachments">attachments list</param>
         /// <param name="headers">headers collection</param>
         /// <param name="edpData">the list of edp data</param>
-        public Message(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers, ICollection<EDP.EdpData> edpData)
+        internal Message(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers, ICollection<EDP.EdpData> edpData)
         {
             if (to is null)
                 throw new ArgumentNullException(nameof(to));
