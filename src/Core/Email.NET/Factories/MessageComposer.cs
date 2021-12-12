@@ -317,7 +317,7 @@
         /// </summary>
         /// <param name="headers">the headers list.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public MessageComposer WithHeaders(Dictionary<string, string> headers)
+        public MessageComposer WithHeaders(IEnumerable<KeyValuePair<string, string>> headers)
         {
             if (headers is null)
                 throw new ArgumentNullException(nameof(headers));
