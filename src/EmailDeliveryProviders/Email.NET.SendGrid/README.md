@@ -28,10 +28,7 @@ SendGrid EDP allows you to pass the folowwing data with the message instance
 ```csharp
 // create the message
 var message = Message.Compose()
-    
-    // to pass a custom message id
-    .SetMessageId("your-message-id")
-    
+
     // to pass tracking settings
     .UseTrackingSettings(new TrackingSettings
     {
