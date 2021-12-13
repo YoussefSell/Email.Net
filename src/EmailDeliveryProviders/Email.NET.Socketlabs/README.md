@@ -41,5 +41,3 @@ var message = Message.Compose()
     // to pass a defrent server id
     .UseCustomServerId(15874);
 ```
-
-
