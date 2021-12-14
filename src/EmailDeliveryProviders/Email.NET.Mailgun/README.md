@@ -14,12 +14,12 @@ in order to use the Mailgun EDP, you call the `UseMailgun()` method and pass the
 ```csharp
 // register Mailgun EDP with EmailServiceFactory
 EmailServiceFactory.Instance
-    .UseMailgun(apiKey: "your-sendgrid-api-key", domain: "your-mailgun-domain")
+    .UseMailgun(apiKey: "your-mailgun-api-key", domain: "your-mailgun-domain")
     .Create();
 
 // register Mailgun EDP with Dependency Injection
 services.AddEmailNet(MailgunEmailDeliveryProvider.Name)
-    .UseMailgun(apiKey: "your-sendgrid-api-key", domain: "your-mailgun-domain");
+    .UseMailgun(apiKey: "your-mailgun-api-key", domain: "your-mailgun-domain");
 ```
 
 ##### Custom EDP data
