@@ -14,6 +14,14 @@
         /// add the Email.NET services and configuration.
         /// </summary>
         /// <param name="serviceCollection">the service collection instant</param>
+        /// <param name="defaultEdpName">name of the default edp to be used.</param>
+        public static EmailNetBuilder AddEmailNet(this IServiceCollection serviceCollection, string defaultEdpName)
+            => AddEmailNet(serviceCollection, options => options.DefaultEmailDeliveryProvider = defaultEdpName);
+
+        /// <summary>
+        /// add the Email.NET services and configuration.
+        /// </summary>
+        /// <param name="serviceCollection">the service collection instant</param>
         /// <param name="config">the configuration initializer.</param>
         public static EmailNetBuilder AddEmailNet(this IServiceCollection serviceCollection, Action<EmailServiceOptions> config)
         {
