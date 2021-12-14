@@ -54,6 +54,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.Samples.ASPCore",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.NET.EDPs.Test", "tests\Email.NET.EDPs.Test\Email.NET.EDPs.Test.csproj", "{D777598B-337A-42B2-8C41-A1EBC31863A2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{DBEF4524-D629-4572-B608-EF2C40FC6EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.Net.EDP.Template", "Templates\Email.Net.EDP.Template\Email.Net.EDP.Template.csproj", "{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +128,10 @@ Global
 		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D777598B-337A-42B2-8C41-A1EBC31863A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +155,7 @@ Global
 		{7FD6770C-4F1F-4706-9023-D0CD1C694B66} = {E910BB4C-7688-4422-BAA9-59DBE6487147}
 		{9C7C4B0B-833E-43D2-B2D9-F9A813938F42} = {E910BB4C-7688-4422-BAA9-59DBE6487147}
 		{D777598B-337A-42B2-8C41-A1EBC31863A2} = {15EA4737-125B-4E6E-A806-E13B7EBCDCCF}
+		{EF64F513-8E91-42D4-8C1A-86B9170CCBA7} = {DBEF4524-D629-4572-B608-EF2C40FC6EA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C27CF27-51F3-4DC8-8B72-1F7C6FA3D9E9}
