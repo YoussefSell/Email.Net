@@ -123,7 +123,7 @@
                 From = new EmailAddress(message.From.Address, message.From.DisplayName),
             };
 
-            var trackingSettingsEDP = message.EdpData.GetData("sendgrid_tracking_settings");
+            var trackingSettingsEDP = message.EdpData.GetData(CustomEdpData.TrackingSettings);
             if (!trackingSettingsEDP.IsEmpty())
                 mailMessage.TrackingSettings = trackingSettingsEDP.GetValue<TrackingSettings>();
 

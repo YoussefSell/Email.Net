@@ -15,6 +15,6 @@
         /// <param name="smtpOptions">the smtp options instance</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
         public static MessageComposer UseCustomSmtpOptions(this MessageComposer messageComposer, EDP.MailKit.SmtpOptions smtpOptions)
-            => messageComposer.PassEdpData(EdpData.New(EdpData.Keys.SmtpOptions, smtpOptions));
+            => messageComposer.PassEdpData(EdpData.Keys.SmtpOptions, smtpOptions);
     }
 }

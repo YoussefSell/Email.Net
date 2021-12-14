@@ -163,11 +163,11 @@
                 }
             }
 
-            var enableTrackingEdp = message.EdpData.GetData("enable_tracking");
+            var enableTrackingEdp = message.EdpData.GetData(CustomEdpData.EnableTracking);
             if (!enableTrackingEdp.IsEmpty())
                 content.Add(new StringContent(enableTrackingEdp.GetValue<bool>().ToYesNoString()), "o:tracking");
 
-            var testModeEdp = message.EdpData.GetData("test_mode");
+            var testModeEdp = message.EdpData.GetData(CustomEdpData.TestMode);
             if (!testModeEdp.IsEmpty())
                 content.Add(new StringContent(testModeEdp.GetValue<bool>().ToYesNoString()), "o:testmode");
 

@@ -1,6 +1,6 @@
 ﻿namespace Email.NET
 {
-    using Email.NET.EDP;
+    using Email.NET.EDP.SocketLabs;
     using Email.NET.Factories;
 
     /// <summary>
@@ -15,6 +15,6 @@
         /// <param name="serverId">the serverId to be used.</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
         public static MessageComposer UseCustomServerId(this MessageComposer messageComposer, int serverId)
-            => messageComposer.PassEdpData(EdpData.New("server_id", serverId));
+            => messageComposer.PassEdpData(CustomEdpData.ServerId, serverId);
     }
 }

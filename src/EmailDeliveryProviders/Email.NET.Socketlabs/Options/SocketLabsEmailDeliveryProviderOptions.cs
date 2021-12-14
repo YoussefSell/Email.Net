@@ -1,6 +1,5 @@
 ﻿namespace Email.NET.EDP.SocketLabs
 {
-    using Email.NET.EDP.Smtp;
     using Email.NET.Exceptions;
 
     /// <summary>

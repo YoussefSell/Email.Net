@@ -13,7 +13,7 @@ namespace Email.NET.Socketlabs.Test
         static readonly string TEST_API_KEY = Environment.GetEnvironmentVariable("EMAIL_NET_SOCKETLABS_API_KEY", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException();
         static readonly int TEST_SERVER = int.Parse(Environment.GetEnvironmentVariable("EMAIL_NET_SOCKETLABS_SERVER", EnvironmentVariableTarget.Machine) ?? throw new ArgumentNullException());
 
-        [Fact]
+        [Fact] 
         public void ThorwIfOptionsIsNull()
         {
             // arrange

@@ -98,7 +98,7 @@
 
             // get the apiKey & serverId from the data list if any.
             var apikeyEdpData = data.GetData(EdpData.Keys.ApiKey);
-            var serverIdEdpData = data.GetData("server_id");
+            var serverIdEdpData = data.GetData(CustomEdpData.ServerId);
 
             if (!apikeyEdpData.IsEmpty())
                 apiKey = apikeyEdpData.GetValue<string>();
