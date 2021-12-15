@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\src\Core\Email.Net\Email.Net.csproj" />
   </ItemGroup>
 
 </Project>

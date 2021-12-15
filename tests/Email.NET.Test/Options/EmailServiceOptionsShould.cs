@@ -1,6 +1,6 @@
-﻿namespace Email.NET.Test
+﻿namespace Email.Net.Test
 {
-    using Email.NET.Exceptions;
+    using Email.Net.Exceptions;
     using Xunit;
 
     public class EmailServiceOptionsShould

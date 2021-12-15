@@ -1,6 +1,6 @@
-﻿namespace Email.NET.EDP.Edp_name
+﻿namespace Email.Net.EDP.Edp_name
 {
-    using Email.NET.Exceptions;
+    using Email.Net.Exceptions;
 
     /// <summary>
     /// the options for configuring the SocketLabs email delivery provider

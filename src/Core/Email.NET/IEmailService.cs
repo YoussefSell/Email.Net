@@ -1,7 +1,7 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
     using EDP;
-    using Email.NET.Exceptions;
+    using Email.Net.Exceptions;
     using System;
     using System.Threading.Tasks;
 

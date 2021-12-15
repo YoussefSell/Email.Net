@@ -1,4 +1,4 @@
-# Email.NET.AmazonSES - Email delivery provider [EDP]
+# Email.Net.AmazonSES - Email delivery provider [EDP]
 
 send emails using AmazonSES.
 

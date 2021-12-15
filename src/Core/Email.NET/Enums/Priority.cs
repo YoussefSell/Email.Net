@@ -1,4 +1,4 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
     /// <summary>
     /// Specifies the priority of the message.

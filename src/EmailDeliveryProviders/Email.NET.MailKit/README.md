@@ -1,4 +1,4 @@
-# Email.NET.MailKit - Email delivery provider [EDP]
+# Email.Net.MailKit - Email delivery provider [EDP]
 
 send emails using MailKit.
 

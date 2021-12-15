@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.Mailgun
+﻿namespace Email.Net.EDP.Mailgun
 {
     internal static class GeneralExtensions
     {

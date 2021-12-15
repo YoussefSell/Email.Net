@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
-    using Email.NET.EDP;
-    using Email.NET.EDP.SendGrid;
+    using Email.Net.EDP;
+    using Email.Net.EDP.SendGrid;
     using System;
 
     /// <summary>

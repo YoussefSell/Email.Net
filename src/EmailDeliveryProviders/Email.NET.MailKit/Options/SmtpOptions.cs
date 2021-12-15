@@ -1,6 +1,6 @@
-﻿namespace Email.NET.EDP.MailKit
+﻿namespace Email.Net.EDP.MailKit
 {
-    using Email.NET.Exceptions;
+    using Email.Net.Exceptions;
     using global::MailKit.Security;
     using System.Net.Mail;
 

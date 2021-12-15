@@ -1,4 +1,4 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
     using EDP;
     using System.Collections.Generic;

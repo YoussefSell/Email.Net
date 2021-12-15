@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
-    using Email.NET.EDP;
-    using Email.NET.EDP.Mailgun;
+    using Email.Net.EDP;
+    using Email.Net.EDP.Mailgun;
     using System;
 
     /// <summary>

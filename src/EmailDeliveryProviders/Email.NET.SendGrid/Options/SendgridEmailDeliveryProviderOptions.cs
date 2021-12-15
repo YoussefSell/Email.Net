@@ -1,6 +1,6 @@
-﻿namespace Email.NET.EDP.SendGrid
+﻿namespace Email.Net.EDP.SendGrid
 {
-    using Email.NET.Exceptions;
+    using Email.Net.Exceptions;
 
     /// <summary>
     /// the options for configuring the Smtp email delivery provider

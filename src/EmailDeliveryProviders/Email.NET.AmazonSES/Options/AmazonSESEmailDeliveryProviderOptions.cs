@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.AmazonSES
+﻿namespace Email.Net.EDP.AmazonSES
 {
     using Amazon;
     using Exceptions;

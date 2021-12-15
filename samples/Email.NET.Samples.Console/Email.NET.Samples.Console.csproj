@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.NET.AmazonSES\Email.NET.AmazonSES.csproj" />
-    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.NET.Mailgun\Email.NET.Mailgun.csproj" />
-    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.NET.MailKit\Email.NET.MailKit.csproj" />
-    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.NET.SendGrid\Email.NET.SendGrid.csproj" />
-    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.NET.Socketlabs\Email.NET.Socketlabs.csproj" />
+    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.Net.AmazonSES\Email.Net.AmazonSES.csproj" />
+    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.Net.Mailgun\Email.Net.Mailgun.csproj" />
+    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.Net.MailKit\Email.Net.MailKit.csproj" />
+    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.Net.SendGrid\Email.Net.SendGrid.csproj" />
+    <ProjectReference Include="..\..\src\EmailDeliveryProviders\Email.Net.Socketlabs\Email.Net.Socketlabs.csproj" />
   </ItemGroup>
 
 </Project>

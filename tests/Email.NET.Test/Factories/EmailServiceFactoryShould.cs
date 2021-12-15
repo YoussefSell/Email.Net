@@ -1,8 +1,8 @@
-﻿namespace Email.NET.Test.Factories
+﻿namespace Email.Net.Test.Factories
 {
-    using Email.NET.EDP;
-    using Email.NET.Exceptions;
-    using Email.NET.Factories;
+    using Email.Net.EDP;
+    using Email.Net.Exceptions;
+    using Email.Net.Factories;
     using Moq;
     using System.Net.Mail;
     using Xunit;

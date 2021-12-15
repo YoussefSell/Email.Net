@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.SocketLabs
+﻿namespace Email.Net.EDP.SocketLabs
 {
     /// <summary>
     /// the SocketLabs email delivery provider

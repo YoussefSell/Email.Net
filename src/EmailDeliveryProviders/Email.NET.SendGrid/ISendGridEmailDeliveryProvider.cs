@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.SendGrid
+﻿namespace Email.Net.EDP.SendGrid
 {
     /// <summary>
     /// the SendGrid email delivery provider

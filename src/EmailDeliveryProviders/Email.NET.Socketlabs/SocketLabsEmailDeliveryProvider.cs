@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.SocketLabs
+﻿namespace Email.Net.EDP.SocketLabs
 {
     using global::SocketLabs.InjectionApi;
     using global::SocketLabs.InjectionApi.Message;
@@ -188,7 +188,7 @@
         /// </summary>
         /// <param name="message">the <see cref="BasicMessage"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        private void SetAttachments(BasicMessage message, IEnumerable<NET.Attachment> attachments)
+        private void SetAttachments(BasicMessage message, IEnumerable<Net.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;

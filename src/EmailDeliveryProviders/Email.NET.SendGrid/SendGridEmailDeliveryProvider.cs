@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.SendGrid
+﻿namespace Email.Net.EDP.SendGrid
 {
     using global::SendGrid;
     using global::SendGrid.Helpers.Mail;
@@ -163,7 +163,7 @@
         /// </summary>
         /// <param name="message">the <see cref="SendGridMessage"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        private void SetAttachments(SendGridMessage message, IEnumerable<NET.Attachment> attachments)
+        private void SetAttachments(SendGridMessage message, IEnumerable<Net.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;

@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Email.NET.Samples.ASPCore": {
+    "Email.Net.Samples.ASPCore": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

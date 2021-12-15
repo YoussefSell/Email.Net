@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.SocketLabs
+﻿namespace Email.Net.EDP.SocketLabs
 {
     /// <summary>
     /// custom edp data, this class holds the names of the keys

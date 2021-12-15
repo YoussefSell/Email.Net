@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
-    using Email.NET.EDP;
-    using Email.NET.EDP.AmazonSES;
+    using Email.Net.EDP;
+    using Email.Net.EDP.AmazonSES;
     using System;
 
     /// <summary>

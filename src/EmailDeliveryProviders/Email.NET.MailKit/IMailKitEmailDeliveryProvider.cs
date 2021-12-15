@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.MailKit
+﻿namespace Email.Net.EDP.MailKit
 {
     /// <summary>
     /// the MailKit email delivery provider

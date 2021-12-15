@@ -1,8 +1,8 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
-    using Email.NET;
-    using Email.NET.EDP;
-    using Email.NET.EDP.Smtp;
+    using Email.Net;
+    using Email.Net.EDP;
+    using Email.Net.EDP.Smtp;
     using System;
 
     /// <summary>
@@ -11,7 +11,7 @@
     public static class Configurations
     {
         /// <summary>
-        /// add the Email.NET services and configuration.
+        /// add the Email.Net services and configuration.
         /// </summary>
         /// <param name="serviceCollection">the service collection instant</param>
         /// <param name="defaultEdpName">name of the default edp to be used.</param>
@@ -19,7 +19,7 @@
             => AddEmailNet(serviceCollection, options => options.DefaultEmailDeliveryProvider = defaultEdpName);
 
         /// <summary>
-        /// add the Email.NET services and configuration.
+        /// add the Email.Net services and configuration.
         /// </summary>
         /// <param name="serviceCollection">the service collection instant</param>
         /// <param name="config">the configuration initializer.</param>

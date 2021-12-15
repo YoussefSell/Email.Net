@@ -1,7 +1,7 @@
-namespace Email.NET.Socketlabs.Test
+namespace Email.Net.Socketlabs.Test
 {
-    using Email.NET.EDP.SocketLabs;
-    using Email.NET.Exceptions;
+    using Email.Net.EDP.SocketLabs;
+    using Email.Net.Exceptions;
     using System;
     using System.Linq;
     using Xunit;

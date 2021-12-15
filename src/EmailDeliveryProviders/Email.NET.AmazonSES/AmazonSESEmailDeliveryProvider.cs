@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.AmazonSES
+﻿namespace Email.Net.EDP.AmazonSES
 {
     using Amazon.SimpleEmail;
     using Amazon.SimpleEmail.Model;
@@ -12,11 +12,11 @@
     public partial class AmazonSESEmailDeliveryProvider : IAmazonSESEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(NET.Message message)
+        public EmailSendingResult Send(Net.Message message)
             => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(NET.Message message)
+        public async Task<EmailSendingResult> SendAsync(Net.Message message)
         {
             try
             {
@@ -105,7 +105,7 @@
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="SendEmailRequest"/></returns>
-        public SendEmailRequest CreateMessage(NET.Message message)
+        public SendEmailRequest CreateMessage(Net.Message message)
         {
             var mailMessage = new SendEmailRequest
             {

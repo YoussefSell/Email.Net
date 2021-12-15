@@ -1,4 +1,4 @@
-# Email.NET.SendGrid - Email delivery provider [EDP]
+# Email.Net.SendGrid - Email delivery provider [EDP]
 
 send emails using SendGrid.
 

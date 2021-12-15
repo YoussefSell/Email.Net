@@ -1,7 +1,7 @@
-namespace Email.NET.Mailgun.Test
+namespace Email.Net.Mailgun.Test
 {
-    using Email.NET.EDP.Mailgun;
-    using Email.NET.Exceptions;
+    using Email.Net.EDP.Mailgun;
+    using Email.Net.Exceptions;
     using System;
     using Xunit;
 

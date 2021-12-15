@@ -1,4 +1,4 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
     /// <summary>
     /// the type of the message body

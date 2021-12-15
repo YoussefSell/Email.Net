@@ -1,7 +1,7 @@
-﻿namespace Email.NET.Test.EDP
+﻿namespace Email.Net.Test.EDP
 {
-    using Email.NET.EDP.Smtp;
-    using Email.NET.Exceptions;
+    using Email.Net.EDP.Smtp;
+    using Email.Net.Exceptions;
     using System;
     using System.IO;
     using System.Linq;
@@ -13,7 +13,7 @@
 
         public SmtpEmailDeliveryProviderShould()
         {
-            tempOutDirectory = Path.Combine(Path.GetTempPath(), "Email.NET");
+            tempOutDirectory = Path.Combine(Path.GetTempPath(), "Email.Net");
             Directory.CreateDirectory(tempOutDirectory);
         }
 

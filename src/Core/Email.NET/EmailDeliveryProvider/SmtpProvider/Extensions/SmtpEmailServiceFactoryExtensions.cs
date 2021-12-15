@@ -1,7 +1,7 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
-    using Email.NET.EDP.Smtp;
-    using Email.NET.Factories;
+    using Email.Net.EDP.Smtp;
+    using Email.Net.Factories;
     using System;
 
     /// <summary>

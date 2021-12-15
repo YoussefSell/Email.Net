@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Utilities
+﻿namespace Email.Net.Utilities
 {
     /// <summary>
     /// extension methods on the <see cref="string"/> type

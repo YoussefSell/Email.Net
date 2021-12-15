@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.Smtp
+﻿namespace Email.Net.EDP.Smtp
 {
     using System;
     using System.Collections.Generic;
@@ -215,7 +215,7 @@
         /// </summary>
         /// <param name="message">the <see cref="MailMessage"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        private void SetAttachments(MailMessage message, IEnumerable<NET.Attachment> attachments)
+        private void SetAttachments(MailMessage message, IEnumerable<Net.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;

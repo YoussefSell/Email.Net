@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Factories
+﻿namespace Email.Net.Factories
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +20,7 @@
         private readonly HashSet<MailAddress> _bcc;
         private readonly HashSet<MailAddress> _cc;
         private readonly HashSet<MailAddress> _replyTo;
-        private readonly HashSet<NET.Attachment> _attachments;
+        private readonly HashSet<Net.Attachment> _attachments;
 
         private MailAddress _from;
         private Dictionary<string, string> _headers;
@@ -34,7 +34,7 @@
             _bcc = new HashSet<MailAddress>();
             _replyTo = new HashSet<MailAddress>();
             _edpData = new HashSet<EDP.EdpData>();
-            _attachments = new HashSet<NET.Attachment>();
+            _attachments = new HashSet<Net.Attachment>();
             _headers = new Dictionary<string, string>();
         }
 
@@ -394,7 +394,7 @@
         /// </summary>
         /// <param name="attachments">the list of attachments</param>
         /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public MessageComposer IncludeAttachment(params NET.Attachment[] attachments)
+        public MessageComposer IncludeAttachment(params Net.Attachment[] attachments)
         {
             foreach (var attachment in attachments)
                 _attachments.Add(attachment);

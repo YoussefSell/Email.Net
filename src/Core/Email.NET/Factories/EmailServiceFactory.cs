@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Factories
+﻿namespace Email.Net.Factories
 {
     using EDP;
     using System;

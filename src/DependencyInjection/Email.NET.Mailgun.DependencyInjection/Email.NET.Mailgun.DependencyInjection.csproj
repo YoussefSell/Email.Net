@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,14 +6,14 @@
 
   <PropertyGroup>
     <Title>Email.Net - Mailgun EDP</Title>
-    <PackageId>Email.NET.Mailgun.DependencyInjection</PackageId>
+    <PackageId>Email.Net.Mailgun.DependencyInjection</PackageId>
     <PackageTags>Email.Net; Emails; SMTP; MailGun</PackageTags>
     <Description>Mailgun email delivery provider for Email.Net.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.Mailgun\Email.NET.Mailgun.csproj" />
-    <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.Net.Mailgun\Email.Net.Mailgun.csproj" />
+    <ProjectReference Include="..\Email.Net.DependencyInjection\Email.Net.DependencyInjection.csproj" />
   </ItemGroup>
 
   <ItemGroup>

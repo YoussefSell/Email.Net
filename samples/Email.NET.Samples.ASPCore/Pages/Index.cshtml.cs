@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Samples.ASPCore.Pages;
+﻿namespace Email.Net.Samples.ASPCore.Pages;
 
 public class IndexModel : PageModel
 {

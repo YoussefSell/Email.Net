@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.MailKit
+﻿namespace Email.Net.EDP.MailKit
 {
     using global::MailKit.Net.Smtp;
     using global::MailKit.Security;
@@ -248,7 +248,7 @@
         /// </summary>
         /// <param name="message">the <see cref="BodyBuilder"/> instance</param>
         /// <param name="attachments">the list of attachments to add</param>
-        public void SetAttachments(BodyBuilder message, IEnumerable<NET.Attachment> attachments)
+        public void SetAttachments(BodyBuilder message, IEnumerable<Net.Attachment> attachments)
         {
             if (attachments is null || !attachments.Any())
                 return;

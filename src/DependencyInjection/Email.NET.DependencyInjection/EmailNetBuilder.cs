@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
-    using Email.NET;
+    using Email.Net;
 
     /// <summary>
     /// the email.net DI builder.

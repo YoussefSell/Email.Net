@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Utilities
+﻿namespace Email.Net.Utilities
 {
     using System;
     using System.Collections.Generic;

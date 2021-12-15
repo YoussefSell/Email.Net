@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,14 +6,14 @@
 
   <PropertyGroup>
     <Title>Email.Net - AmazonSES EDP</Title>
-    <PackageId>Email.NET.AmazonSES.DependencyInjection</PackageId>
+    <PackageId>Email.Net.AmazonSES.DependencyInjection</PackageId>
     <PackageTags>Email.Net; Emails; SMTP; AmazonSES</PackageTags>
     <Description>AmazonSES email delivery provider for Email.Net.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.NET.AmazonSES\Email.NET.AmazonSES.csproj" />
-    <ProjectReference Include="..\Email.NET.DependencyInjection\Email.NET.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\EmailDeliveryProviders\Email.Net.AmazonSES\Email.Net.AmazonSES.csproj" />
+    <ProjectReference Include="..\Email.Net.DependencyInjection\Email.Net.DependencyInjection.csproj" />
   </ItemGroup>
 
   <ItemGroup>

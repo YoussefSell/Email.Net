@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.Mailgun
+﻿namespace Email.Net.EDP.Mailgun
 {
     /// <summary>
     /// custom edp data, this class holds the names of the keys

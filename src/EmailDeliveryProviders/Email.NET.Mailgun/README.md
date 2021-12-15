@@ -1,4 +1,4 @@
-# Email.NET.Mailgun - Email delivery provider [EDP]
+# Email.Net.Mailgun - Email delivery provider [EDP]
 
 send emails using Mailgun.
 

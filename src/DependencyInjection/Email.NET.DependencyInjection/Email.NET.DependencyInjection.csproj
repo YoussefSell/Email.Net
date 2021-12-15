@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,9 +6,9 @@
   
   <PropertyGroup>
     <Title>Email.Net</Title>
-    <PackageId>Email.NET.DependencyInjection</PackageId>
+    <PackageId>Email.Net.DependencyInjection</PackageId>
     <PackageTags>Email.Net; Emails; SMTP; Socketlabs; MailKit; SendGrid; MailGun; AmazonSES</PackageTags>
-    <Description>An email sender abstraction for .NET to decouple your email sending from the underlying provider, with access to different types of providers such as MailKit, SendGrid, MailGun, etc.</Description>
+    <Description>An email sender abstraction for .Net to decouple your email sending from the underlying provider, with access to different types of providers such as MailKit, SendGrid, MailGun, etc.</Description>
   </PropertyGroup>
   
   <ItemGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\Core\Email.Net\Email.Net.csproj" />
   </ItemGroup>
   
   <ItemGroup>

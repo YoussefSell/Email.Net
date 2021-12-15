@@ -1,6 +1,6 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
-    using Email.NET.Factories;
+    using Email.Net.Factories;
 
     /// <summary>
     /// the extensions methods over the <see cref="MessageComposer"/> factory.

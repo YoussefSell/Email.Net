@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.Mailgun
+﻿namespace Email.Net.EDP.Mailgun
 {
     /// <summary>
     /// the Mailgun email delivery provider

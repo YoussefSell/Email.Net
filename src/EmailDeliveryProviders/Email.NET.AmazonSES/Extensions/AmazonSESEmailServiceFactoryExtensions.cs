@@ -1,7 +1,7 @@
-﻿namespace Email.NET
+﻿namespace Email.Net
 {
-    using Email.NET.EDP.AmazonSES;
-    using Email.NET.Factories;
+    using Email.Net.EDP.AmazonSES;
+    using Email.Net.Factories;
     using System;
 
     /// <summary>

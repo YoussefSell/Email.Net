@@ -1,4 +1,4 @@
-# Email.NET.Socketlabs - Email delivery provider [EDP]
+# Email.Net.Socketlabs - Email delivery provider [EDP]
 
 send emails using socketlabs.
 

@@ -1,7 +1,7 @@
-﻿namespace Email.NET.Test.Factories
+﻿namespace Email.Net.Test.Factories
 {
-    using Email.NET.EDP;
-    using Email.NET.Factories;
+    using Email.Net.EDP;
+    using Email.Net.Factories;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -920,7 +920,7 @@
 
             // act
             var message = composser
-                .IncludeAttachment(new NET.Attachment[] {
+                .IncludeAttachment(new Net.Attachment[] {
                     new FilePathAttachment(filePath),
                     new Base64Attachement(@"test_file_1.txt", MockData.TestFileBase64Value),
                     new ByteArrayAttachment(@"test_file_2.txt", MockData.TestFileAsByteArray())

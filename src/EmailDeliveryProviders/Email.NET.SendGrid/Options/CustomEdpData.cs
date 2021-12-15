@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.SendGrid
+﻿namespace Email.Net.EDP.SendGrid
 {
     /// <summary>
     /// custom edp data, this class holds the names of the keys

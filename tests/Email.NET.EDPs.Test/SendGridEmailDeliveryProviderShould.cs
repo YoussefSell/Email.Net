@@ -1,7 +1,7 @@
-namespace Email.NET.Sendgrid.Test
+namespace Email.Net.Sendgrid.Test
 {
-    using Email.NET.EDP.SendGrid;
-    using Email.NET.Exceptions;
+    using Email.Net.EDP.SendGrid;
+    using Email.Net.Exceptions;
     using System;
     using System.Linq;
     using Xunit;

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,13 +6,13 @@
 
   <PropertyGroup>
     <Title>Email.Net - Mailgun EDP</Title>
-    <PackageId>Email.NET.Mailgun</PackageId>
+    <PackageId>Email.Net.Mailgun</PackageId>
     <PackageTags>Email.Net; Emails; SMTP; MailGun</PackageTags>
     <Description>Mailgun email delivery provider for Email.Net.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\Core\Email.Net\Email.Net.csproj" />
   </ItemGroup>
 
   <ItemGroup>

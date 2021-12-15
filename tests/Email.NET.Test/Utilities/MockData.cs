@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Test
+﻿namespace Email.Net.Test
 {
     using System;
     using System.IO;

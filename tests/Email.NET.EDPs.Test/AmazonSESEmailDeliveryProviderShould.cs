@@ -1,7 +1,7 @@
-namespace Email.NET.AmazonSES.Test
+namespace Email.Net.AmazonSES.Test
 {
-    using Email.NET.EDP.AmazonSES;
-    using Email.NET.Exceptions;
+    using Email.Net.EDP.AmazonSES;
+    using Email.Net.Exceptions;
     using System;
     using System.Linq;
     using Xunit;

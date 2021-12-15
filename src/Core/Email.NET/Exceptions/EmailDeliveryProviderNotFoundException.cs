@@ -1,4 +1,4 @@
-﻿namespace Email.NET.Exceptions
+﻿namespace Email.Net.Exceptions
 {
     using System;
 

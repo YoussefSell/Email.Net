@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <Title>Email.Net - Socketlabs EDP</Title>
-    <PackageId>Email.NET.Socketlabs</PackageId>
+    <PackageId>Email.Net.Socketlabs</PackageId>
     <PackageTags>Email.Net; Emails; Socketlabs;</PackageTags>
     <Description>Socketlabs Email delivery provider for Email.Net.</Description>
   </PropertyGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\Core\Email.Net\Email.Net.csproj" />
   </ItemGroup>
 
   <ItemGroup>

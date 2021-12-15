@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.Net.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <Title>Email.Net - SendGrid EDP</Title>
-    <PackageId>Email.NET.SendGrid</PackageId>
+    <PackageId>Email.Net.SendGrid</PackageId>
     <PackageTags>Email.Net; Emails; SendGrid</PackageTags>
     <Description>SendGrid email delivery provider for Email.Net.</Description>
   </PropertyGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Email.NET\Email.NET.csproj" />
+    <ProjectReference Include="..\..\Core\Email.Net\Email.Net.csproj" />
   </ItemGroup>
 
   <ItemGroup>

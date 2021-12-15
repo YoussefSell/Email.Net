@@ -1,4 +1,4 @@
-﻿namespace Email.NET.EDP.Smtp
+﻿namespace Email.Net.EDP.Smtp
 {
     using Exceptions;
     using Utilities;

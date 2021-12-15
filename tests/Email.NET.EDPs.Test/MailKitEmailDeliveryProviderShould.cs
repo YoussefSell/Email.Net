@@ -1,8 +1,8 @@
-namespace Email.NET.MailKit.Test
+namespace Email.Net.MailKit.Test
 {
-    using Email.NET.EDP;
-    using Email.NET.EDP.MailKit;
-    using Email.NET.Exceptions;
+    using Email.Net.EDP;
+    using Email.Net.EDP.MailKit;
+    using Email.Net.Exceptions;
     using MimeKit;
     using System;
     using System.IO;
@@ -15,7 +15,7 @@ namespace Email.NET.MailKit.Test
 
         public MailKitEmailDeliveryProviderShould()
         {
-            tempOutDirectory = Path.Combine(Path.GetTempPath(), "Email.NET");
+            tempOutDirectory = Path.Combine(Path.GetTempPath(), "Email.Net");
             Directory.CreateDirectory(tempOutDirectory);
         }
 
