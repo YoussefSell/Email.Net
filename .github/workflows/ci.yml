@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       EMAIL_NET_TO_EMAIL: ${{secrets.EMAIL_NET_TO_EMAIL}}
       EMAIL_NET_FROM_EMAIL: ${{secrets.EMAIL_NET_FROM_EMAIL}}
