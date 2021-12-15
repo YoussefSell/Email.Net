@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\Email.Net\Email.Net.csproj" />
+    <ProjectReference Include="..\..\src\Core\Email.NET\Email.Net.csproj" />
   </ItemGroup>
+
 
 </Project>

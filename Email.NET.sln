@@ -8,33 +8,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{419A6ACE-041
 		src\Directory.Build.props = src\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net", "src\Core\Email.Net\Email.Net.csproj", "{8B270DD8-E45A-4E06-8DC9-52FC58112395}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net", "src\Core\Email.NET\Email.Net.csproj", "{8B270DD8-E45A-4E06-8DC9-52FC58112395}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Socketlabs", "src\EmailDeliveryProviders\Email.Net.Socketlabs\Email.Net.Socketlabs.csproj", "{532E5F8B-628F-4387-8F8B-547048CB3F65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Socketlabs", "src\EmailDeliveryProviders\Email.NET.Socketlabs\Email.Net.Socketlabs.csproj", "{532E5F8B-628F-4387-8F8B-547048CB3F65}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.SendGrid", "src\EmailDeliveryProviders\Email.Net.SendGrid\Email.Net.SendGrid.csproj", "{C78E766E-D274-4171-BF86-06676099FF7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.SendGrid", "src\EmailDeliveryProviders\Email.NET.SendGrid\Email.Net.SendGrid.csproj", "{C78E766E-D274-4171-BF86-06676099FF7D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Mailgun", "src\EmailDeliveryProviders\Email.Net.Mailgun\Email.Net.Mailgun.csproj", "{9EED58AC-08DA-4C50-915B-2D202BB4239D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Mailgun", "src\EmailDeliveryProviders\Email.NET.Mailgun\Email.Net.Mailgun.csproj", "{9EED58AC-08DA-4C50-915B-2D202BB4239D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.MailKit", "src\EmailDeliveryProviders\Email.Net.MailKit\Email.Net.MailKit.csproj", "{6B0D92F0-829E-4C6D-A0FD-8878467865E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.MailKit", "src\EmailDeliveryProviders\Email.NET.MailKit\Email.Net.MailKit.csproj", "{6B0D92F0-829E-4C6D-A0FD-8878467865E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.AmazonSES", "src\EmailDeliveryProviders\Email.Net.AmazonSES\Email.Net.AmazonSES.csproj", "{46BCC0E9-4D2E-48E2-A055-5315D95B9A34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.AmazonSES", "src\EmailDeliveryProviders\Email.NET.AmazonSES\Email.Net.AmazonSES.csproj", "{46BCC0E9-4D2E-48E2-A055-5315D95B9A34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.DependencyInjection", "src\DependencyInjection\Email.Net.DependencyInjection\Email.Net.DependencyInjection.csproj", "{BFEC2A90-2173-472A-87BF-DBB19BE58E04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.DependencyInjection", "src\DependencyInjection\Email.NET.DependencyInjection\Email.Net.DependencyInjection.csproj", "{BFEC2A90-2173-472A-87BF-DBB19BE58E04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Socketlabs.DependencyInjection", "src\DependencyInjection\Email.Net.Socketlabs.DependencyInjection\Email.Net.Socketlabs.DependencyInjection.csproj", "{BB78E9E0-82C9-4C7C-B115-4B7A0CED6AE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Socketlabs.DependencyInjection", "src\DependencyInjection\Email.NET.Socketlabs.DependencyInjection\Email.Net.Socketlabs.DependencyInjection.csproj", "{BB78E9E0-82C9-4C7C-B115-4B7A0CED6AE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.SendGrid.DependencyInjection", "src\DependencyInjection\Email.Net.SendGrid.DependencyInjection\Email.Net.SendGrid.DependencyInjection.csproj", "{028B993D-49E9-415C-A3A2-55ADF8F69EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.SendGrid.DependencyInjection", "src\DependencyInjection\Email.NET.SendGrid.DependencyInjection\Email.Net.SendGrid.DependencyInjection.csproj", "{028B993D-49E9-415C-A3A2-55ADF8F69EEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.MailKit.DependencyInjection", "src\DependencyInjection\Email.Net.MailKit.DependencyInjection\Email.Net.MailKit.DependencyInjection.csproj", "{6D875C97-3E60-4DD0-99BE-ECA4E30AD243}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.MailKit.DependencyInjection", "src\DependencyInjection\Email.NET.MailKit.DependencyInjection\Email.Net.MailKit.DependencyInjection.csproj", "{6D875C97-3E60-4DD0-99BE-ECA4E30AD243}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Mailgun.DependencyInjection", "src\DependencyInjection\Email.Net.Mailgun.DependencyInjection\Email.Net.Mailgun.DependencyInjection.csproj", "{D9B54852-B9A9-45A0-B404-46C6872FE362}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Mailgun.DependencyInjection", "src\DependencyInjection\Email.NET.Mailgun.DependencyInjection\Email.Net.Mailgun.DependencyInjection.csproj", "{D9B54852-B9A9-45A0-B404-46C6872FE362}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.AmazonSES.DependencyInjection", "src\DependencyInjection\Email.Net.AmazonSES.DependencyInjection\Email.Net.AmazonSES.DependencyInjection.csproj", "{43D18BB8-5015-47D4-AC3E-53EEFC4596A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.AmazonSES.DependencyInjection", "src\DependencyInjection\Email.NET.AmazonSES.DependencyInjection\Email.Net.AmazonSES.DependencyInjection.csproj", "{43D18BB8-5015-47D4-AC3E-53EEFC4596A5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{15EA4737-125B-4E6E-A806-E13B7EBCDCCF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Test", "tests\Email.Net.Test\Email.Net.Test.csproj", "{75564347-A814-44DF-9F78-2B3EF4598073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Test", "tests\Email.NET.Test\Email.Net.Test.csproj", "{75564347-A814-44DF-9F78-2B3EF4598073}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailDeliveryProviders", "EmailDeliveryProviders", "{8727C7CD-012D-4857-9A96-BD29D4690410}"
 EndProject
@@ -48,15 +48,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{E910BB4C-7688-4422-BAA9-59DBE6487147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Samples.Console", "samples\Email.Net.Samples.Console\Email.Net.Samples.Console.csproj", "{7FD6770C-4F1F-4706-9023-D0CD1C694B66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Samples.Console", "samples\Email.NET.Samples.Console\Email.Net.Samples.Console.csproj", "{7FD6770C-4F1F-4706-9023-D0CD1C694B66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Samples.ASPCore", "samples\Email.Net.Samples.ASPCore\Email.Net.Samples.ASPCore.csproj", "{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.Samples.ASPCore", "samples\Email.NET.Samples.ASPCore\Email.Net.Samples.ASPCore.csproj", "{9C7C4B0B-833E-43D2-B2D9-F9A813938F42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.EDPs.Test", "tests\Email.Net.EDPs.Test\Email.Net.EDPs.Test.csproj", "{D777598B-337A-42B2-8C41-A1EBC31863A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email.Net.EDPs.Test", "tests\Email.NET.EDPs.Test\Email.Net.EDPs.Test.csproj", "{D777598B-337A-42B2-8C41-A1EBC31863A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{DBEF4524-D629-4572-B608-EF2C40FC6EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.Net.EDP.Template", "Templates\Email.Net.EDP.Template\Email.Net.EDP.Template.csproj", "{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email.Net.EDP.Template", "Templates\Email.NET.EDP.Template\Email.Net.EDP.Template.csproj", "{EF64F513-8E91-42D4-8C1A-86B9170CCBA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

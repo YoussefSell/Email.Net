@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Email.Net\Email.Net.csproj" />
+    <ProjectReference Include="..\..\Core\Email.NET\Email.Net.csproj" />
   </ItemGroup>
 
   <ItemGroup>
