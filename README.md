@@ -1,15 +1,15 @@
-# Email.NET
+# Email.Net
 
-[![](https://img.shields.io/github/license/YoussefSell/Email.NET)](https://github.com/YoussefSell/Email.NET/blob/master/LICENSE)
-[![](https://img.shields.io/nuget/v/Email.NET)](https://www.nuget.org/packages/Email.NET/)
-![Build](https://github.com/YoussefSell/Email.NET/actions/workflows/ci.yml/badge.svg)
+[![](https://img.shields.io/github/license/YoussefSell/Email.Net)](https://github.com/YoussefSell/Email.Net/blob/master/LICENSE)
+[![](https://img.shields.io/nuget/v/Email.Net)](https://www.nuget.org/packages/Email.Net/)
+![Build](https://github.com/YoussefSell/Email.Net/actions/workflows/ci.yml/badge.svg)
 
 
 Send emails from your .Net application with a flexible solution that guarantee clean architectures, and access to different types of providers.
 
 ## Quick setup
 
-to get started install the package using the [NuGet](https://www.nuget.org/packages/Email.NET/) package manager `Install-Package Email.Net`.
+to get started install the package using the [NuGet](https://www.nuget.org/packages/Email.Net/) package manager `Install-Package Email.Net`.
 
 ## Getting started
 
@@ -57,15 +57,15 @@ now we have a message let's try to send it.
 
 ### 2- EDPs [Email Delivery Provider]
 
-EDPs are what actually used to send the emails under the hood, when you install Email.NET you get an EDP by default which is `SmtpEmailDeliveryProvider` that you can use to send emails using SMTP.
+EDPs are what actually used to send the emails under the hood, when you install Email.Net you get an EDP by default which is `SmtpEmailDeliveryProvider` that you can use to send emails using SMTP.
 
 we have also other EDPs that you can use, but they exist in a separate packages:
 
-- **[Email.NET.Socketlabs](https://www.nuget.org/packages/Email.Net.Socketlabs/):** to send emails using Socketlabs.
-- **[Email.NET.SendGrid](https://www.nuget.org/packages/Email.Net.SendGrid/):** to send emails using SendGrid.
-- **[Email.NET.MailKit](https://www.nuget.org/packages/Email.Net.MailKit/):** to send emails using MailKit.
-- **[Email.NET.Mailgun](https://www.nuget.org/packages/Email.Net.Mailgun/):** to send emails using Mailgun.
-- **[Email.NET.AmazonSES](https://www.nuget.org/packages/Email.Net.AmazonSES/):** to send emails using AmazonSES.
+- **[Email.Net.Socketlabs](https://www.nuget.org/packages/Email.Net.Socketlabs/):** to send emails using Socketlabs.
+- **[Email.Net.SendGrid](https://www.nuget.org/packages/Email.Net.SendGrid/):** to send emails using SendGrid.
+- **[Email.Net.MailKit](https://www.nuget.org/packages/Email.Net.MailKit/):** to send emails using MailKit.
+- **[Email.Net.Mailgun](https://www.nuget.org/packages/Email.Net.Mailgun/):** to send emails using Mailgun.
+- **[Email.Net.AmazonSES](https://www.nuget.org/packages/Email.Net.AmazonSES/):** to send emails using AmazonSES.
 
 and we will be adding more in the future, but if you want to create your own EDP you can follow this [tutorial](#) and you will learn how to build one.
 
@@ -141,7 +141,7 @@ var result = emailService.Send(message);
 
 ## working with Dependency Injection
 
-to register Email.NET with DI we need to use [**Email.NET.DependencyInjection**](https://www.nuget.org/packages/Email.NET.DependencyInjection/) package, this package contains an extension method on the `IServiceCollection` interface that register the `EmailService` as a Scoped service.
+to register Email.Net with DI we need to use [**Email.Net.DependencyInjection**](https://www.nuget.org/packages/Email.Net.DependencyInjection/) package, this package contains an extension method on the `IServiceCollection` interface that register the `EmailService` as a Scoped service.
 
 once you have the package downloaded you can register Email.Net like so:
 
@@ -193,7 +193,7 @@ public class IndexModel : PageModel
 
 here are some samples of how you can integrate Email.Net with different app types:
 
-- [Console app](https://github.com/YoussefSell/Email.NET/tree/master/samples/Email.NET.Samples.Console)
-- [ASP Core app](https://github.com/YoussefSell/Email.NET/tree/master/samples/Email.NET.Samples.ASPCore)
+- [Console app](https://github.com/YoussefSell/Email.Net/tree/master/samples/Email.Net.Samples.Console)
+- [ASP Core app](https://github.com/YoussefSell/Email.Net/tree/master/samples/Email.Net.Samples.ASPCore)
 
 for full documentation check the [Wiki](https://github.com/YoussefSell/Email.Net/wiki) page.

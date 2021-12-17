@@ -1,0 +1,10 @@
+﻿global using Email.Net;
+global using Email.Net.Factories;
+global using Email.Net.EDP;
+global using Email.Net.EDP.Smtp;
+global using Email.Net.EDP.Mailgun;
+global using Email.Net.EDP.MailKit;
+global using Email.Net.EDP.SendGrid;
+global using Email.Net.EDP.AmazonSES;
+global using Email.Net.EDP.SocketLabs;
+global using System.Net.Mail;
