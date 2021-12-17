@@ -909,19 +909,10 @@
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
-            var filePath = @"C:\Email.Net\test_file.txt";
-            var dirName = Path.GetDirectoryName(filePath);
-
-            if (dirName is not null)
-            {
-                Directory.CreateDirectory(dirName);
-                File.WriteAllBytes(filePath, MockData.TestFileAsByteArray());
-            }
-
             // act
             var message = composser
                 .IncludeAttachment(new Net.Attachment[] {
-                    new FilePathAttachment(filePath),
+                    new FilePathAttachment(MockData.TestFilePath),
                     new Base64Attachement(@"test_file_1.txt", MockData.TestFileBase64Value),
                     new ByteArrayAttachment(@"test_file_2.txt", MockData.TestFileAsByteArray())
                 })
@@ -929,11 +920,6 @@
 
             // assert
             Assert.Equal(3, message.Attachments.Count);
-
-            File.Delete(filePath);
-            
-            if (dirName is not null)
-                Directory.Delete(dirName);
         }
 
         #endregion
