@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.Net.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DependencyInjection\Email.Net.Mailgun.DependencyInjection\Email.Net.Mailgun.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\src\DependencyInjection\Email.Net.MailKit.DependencyInjection\Email.Net.MailKit.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\src\DependencyInjection\Email.Net.SendGrid.DependencyInjection\Email.Net.SendGrid.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\src\DependencyInjection\Email.Net.AmazonSES.DependencyInjection\Email.Net.AmazonSES.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\src\DependencyInjection\Email.Net.Socketlabs.DependencyInjection\Email.Net.Socketlabs.DependencyInjection.csproj" />
+  </ItemGroup>
+
+</Project>

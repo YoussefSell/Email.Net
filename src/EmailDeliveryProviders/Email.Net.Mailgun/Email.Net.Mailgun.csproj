@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.Net.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Email.Net - Mailgun EDP</Title>
+    <PackageId>Email.Net.Mailgun</PackageId>
+    <PackageTags>Email.Net; Emails; SMTP; MailGun</PackageTags>
+    <Description>Mailgun email delivery provider for Email.Net.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Email.Net\Email.Net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>
