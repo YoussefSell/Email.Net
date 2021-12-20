@@ -200,6 +200,6 @@ here are some samples of how you can integrate Email.Net with different app type
 
 ## Blog posts
 
-here you will find a list of blog post explaining how to integrate Email.Net in you applications:
+here you will find a list of blog posts explaining how to integrate Email.Net in your applications, also if you have written one let's add it here:
 
 - [How to send emails with C# - the right way](https://youssefsellami.com/how-to-send-emails-with-csharp/)
