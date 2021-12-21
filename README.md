@@ -189,6 +189,8 @@ public class IndexModel : PageModel
 }
 ```
 
+for full documentation check the [Wiki](https://github.com/YoussefSell/Email.Net/wiki) page.
+
 ## Samples
 
 here are some samples of how you can integrate Email.Net with different app types:
@@ -196,4 +198,8 @@ here are some samples of how you can integrate Email.Net with different app type
 - [Console app](https://github.com/YoussefSell/Email.Net/tree/master/samples/Email.Net.Samples.Console)
 - [ASP Core app](https://github.com/YoussefSell/Email.Net/tree/master/samples/Email.Net.Samples.ASPCore)
 
-for full documentation check the [Wiki](https://github.com/YoussefSell/Email.Net/wiki) page.
+## Blog posts
+
+here you will find a list of blog posts explaining how to integrate Email.Net in your applications, also if you have written one let's add it here:
+
+- [How to send emails with C# - the right way](https://youssefsellami.com/how-to-send-emails-with-csharp/)
