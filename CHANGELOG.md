@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0]
 
+####  Changed
+
 - renamed Message to EmailMessage.
 - renamed MessageComposer to EmailMessageComposer.
-
-####  Changed
 
 ## [1.1.0]
 
