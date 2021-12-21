@@ -15,13 +15,13 @@ to get started install the package using the [NuGet](https://www.nuget.org/packa
 
 when you will send an email, there are three component that you will interact with:
 
-- **Message**: the email message content to be sent.
+- **EmailMessage**: the email message content to be sent.
 - **EmailService**: the email service.
 - **Edp**: the Email Delivery Provider.
 
 you first compose your message, than you pass the message to the email service, than service will send the message using an EDP.
 
-### 1. Message
+### 1. EmailMessage
 
 the message contain your email content, which includes the following
 
@@ -42,7 +42,7 @@ the message contain your email content, which includes the following
 now let see how can we compose a message:
 
 ```csharp
-var message = Message.Compose()
+var message = EmailMessage.Compose()
     .To("to@email.net")
     .WithSubject("test email")
     .WithPlainTextContent("this is a test email")
@@ -51,7 +51,7 @@ var message = Message.Compose()
     .Build();
 ```
 
-on the `Message` class you will find a method called `Compose()`, this method will give you a fluent API to compose your email so use the `'.'` and intellisense to see all the available function to compose you message, once you're done, call `Build()` to create an instance of the `Message`.
+on the `EmailMessage` class you will find a method called `Compose()`, this method will give you a fluent API to compose your email so use the `'.'` and intellisense to see all the available function to compose you message, once you're done, call `Build()` to create an instance of the `EmailMessage`.
 
 now we have a message let's try to send it.
 
@@ -127,7 +127,7 @@ var emailService = EmailServiceFactory.Instance
     .Create();
 
 // create the message
-var message = Message.Compose()
+var message = EmailMessage.Compose()
     .To("to@email.net")
     .WithSubject("test email")
     .WithPlainTextContent("this is a test email")
@@ -173,7 +173,7 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         /* compose the email message */
-        var message = Message.Compose()
+        var message = EmailMessage.Compose()
             .To("to@email.net")
             .WithPlainTextContent("this is a test email")
             .WithHtmlContent("<p>this is a test email</p>")
