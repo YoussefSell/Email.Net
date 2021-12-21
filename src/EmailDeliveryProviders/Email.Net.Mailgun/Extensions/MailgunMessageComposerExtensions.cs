@@ -4,7 +4,7 @@
     using Email.Net.EDP.Mailgun;
 
     /// <summary>
-    /// the extensions methods over the <see cref="MessageComposer"/> factory.
+    /// the extensions methods over the <see cref="EmailMessageComposer"/> factory.
     /// </summary>
     public static class MailgunMessageComposerExtensions
     {
@@ -12,16 +12,16 @@
         /// use the test mode when sending the email with Mailgun.
         /// </summary>
         /// <param name="messageComposer">the message composer instance.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public static MessageComposer UseTestMode(this MessageComposer messageComposer)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining.</returns>
+        public static EmailMessageComposer UseTestMode(this EmailMessageComposer messageComposer)
             => messageComposer.PassEdpData(CustomEdpData.TestMode, true);
 
         /// <summary>
         /// enable email tracking when sending the email with Mailgun.
         /// </summary>
         /// <param name="messageComposer">the message composer instance.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public static MessageComposer UseEnableTracking(this MessageComposer messageComposer)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining.</returns>
+        public static EmailMessageComposer UseEnableTracking(this EmailMessageComposer messageComposer)
             => messageComposer.PassEdpData(CustomEdpData.EnableTracking, true);
     }
 }

@@ -13,11 +13,11 @@
     public partial class MailgunEmailDeliveryProvider : IMailgunEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message)
+        public EmailSendingResult Send(EmailMessage message)
             => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message)
+        public async Task<EmailSendingResult> SendAsync(EmailMessage message)
         {
             try
             {
@@ -86,7 +86,7 @@
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="HttpClient"/></returns>
-        public HttpContent CreateMessage(Message message)
+        public HttpContent CreateMessage(EmailMessage message)
         {
             var content = new MultipartFormDataContent();
 

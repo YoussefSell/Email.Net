@@ -144,7 +144,7 @@ namespace Email.Net.Mailgun.Test
                 Domain = TEST_DOMAIN,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -189,7 +189,7 @@ namespace Email.Net.Mailgun.Test
                 Domain = TEST_DOMAIN,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
                 .To(TEST_TO_EMAIL)
@@ -220,7 +220,7 @@ namespace Email.Net.Mailgun.Test
                 Domain = TEST_DOMAIN,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
                 .To(TEST_TO_EMAIL)
@@ -251,7 +251,7 @@ namespace Email.Net.Mailgun.Test
                 Domain = TEST_DOMAIN,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From(TEST_FROM_EMAIL)
                 .ReplyTo("replayto@email.net")
                 .To(TEST_TO_EMAIL)

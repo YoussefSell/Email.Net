@@ -14,7 +14,7 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         /* compose the email message */
-        var message = Message.Compose()
+        var message = EmailMessage.Compose()
             .To("to@email.net")
             .WithPlainTextContent("this is a test email")
             .WithHtmlContent("<p>this is a test email</p>")

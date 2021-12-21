@@ -4,7 +4,7 @@
     using Email.Net.Factories;
 
     /// <summary>
-    /// the extensions methods over the <see cref="MessageComposer"/> factory.
+    /// the extensions methods over the <see cref="EmailMessageComposer"/> factory.
     /// </summary>
     public static class SmtpProviderMessageComposerExtensions
     {
@@ -13,8 +13,8 @@
         /// </summary>
         /// <param name="messageComposer">the message composer instance</param>
         /// <param name="smtpOptions">the smtp options instance</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining</returns>
-        public static MessageComposer UseCustomSmtpOptions(this MessageComposer messageComposer, EDP.Smtp.SmtpOptions smtpOptions)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining</returns>
+        public static EmailMessageComposer UseCustomSmtpOptions(this EmailMessageComposer messageComposer, EDP.Smtp.SmtpOptions smtpOptions)
             => messageComposer.PassEdpData(EdpData.Keys.SmtpOptions, smtpOptions);
     }
 }

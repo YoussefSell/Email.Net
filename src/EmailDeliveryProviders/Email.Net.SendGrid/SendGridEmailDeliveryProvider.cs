@@ -14,11 +14,11 @@
     public partial class SendgridEmailDeliveryProvider : ISendgridEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message)
+        public EmailSendingResult Send(EmailMessage message)
             => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message)
+        public async Task<EmailSendingResult> SendAsync(EmailMessage message)
         {
             try
             {
@@ -109,11 +109,11 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="SendGridMessage"/> from the given <see cref="Message"/>.
+        /// create an instance of <see cref="SendGridMessage"/> from the given <see cref="EmailMessage"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="SendGridMessage"/></returns>
-        public SendGridMessage CreateMessage(Message message)
+        public SendGridMessage CreateMessage(EmailMessage message)
         {
             var mailMessage = new SendGridMessage
             {

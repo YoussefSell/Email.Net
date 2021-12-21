@@ -107,7 +107,7 @@ namespace Email.Net.MailKit.Test
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -151,7 +151,7 @@ namespace Email.Net.MailKit.Test
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -186,7 +186,7 @@ namespace Email.Net.MailKit.Test
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithSubject("test subject")
@@ -221,7 +221,7 @@ namespace Email.Net.MailKit.Test
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -257,7 +257,7 @@ namespace Email.Net.MailKit.Test
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")

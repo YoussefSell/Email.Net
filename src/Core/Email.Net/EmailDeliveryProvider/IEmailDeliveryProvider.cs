@@ -16,12 +16,12 @@
         /// Sends the specified email message.
         /// </summary>
         /// <param name="message">the email message to be send</param>
-        EmailSendingResult Send(Message message);
+        EmailSendingResult Send(EmailMessage message);
 
         /// <summary>
         /// Sends the specified email message.
         /// </summary>
         /// <param name="message">the email message to be send</param>
-        Task<EmailSendingResult> SendAsync(Message message);
+        Task<EmailSendingResult> SendAsync(EmailMessage message);
     }
 }

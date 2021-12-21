@@ -16,7 +16,7 @@
         {
             var edpMock1 = new Mock<IEmailDeliveryProvider>();
             edpMock1.Setup(e => e.Name).Returns(_edp1_name);
-            edpMock1.Setup(e => e.Send(It.IsAny<Message>())).Returns(EmailSendingResult.Success(_edp1_name));
+            edpMock1.Setup(e => e.Send(It.IsAny<EmailMessage>())).Returns(EmailSendingResult.Success(_edp1_name));
             _edp1 = edpMock1.Object;
         }
 

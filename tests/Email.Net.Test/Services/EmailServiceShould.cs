@@ -17,12 +17,12 @@
         {
             var edpMock1 = new Mock<IEmailDeliveryProvider>();
             edpMock1.Setup(e => e.Name).Returns(_edp1_name);
-            edpMock1.Setup(e => e.Send(It.IsAny<Message>())).Returns(EmailSendingResult.Success(_edp1_name));
+            edpMock1.Setup(e => e.Send(It.IsAny<EmailMessage>())).Returns(EmailSendingResult.Success(_edp1_name));
             _edp1 = edpMock1.Object;
 
             var edpMock2 = new Mock<IEmailDeliveryProvider>();
             edpMock2.Setup(e => e.Name).Returns(_edp2_name);
-            edpMock2.Setup(e => e.Send(It.IsAny<Message>())).Returns(EmailSendingResult.Success(_edp2_name));
+            edpMock2.Setup(e => e.Send(It.IsAny<EmailMessage>())).Returns(EmailSendingResult.Success(_edp2_name));
             _edp2 = edpMock2.Object;
         }
 
@@ -108,7 +108,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1, _edp2 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -127,7 +127,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1, _edp2 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -146,7 +146,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -166,7 +166,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -186,7 +186,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -205,7 +205,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -240,7 +240,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name, DefaultFrom = new System.Net.Mail.MailAddress("default@email.net") };
             var service = new EmailService(new[] { _edp1 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
                 .Build();
@@ -259,7 +259,7 @@
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
             var service = new EmailService(new[] { _edp1 }, options);
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
                 .Build();
@@ -278,7 +278,7 @@
             // arrange
             var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name, PauseSending = true };
             var service = new EmailService(new[] { _edp1 }, options);
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithPlainTextContent("test content")

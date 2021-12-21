@@ -105,7 +105,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -154,7 +154,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -202,7 +202,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -250,7 +250,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -285,7 +285,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
                 .WithSubject("test subject")
@@ -320,7 +320,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -356,7 +356,7 @@
                 }
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")

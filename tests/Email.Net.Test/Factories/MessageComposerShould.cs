@@ -10,7 +10,7 @@
     using Xunit;
 
     /// <summary>
-    /// the test class for the <see cref="MessageComposer"/>
+    /// the test class for the <see cref="EmailMessageComposer"/>
     /// </summary>
     public class MessageComposerShould
     {
@@ -18,7 +18,7 @@
         public void CreateMessageWithAllProps()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .To("to@email.net", "to")
                 .From("from@email.net", "from")
                 .ReplyTo("replayto@email.net", "replayto")
@@ -76,7 +76,7 @@
         public void AddPlainTextContent()
         {
             // arrange
-            var composser = Message.Compose().To("to@email.net");
+            var composser = EmailMessage.Compose().To("to@email.net");
 
             // act
             var message = composser
@@ -92,7 +92,7 @@
         public void AddHtmlContent()
         {
             // arrange
-            var composser = Message.Compose().To("to@email.net");
+            var composser = EmailMessage.Compose().To("to@email.net");
 
             // act
             var message = composser
@@ -112,7 +112,7 @@
         public void CreateMessageWithFrom_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("test@email.net");
 
@@ -131,7 +131,7 @@
         public void CreateMessageWithFromHasName_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("test@email.net");
 
@@ -152,7 +152,7 @@
         public void CreateMessageWithFrom_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To(new MailAddress("test@email.net"));
 
@@ -171,7 +171,7 @@
         public void CreateMessageWithFromHasName_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("test@email.net");
 
@@ -197,7 +197,7 @@
         public void ThrowExceptionIfNoToEmail()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content");
 
             // act
@@ -210,7 +210,7 @@
         public void CreateMessageWithTo_FromString()
         {
             // arrange
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expected = "example@email.net";
 
             // act
@@ -227,7 +227,7 @@
         public void CreateMessageWithToHasName_FromString()
         {
             // arrange
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expectedEmail = "example@email.net";
             var expectedName = "user";
 
@@ -246,7 +246,7 @@
         public void CreateMessageWithMultipleTo_FromString()
         {
             // arrange 
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expected1 = "example1@email.net";
             var expected2 = "example2@email.net";
             var expected3 = "example3@email.net";
@@ -267,7 +267,7 @@
         public void CreateMessageWithMultipleToFromStringWithCustomSeparator()
         {
             // arrange 
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expected1 = "example1@email.net";
             var expected2 = "example2@email.net";
             var expected3 = "example3@email.net";
@@ -288,7 +288,7 @@
         public void CreateMessageWithTo_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expected = "example@email.net";
 
             // act
@@ -305,7 +305,7 @@
         public void CreateMessageWithToHasName_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expectedEmail = "example@email.net";
             var expectedName = "user";
 
@@ -324,7 +324,7 @@
         public void CreateMessageWithMultipleTo_FromMailAddress()
         {
             // arrange 
-            var composser = Message.Compose().WithPlainTextContent("test content");
+            var composser = EmailMessage.Compose().WithPlainTextContent("test content");
             var expected1 = "example1@email.net";
             var expected2 = "example2@email.net";
             var expected3 = "example3@email.net";
@@ -353,7 +353,7 @@
         public void CreateMessageWithReplyTo_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -373,7 +373,7 @@
         public void CreateMessageWithReplyToHasName_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -395,7 +395,7 @@
         public void CreateMessageWithMultipleReplyTo_FromString()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -419,7 +419,7 @@
         public void CreateMessageWithMultipleReplyToFromStringWithCusReplyTomSeparaReplyTor()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -443,7 +443,7 @@
         public void CreateMessageWithReplyTo_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -463,7 +463,7 @@
         public void CreateMessageWithReplyToHasName_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -485,7 +485,7 @@
         public void CreateMessageWithMultipleReplyTo_FromMailAddress()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -517,7 +517,7 @@
         public void CreateMessageWithBcc_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -537,7 +537,7 @@
         public void CreateMessageWithBccHasName_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -559,7 +559,7 @@
         public void CreateMessageWithMultipleBcc_FromString()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -583,7 +583,7 @@
         public void CreateMessageWithMultipleBccFromStringWithCusBccmSeparaBccr()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -607,7 +607,7 @@
         public void CreateMessageWithBcc_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -627,7 +627,7 @@
         public void CreateMessageWithBccHasName_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -649,7 +649,7 @@
         public void CreateMessageWithMultipleBcc_FromMailAddress()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -681,7 +681,7 @@
         public void CreateMessageWithCc_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -701,7 +701,7 @@
         public void CreateMessageWithCcHasName_FromString()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -723,7 +723,7 @@
         public void CreateMessageWithMultipleCc_FromString()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -747,7 +747,7 @@
         public void CreateMessageWithMultipleCcFromStringWithCusCcmSeparaCcr()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -771,7 +771,7 @@
         public void CreateMessageWithCc_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -791,7 +791,7 @@
         public void CreateMessageWithCcHasName_FromMailAddress()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -813,7 +813,7 @@
         public void CreateMessageWithMultipleCc_FromMailAddress()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -845,7 +845,7 @@
         public void AddByteArrayAttachment()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -865,7 +865,7 @@
         public void AddBase64Attachment()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -885,7 +885,7 @@
         public void AddFilePathAttachment()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -905,7 +905,7 @@
         public void AddMultipleAttachments()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -930,7 +930,7 @@
         public void AddHeader()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -949,7 +949,7 @@
         public void AddMultipleHeaders()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -980,7 +980,7 @@
         public void AddHeadersFromADictionaryAppendIntenalList()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .WithHeader("key0", "value0")
                 .To("to@email.net");
@@ -1019,7 +1019,7 @@
         public void CreateMessageWithEdpData_FromKeyValue()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1038,7 +1038,7 @@
         public void CreateMessageWithEdpData_FromInstance()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1057,7 +1057,7 @@
         public void CreateMessageWithEdpData_FromListInstance()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1078,7 +1078,7 @@
         public void CreateMessageWithEdpData_FromExtensionMethods()
         {
             // arrange 
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1104,7 +1104,7 @@
         public void MarkMessageWithHighPriority()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1121,7 +1121,7 @@
         public void MarkMessageWithLowPriority()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1138,7 +1138,7 @@
         public void MarkMessageWithNormalPriority()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content")
                 .To("to@email.net");
 
@@ -1159,7 +1159,7 @@
         public void SplitEmailAddressWithEmptySpaces()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content");
 
             // act
@@ -1177,7 +1177,7 @@
         public void ThorwIfEmailIsInInvalidFormat()
         {
             // arrange
-            var composser = Message.Compose()
+            var composser = EmailMessage.Compose()
                 .WithPlainTextContent("test content");
 
             // assert

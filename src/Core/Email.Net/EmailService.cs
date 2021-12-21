@@ -13,15 +13,15 @@
     public partial class EmailService
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message)
+        public EmailSendingResult Send(EmailMessage message)
             => Send(message, _defaultProvider);
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message)
+        public Task<EmailSendingResult> SendAsync(EmailMessage message)
             => SendAsync(message, _defaultProvider);
 
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, string edp_name)
+        public EmailSendingResult Send(EmailMessage message, string edp_name)
         {
             // check if the provider name is valid
             if (edp_name is null)
@@ -36,7 +36,7 @@
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, string edp_name)
+        public Task<EmailSendingResult> SendAsync(EmailMessage message, string edp_name)
         {
             // check if the provider name is valid
             if (edp_name is null)
@@ -51,7 +51,7 @@
         }
 
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message, IEmailDeliveryProvider edp)
+        public EmailSendingResult Send(EmailMessage message, IEmailDeliveryProvider edp)
         {
             // check if given params are not null.
             if (message is null)
@@ -75,7 +75,7 @@
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider edp)
+        public Task<EmailSendingResult> SendAsync(EmailMessage message, IEmailDeliveryProvider edp)
         {
             // check if given params are not null.
             if (message is null)
@@ -161,12 +161,12 @@
         /// check if the message from value is supplied
         /// </summary>
         /// <param name="message">the message instance</param>
-        private void CheckMessageFromValue(Message message)
+        private void CheckMessageFromValue(EmailMessage message)
         {
             if (message.From is null)
             {
                 if (Options.DefaultFrom is null)
-                    throw new ArgumentException($"the {typeof(Message).FullName} [From] value is null, either supply a from value in the message, or set a default [From] value in {typeof(EmailServiceOptions).FullName}");
+                    throw new ArgumentException($"the {typeof(EmailMessage).FullName} [From] value is null, either supply a from value in the message, or set a default [From] value in {typeof(EmailServiceOptions).FullName}");
 
                 message.SetFrom(Options.DefaultFrom);
             }
