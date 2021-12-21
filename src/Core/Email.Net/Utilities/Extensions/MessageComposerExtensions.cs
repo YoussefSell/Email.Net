@@ -4,7 +4,7 @@
     using Email.Net.Factories;
 
     /// <summary>
-    /// the extensions methods over the <see cref="MessageComposer"/> factory.
+    /// the extensions methods over the <see cref="EmailMessageComposer"/> factory.
     /// </summary>
     public static class MessageComposerExtensions
     {
@@ -13,8 +13,8 @@
         /// </summary>
         /// <param name="messageComposer">the message composer instance.</param>
         /// <param name="apiKey">the apiKey to be used.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public static MessageComposer UseCustomApiKey(this MessageComposer messageComposer, string apiKey)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining.</returns>
+        public static EmailMessageComposer UseCustomApiKey(this EmailMessageComposer messageComposer, string apiKey)
             => messageComposer.PassEdpData(EdpData.New(EdpData.Keys.ApiKey, apiKey));
 
         /// <summary>
@@ -22,8 +22,8 @@
         /// </summary>
         /// <param name="messageComposer">the message composer instance.</param>
         /// <param name="messageId">the messageId to be used.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public static MessageComposer SetMessageId(this MessageComposer messageComposer, string messageId)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining.</returns>
+        public static EmailMessageComposer SetMessageId(this EmailMessageComposer messageComposer, string messageId)
             => messageComposer.PassEdpData(EdpData.New(EdpData.Keys.MessageId, messageId));
 
         /// <summary>
@@ -31,8 +31,8 @@
         /// </summary>
         /// <param name="messageComposer">the message composer instance.</param>
         /// <param name="mailingId">the mailing to be used.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public static MessageComposer SetMailingId(this MessageComposer messageComposer, string mailingId)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining.</returns>
+        public static EmailMessageComposer SetMailingId(this EmailMessageComposer messageComposer, string mailingId)
             => messageComposer.PassEdpData(EdpData.New(EdpData.Keys.MailingId, mailingId));
 
         /// <summary>
@@ -40,8 +40,8 @@
         /// </summary>
         /// <param name="messageComposer">the message composer instance.</param>
         /// <param name="campaignId">the campaignId to be used.</param>
-        /// <returns>Instance of <see cref="MessageComposer"/> to enable fluent chaining.</returns>
-        public static MessageComposer SetCampaignId(this MessageComposer messageComposer, string campaignId)
+        /// <returns>Instance of <see cref="EmailMessageComposer"/> to enable fluent chaining.</returns>
+        public static EmailMessageComposer SetCampaignId(this EmailMessageComposer messageComposer, string campaignId)
             => messageComposer.PassEdpData(EdpData.New(EdpData.Keys.CampaignId, campaignId));
     }
 }

@@ -14,7 +14,7 @@
     public partial class SmtpEmailDeliveryProvider : ISmtpEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message)
+        public EmailSendingResult Send(EmailMessage message)
         {
             try
             {
@@ -33,7 +33,7 @@
         }
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message)
+        public async Task<EmailSendingResult> SendAsync(EmailMessage message)
         {
             try
             {
@@ -129,12 +129,12 @@
         }
 
         /// <summary>
-        /// create a <see cref="MailMessage"/> instance from the <see cref="Message"/> instance
+        /// create a <see cref="MailMessage"/> instance from the <see cref="EmailMessage"/> instance
         /// </summary>
-        /// <param name="message">the <see cref="Message"/> instance</param>
+        /// <param name="message">the <see cref="EmailMessage"/> instance</param>
         /// <returns>an instance of <see cref="MailMessage"/></returns>
         /// <exception cref="ArgumentNullException">if the <paramref name="message"/>is null</exception>
-        public MailMessage CreateMessage(Message message)
+        public MailMessage CreateMessage(EmailMessage message)
         {
             var mailMessage = new MailMessage
             {

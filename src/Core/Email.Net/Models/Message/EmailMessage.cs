@@ -10,7 +10,7 @@
     /// <summary>
     /// defines the mail message.
     /// </summary>
-    public partial class Message
+    public partial class EmailMessage
     {
         /// <summary>
         /// Gets or sets the priority of this e-mail message.
@@ -83,12 +83,12 @@
     }
 
     /// <summary>
-    /// partial part for <see cref="Message"/>
+    /// partial part for <see cref="EmailMessage"/>
     /// </summary>
-    public partial class Message
+    public partial class EmailMessage
     {
         /// <summary>
-        /// create instance of <see cref="Message"/> with all properties
+        /// create instance of <see cref="EmailMessage"/> with all properties
         /// </summary>
         /// <param name="subject">the message subject</param>
         /// <param name="plainTextBody">the message plan text body</param>
@@ -103,7 +103,7 @@
         /// <param name="attachments">attachments list</param>
         /// <param name="headers">headers collection</param>
         /// <param name="edpData">the list of edp data</param>
-        internal Message(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers, ICollection<EDP.EdpData> edpData)
+        internal EmailMessage(string subject, string plainTextBody, string htmlBody, string charset, MailAddress from, ICollection<MailAddress> to, Priority priority, ICollection<MailAddress> replyTo, ICollection<MailAddress> bcc, ICollection<MailAddress> cc, ICollection<Attachment> attachments, IDictionary<string, string> headers, ICollection<EDP.EdpData> edpData)
         {
             if (to is null)
                 throw new ArgumentNullException(nameof(to));
@@ -155,10 +155,10 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="MessageComposer"/> to start composing the message data.
+        /// create an instance of <see cref="EmailMessageComposer"/> to start composing the message data.
         /// </summary>
-        /// <returns>instance of <see cref="MessageComposer"/>.</returns>
-        public static MessageComposer Compose()
-            => new MessageComposer();
+        /// <returns>instance of <see cref="EmailMessageComposer"/>.</returns>
+        public static EmailMessageComposer Compose()
+            => new EmailMessageComposer();
     }
 }

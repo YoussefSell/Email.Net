@@ -13,7 +13,7 @@
     public partial class SocketLabsEmailDeliveryProvider : ISocketLabsEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message)
+        public EmailSendingResult Send(EmailMessage message)
         {
             try
             {
@@ -37,7 +37,7 @@
         }
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Message message)
+        public async Task<EmailSendingResult> SendAsync(EmailMessage message)
         {
             try
             {
@@ -129,11 +129,11 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
+        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="EmailMessage"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public BasicMessage CreateMessage(Message message)
+        public BasicMessage CreateMessage(EmailMessage message)
         {
             var messageIdEdpData = message.EdpData.GetData(EdpData.Keys.MessageId);
             var mailingIdEdpData = message.EdpData.GetData(EdpData.Keys.MailingId);

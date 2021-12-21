@@ -62,7 +62,7 @@ namespace Email.Net.AmazonSES.Test
                 RegionEndpoint = Amazon.RegionEndpoint.USWest2,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -101,7 +101,7 @@ namespace Email.Net.AmazonSES.Test
                 RegionEndpoint = Amazon.RegionEndpoint.USWest2,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -130,7 +130,7 @@ namespace Email.Net.AmazonSES.Test
                 RegionEndpoint = Amazon.RegionEndpoint.USWest2,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -160,7 +160,7 @@ namespace Email.Net.AmazonSES.Test
                 RegionEndpoint = Amazon.RegionEndpoint.USWest2,
             });
 
-            var message = Message.Compose()
+            var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")

@@ -3,7 +3,7 @@
     using Email.Net.Factories;
 
     /// <summary>
-    /// the extensions methods over the <see cref="MessageComposer"/> factory.
+    /// the extensions methods over the <see cref="EmailMessageComposer"/> factory.
     /// </summary>
     public static class AmazonSESMessageComposerExtensions
     {

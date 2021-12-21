@@ -23,7 +23,7 @@
         /// the given message doesn't contain a 'From' (sender) email, 
         /// and no default 'From' (sender) email is set in the <see cref="EmailServiceOptions.DefaultFrom"/> option supplied to the EmailService instance.
         /// </exception>
-        EmailSendingResult Send(Message message);
+        EmailSendingResult Send(EmailMessage message);
 
         /// <summary>
         /// Sends the specified email message using the default <see cref="IEmailDeliveryProvider"/>.
@@ -38,7 +38,7 @@
         /// the given message doesn't contain a 'From' (sender) email, 
         /// and no default 'From' (sender) email is set in the <see cref="EmailServiceOptions.DefaultFrom"/> option supplied to the EmailService instance.
         /// </exception>
-        Task<EmailSendingResult> SendAsync(Message message);
+        Task<EmailSendingResult> SendAsync(EmailMessage message);
 
         /// <summary>
         /// Sends the specified email message using the email delivery provider with the given name.
@@ -51,7 +51,7 @@
         /// the given message doesn't contain a 'From' (sender) email, 
         /// and no default 'From' (sender) email is set in the <see cref="EmailServiceOptions.DefaultFrom"/> option supplied to the EmailService instance.
         /// </exception>
-        EmailSendingResult Send(Message message, string edp_name);
+        EmailSendingResult Send(EmailMessage message, string edp_name);
 
         /// <summary>
         /// Sends the specified email message using the email delivery provider with the given name.
@@ -64,7 +64,7 @@
         /// the given message doesn't contain a 'From' (sender) email, 
         /// and no default 'From' (sender) email is set in the <see cref="EmailServiceOptions.DefaultFrom"/> option supplied to the EmailService instance.
         /// </exception>
-        Task<EmailSendingResult> SendAsync(Message message, string edp_name);
+        Task<EmailSendingResult> SendAsync(EmailMessage message, string edp_name);
 
         /// <summary>
         /// Sends the specified email message using the given email delivery provider.
@@ -76,7 +76,7 @@
         /// the given message doesn't contain a 'From' (sender) email, 
         /// and no default 'From' (sender) email is set in the <see cref="EmailServiceOptions.DefaultFrom"/> option supplied to the EmailService instance.
         /// </exception>
-        EmailSendingResult Send(Message message, IEmailDeliveryProvider edp);
+        EmailSendingResult Send(EmailMessage message, IEmailDeliveryProvider edp);
 
         /// <summary>
         /// Sends the specified email message using the given email delivery provider.
@@ -88,6 +88,6 @@
         /// the given message doesn't contain a 'From' (sender) email, 
         /// and no default 'From' (sender) email is set in the <see cref="EmailServiceOptions.DefaultFrom"/> option supplied to the EmailService instance.
         /// </exception>
-        Task<EmailSendingResult> SendAsync(Message message, IEmailDeliveryProvider edp);
+        Task<EmailSendingResult> SendAsync(EmailMessage message, IEmailDeliveryProvider edp);
     }
 }

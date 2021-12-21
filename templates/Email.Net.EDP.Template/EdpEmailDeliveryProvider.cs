@@ -11,7 +11,7 @@
     public partial class EdpEmailDeliveryProvider : IEdpEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Message message)
+        public EmailSendingResult Send(EmailMessage message)
         {
             try
             {
@@ -24,7 +24,7 @@
         }
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(Message message)
+        public Task<EmailSendingResult> SendAsync(EmailMessage message)
         {
             try
             {
@@ -79,11 +79,11 @@
         }
 
         /// <summary>
-        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="Message"/>.
+        /// create an instance of <see cref="BasicMessage"/> from the given <see cref="EmailMessage"/>.
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="BasicMessage"/></returns>
-        public object CreateMessage(Message message)
+        public object CreateMessage(EmailMessage message)
         {
             throw new NotImplementedException();
         }
