@@ -12,11 +12,11 @@
     public partial class AmazonSESEmailDeliveryProvider : IAmazonSESEmailDeliveryProvider
     {
         /// <inheritdoc/>
-        public EmailSendingResult Send(Net.EmailMessage message)
+        public EmailSendingResult Send(EmailMessage message)
             => SendAsync(message).ConfigureAwait(false).GetAwaiter().GetResult();
 
         /// <inheritdoc/>
-        public async Task<EmailSendingResult> SendAsync(Net.EmailMessage message)
+        public async Task<EmailSendingResult> SendAsync(EmailMessage message)
         {
             try
             {
@@ -105,7 +105,7 @@
         /// </summary>
         /// <param name="message">the message instance</param>
         /// <returns>instance of <see cref="SendEmailRequest"/></returns>
-        public SendEmailRequest CreateMessage(Net.EmailMessage message)
+        public SendEmailRequest CreateMessage(EmailMessage message)
         {
             var mailMessage = new SendEmailRequest
             {
