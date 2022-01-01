@@ -17,10 +17,6 @@
             => Send(message, _defaultProvider);
 
         /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(EmailMessage message)
-            => SendAsync(message, _defaultProvider);
-
-        /// <inheritdoc/>
         public EmailSendingResult Send(EmailMessage message, string edp_name)
         {
             // check if the provider name is valid
@@ -33,21 +29,6 @@
 
             // send the email message
             return Send(message, provider);
-        }
-
-        /// <inheritdoc/>
-        public Task<EmailSendingResult> SendAsync(EmailMessage message, string edp_name)
-        {
-            // check if the provider name is valid
-            if (edp_name is null)
-                throw new ArgumentNullException(nameof(edp_name));
-
-            // check if the provider exist
-            if (!_providers.TryGetValue(edp_name, out IEmailDeliveryProvider provider))
-                throw new EmailDeliveryProviderNotFoundException(edp_name);
-
-            // send the email message
-            return SendAsync(message, provider);
         }
 
         /// <inheritdoc/>
@@ -72,6 +53,25 @@
 
             // send the email message
             return edp.Send(message);
+        }
+
+        /// <inheritdoc/>
+        public Task<EmailSendingResult> SendAsync(EmailMessage message)
+            => SendAsync(message, _defaultProvider);
+
+        /// <inheritdoc/>
+        public Task<EmailSendingResult> SendAsync(EmailMessage message, string edp_name)
+        {
+            // check if the provider name is valid
+            if (edp_name is null)
+                throw new ArgumentNullException(nameof(edp_name));
+
+            // check if the provider exist
+            if (!_providers.TryGetValue(edp_name, out IEmailDeliveryProvider provider))
+                throw new EmailDeliveryProviderNotFoundException(edp_name);
+
+            // send the email message
+            return SendAsync(message, provider);
         }
 
         /// <inheritdoc/>
