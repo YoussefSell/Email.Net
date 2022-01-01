@@ -174,13 +174,13 @@
             }
         }
 
-        private class SendGridResponse
+        private sealed class SendGridResponse
         {
             [JsonProperty("errors")]
             public List<Error> Errors { get; set; }
         }
 
-        private class Error
+        private sealed class Error
         {
             [JsonProperty("message")]
             public string Message { get; set; }
