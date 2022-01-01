@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class EnvVariable
+    internal static class EnvVariable
     {
         public static string Load(string name)
         {
