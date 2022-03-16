@@ -4,7 +4,6 @@
 [![](https://img.shields.io/nuget/v/Email.Net)](https://www.nuget.org/packages/Email.Net/)
 ![Build](https://github.com/YoussefSell/Email.Net/actions/workflows/ci.yml/badge.svg)
 
-
 Send emails from your .Net application with a flexible solution that guarantee clean architectures, and access to different types of providers.
 
 ## Quick setup
@@ -19,7 +18,7 @@ when you will send an email, there are three component that you will interact wi
 - **EmailService**: the email service.
 - **Edp**: the Email Delivery Provider.
 
-you first compose your message, than you pass the message to the email service, than service will send the message using an EDP.
+you first compose your message, than you pass it to the email service, than service will send your message using an EDP.
 
 ### 1. EmailMessage
 
@@ -71,7 +70,7 @@ and we will be adding more in the future, but if you want to create your own EDP
 
 ### 3- EmailService
 
-the email service is what you will be interacting with to send emails, to create an instance of email service use can use the email `EmailServiceFactory`
+the email service is what you will be interacting with to send emails, to create an instance of email service you can use the `EmailServiceFactory`
 
 ```csharp
 var emailService = EmailServiceFactory.Instance
