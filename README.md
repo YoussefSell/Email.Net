@@ -12,7 +12,7 @@ to get started install the package using the [NuGet](https://www.nuget.org/packa
 
 ## Getting started
 
-when you will send an email, there are three component that you will interact with:
+when you will send an emails using Email.Net, there are three component that you will interact with:
 
 - **EmailMessage**: the email message content to be sent.
 - **EmailService**: the email service.
@@ -56,7 +56,7 @@ now we have a message let's try to send it.
 
 ### 2- EDPs [Email Delivery Provider]
 
-EDPs are what actually used to send the emails under the hood, when you install Email.Net you get an EDP by default which is `SmtpEmailDeliveryProvider` that you can use to send emails using SMTP.
+EDPs are what actually used to send the emails under the hood, when you install Email.Net you get an EDP by default which is `SmtpEmailDeliveryProvider` that you can use to send emails using SmtpClient.
 
 we have also other EDPs that you can use, but they exist in a separate packages:
 
@@ -102,8 +102,8 @@ on the `EmailServiceFactory` class you will find a static property `Instance` th
 starting with `UseOptions()` you can configure the `EmailService` options, there are three options:
 
 - **PauseSending:** to pause the sending of emails, if set to true nothing will be sent.
-- **DefaultFrom:** you can set the default Sender email, so that you don't have to do it each time on the message, note that if you have specified a Sender email on the message this value will be ignored.
-- **DefaultEmailDeliveryProvider:** specify the default EDP that should be used to send the emails, because you can configure multiple EDPs you should indicate which one you want to be used.
+- **DefaultFrom:** to set the default Sender email, so that you don't have to do it each time on the message, note that if you have specified a Sender email on the message this value will be ignored.
+- **DefaultEmailDeliveryProvider:** to specify the default EDP that should be used to send the emails, because you can configure multiple EDPs you should indicate which one you want to be used.
 
 `UseEDP()` takes an instance of the EDP, like so: `UseEDP(new SmtpEmailDeliveryProvider(configuration))`, but you're not going to use this method, instead you will use the extension methods given to you by the EDPs as we seen on the example above, the SMTP EDP has an extension method `UseSmtp()` that will allow you to register it.
 
