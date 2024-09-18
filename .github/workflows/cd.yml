@@ -20,7 +20,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Pack Email.Net
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/Core/Email.Net/Email.Net.csproj -o .
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/Email.Net/Email.Net.csproj -o .
       - name: Pack Email.Net.Socketlabs
         run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryChannels/Email.Net.Socketlabs/Email.Net.Socketlabs.csproj -o .
       - name: Pack Email.Net.SendGrid

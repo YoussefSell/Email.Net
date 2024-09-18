@@ -43,29 +43,29 @@
 
             Assert.Equal("test content", message.PlainTextBody);
 
-            Assert.Equal(1, message.To.Count);
+            Assert.Single(message.To);
             Assert.Equal("to", message.To.First().DisplayName);
             Assert.Equal("to@email.net", message.To.First().Address);
 
             Assert.Equal("from", message.From.DisplayName);
             Assert.Equal("from@email.net", message.From.Address);
 
-            Assert.Equal(1, message.Bcc.Count);
+            Assert.Single(message.Bcc);
             Assert.Equal("bcc", message.Bcc.First().DisplayName);
             Assert.Equal("bcc@email.net", message.Bcc.First().Address);
 
-            Assert.Equal(1, message.Cc.Count);
+            Assert.Single(message.Cc);
             Assert.Equal("cc", message.Cc.First().DisplayName);
             Assert.Equal("cc@email.net", message.Cc.First().Address);
 
-            Assert.Equal(1, message.Headers.Count);
+            Assert.Single(message.Headers);
             Assert.Equal("key", message.Headers.First().Key);
             Assert.Equal("value", message.Headers.First().Value);
 
-            Assert.Equal(1, message.Attachments.Count);
+            Assert.Single(message.Attachments);
             Assert.Equal("test_file.txt", message.Attachments.First().FileName);
 
-            Assert.Equal(1, message.ChannelData.Count);
+            Assert.Single(message.ChannelData);
             Assert.Equal(ChannelData.Keys.ApiKey, message.ChannelData.First().Key);
             Assert.Equal("KEY-1", message.ChannelData.First().Value);
         }
@@ -184,7 +184,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.To.Count);
+            Assert.Single(message.To);
             Assert.Equal(expectedEmail, message.From.Address);
             Assert.Equal(expectedName, message.From.DisplayName);
         }
@@ -219,7 +219,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.To.Count);
+            Assert.Single(message.To);
             Assert.Equal(expected, message.To.First().Address);
         }
 
@@ -237,7 +237,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.To.Count);
+            Assert.Single(message.To);
             Assert.Equal(expectedEmail, message.To.First().Address);
             Assert.Equal(expectedName, message.To.First().DisplayName);
         }
@@ -297,7 +297,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.To.Count);
+            Assert.Single(message.To);
             Assert.Equal(expected, message.To.First().Address);
         }
 
@@ -315,7 +315,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.To.Count);
+            Assert.Single(message.To);
             Assert.Equal(expectedEmail, message.To.First().Address);
             Assert.Equal(expectedName, message.To.First().DisplayName);
         }
@@ -365,7 +365,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.ReplyTo.Count);
+            Assert.Single(message.ReplyTo);
             Assert.Equal(expected, message.ReplyTo.First().Address);
         }
 
@@ -386,7 +386,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.ReplyTo.Count);
+            Assert.Single(message.ReplyTo);
             Assert.Equal(expectedEmail, message.ReplyTo.First().Address);
             Assert.Equal(expectedName, message.ReplyTo.First().DisplayName);
         }
@@ -455,7 +455,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.ReplyTo.Count);
+            Assert.Single(message.ReplyTo);
             Assert.Equal(expected, message.ReplyTo.First().Address);
         }
 
@@ -476,7 +476,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.ReplyTo.Count);
+            Assert.Single(message.ReplyTo);
             Assert.Equal(expectedEmail, message.ReplyTo.First().Address);
             Assert.Equal(expectedName, message.ReplyTo.First().DisplayName);
         }
@@ -529,7 +529,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Bcc.Count);
+            Assert.Single(message.Bcc);
             Assert.Equal(expected, message.Bcc.First().Address);
         }
 
@@ -550,7 +550,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Bcc.Count);
+            Assert.Single(message.Bcc);
             Assert.Equal(expectedEmail, message.Bcc.First().Address);
             Assert.Equal(expectedName, message.Bcc.First().DisplayName);
         }
@@ -619,7 +619,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Bcc.Count);
+            Assert.Single(message.Bcc);
             Assert.Equal(expected, message.Bcc.First().Address);
         }
 
@@ -640,7 +640,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Bcc.Count);
+            Assert.Single(message.Bcc);
             Assert.Equal(expectedEmail, message.Bcc.First().Address);
             Assert.Equal(expectedName, message.Bcc.First().DisplayName);
         }
@@ -693,7 +693,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Cc.Count);
+            Assert.Single(message.Cc);
             Assert.Equal(expected, message.Cc.First().Address);
         }
 
@@ -714,7 +714,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Cc.Count);
+            Assert.Single(message.Cc);
             Assert.Equal(expectedEmail, message.Cc.First().Address);
             Assert.Equal(expectedName, message.Cc.First().DisplayName);
         }
@@ -783,7 +783,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Cc.Count);
+            Assert.Single(message.Cc);
             Assert.Equal(expected, message.Cc.First().Address);
         }
 
@@ -804,7 +804,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Cc.Count);
+            Assert.Single(message.Cc);
             Assert.Equal(expectedEmail, message.Cc.First().Address);
             Assert.Equal(expectedName, message.Cc.First().DisplayName);
         }
@@ -857,7 +857,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Attachments.Count);
+            Assert.Single(message.Attachments);
             Assert.Equal(attachment, message.Attachments.First());
         }
 
@@ -877,7 +877,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Attachments.Count);
+            Assert.Single(message.Attachments);
             Assert.Equal(attachment, message.Attachments.First());
         }
 
@@ -897,7 +897,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Attachments.Count);
+            Assert.Single(message.Attachments);
             Assert.Equal(attachment, message.Attachments.First());
         }
 
@@ -940,7 +940,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.Headers.Count);
+            Assert.Single(message.Headers);
             Assert.Equal("key", message.Headers.First().Key);
             Assert.Equal("value", message.Headers.First().Value);
         }
@@ -1029,7 +1029,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.ChannelData.Count);
+            Assert.Single(message.ChannelData);
             Assert.Equal("key", message.ChannelData.First().Key);
             Assert.Equal("value", message.ChannelData.First().Value);
         }
@@ -1048,7 +1048,7 @@
                 .Build();
 
             // assert
-            Assert.Equal(1, message.ChannelData.Count);
+            Assert.Single(message.ChannelData);
             Assert.Equal("key", message.ChannelData.First().Key);
             Assert.Equal("value", message.ChannelData.First().Value);
         }
