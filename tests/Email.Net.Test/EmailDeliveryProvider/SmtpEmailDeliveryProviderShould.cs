@@ -1,17 +1,17 @@
-﻿namespace Email.Net.Test.EDP
+﻿namespace Email.Net.Test.Channel
 {
-    using Email.Net.EDP.Smtp;
+    using Email.Net.Channel.Smtp;
     using Email.Net.Exceptions;
     using System;
     using System.IO;
     using System.Linq;
     using Xunit;
 
-    public class SmtpEmailDeliveryProviderShould : IDisposable
+    public class SmtpEmailDeliveryChannelshould : IDisposable
     {
         private readonly string tempOutDirectory;
 
-        public SmtpEmailDeliveryProviderShould()
+        public SmtpEmailDeliveryChannelshould()
         {
             tempOutDirectory = Path.Combine(Path.GetTempPath(), "Email.Net");
             Directory.CreateDirectory(tempOutDirectory);
@@ -27,13 +27,13 @@
         public void ThorwIfOptionsIsNull()
         {
             // arrange
-            SmtpEmailDeliveryProviderOptions? options = null;
+            SmtpEmailDeliveryChannelOptions? options = null;
 
             // assert
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // act
-                var edp = new SmtpEmailDeliveryProvider(options);
+                var channel = new SmtpEmailDeliveryChannel(options);
             });
         }
 
@@ -41,13 +41,13 @@
         public void ThorwIfOptionsNotValid_SmtpOptionsIsNull()
         {
             // arrange
-            var options = new SmtpEmailDeliveryProviderOptions();
+            var options = new SmtpEmailDeliveryChannelOptions();
 
             // assert
             Assert.Throws<RequiredOptionValueNotSpecifiedException<EmailServiceOptions>>(() =>
             {
                 // act
-                var edp = new SmtpEmailDeliveryProvider(options);
+                var channel = new SmtpEmailDeliveryChannel(options);
             });
         }
 
@@ -55,7 +55,7 @@
         public void ThorwIfOptionsNotValid_SmtpOptions_HostIsNull()
         {
             // arrange
-            var options = new SmtpEmailDeliveryProviderOptions()
+            var options = new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -67,7 +67,7 @@
             Assert.Throws<RequiredOptionValueNotSpecifiedException<SmtpOptions>>(() =>
             {
                 // act
-                var edp = new SmtpEmailDeliveryProvider(options);
+                var channel = new SmtpEmailDeliveryChannel(options);
             });
         }
 
@@ -75,7 +75,7 @@
         public void ThorwIfOptionsNotValid_SmtpOptions_PortIsZero()
         {
             // arrange
-            var options = new SmtpEmailDeliveryProviderOptions()
+            var options = new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -88,7 +88,7 @@
             Assert.Throws<RequiredOptionValueNotSpecifiedException<SmtpOptions>>(() =>
             {
                 // act
-                var edp = new SmtpEmailDeliveryProvider(options);
+                var channel = new SmtpEmailDeliveryChannel(options);
             });
         }
 
@@ -96,7 +96,7 @@
         public void CreateMailMessageFromMessage()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -119,7 +119,7 @@
                 .Build();
 
             // act
-            var mailMessage = edp.CreateMessage(message);
+            var mailMessage = channel.CreateMessage(message);
 
             // assert
             Assert.Equal(message.From.Address, mailMessage.From?.Address);
@@ -145,7 +145,7 @@
         public void CreateMailMessageFromMessage_WithHtmlContnetOnly()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -167,7 +167,7 @@
                 .Build();
 
             // act
-            var mailMessage = edp.CreateMessage(message);
+            var mailMessage = channel.CreateMessage(message);
 
             // assert
             Assert.Equal(message.From.Address, mailMessage.From?.Address);
@@ -193,7 +193,7 @@
         public void CreateMailMessageFromMessage_WithPlainTextContnetOnly()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -215,7 +215,7 @@
                 .Build();
 
             // act
-            var mailMessage = edp.CreateMessage(message);
+            var mailMessage = channel.CreateMessage(message);
 
             // assert
             Assert.Equal(message.From.Address, mailMessage.From?.Address);
@@ -241,7 +241,7 @@
         public void SendEmail()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -264,7 +264,7 @@
                 .Build();
 
             // act
-            var result = edp.Send(message);
+            var result = channel.Send(message);
             var files = Directory.EnumerateFiles(tempOutDirectory, "*.eml");
 
             // assert
@@ -276,7 +276,7 @@
         public void SendEmailUsingCustomSmtpOptions()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -298,7 +298,7 @@
                 .Build();
 
             // act
-            var result = edp.Send(message);
+            var result = channel.Send(message);
 
             var files = Directory.EnumerateFiles(tempOutDirectory, "*.eml");
 
@@ -311,7 +311,7 @@
         public void SendEmailWithBase64Attachement()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -335,7 +335,7 @@
                 .Build();
 
             // act
-            var result = edp.Send(message);
+            var result = channel.Send(message);
             var files = Directory.EnumerateFiles(tempOutDirectory, "*.eml");
 
             // assert
@@ -347,7 +347,7 @@
         public void SendEmailWithFilePathAttachement()
         {
             // arrange
-            var edp = new SmtpEmailDeliveryProvider(new SmtpEmailDeliveryProviderOptions()
+            var channel = new SmtpEmailDeliveryChannel(new SmtpEmailDeliveryChannelOptions()
             {
                 SmtpOptions = new SmtpOptions
                 {
@@ -371,7 +371,7 @@
                 .Build();
 
             // act
-            var result = edp.Send(message);
+            var result = channel.Send(message);
             var files = Directory.EnumerateFiles(tempOutDirectory, "*.eml");
 
             // assert

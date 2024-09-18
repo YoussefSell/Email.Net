@@ -1,6 +1,6 @@
 ﻿namespace Email.Net.Test.Factories
 {
-    using Email.Net.EDP;
+    using Email.Net.Channel;
     using Email.Net.Factories;
     using System;
     using System.Collections.Generic;
@@ -65,9 +65,9 @@
             Assert.Equal(1, message.Attachments.Count);
             Assert.Equal("test_file.txt", message.Attachments.First().FileName);
 
-            Assert.Equal(1, message.EdpData.Count);
-            Assert.Equal(EdpData.Keys.ApiKey, message.EdpData.First().Key);
-            Assert.Equal("KEY-1", message.EdpData.First().Value);
+            Assert.Equal(1, message.ChannelData.Count);
+            Assert.Equal(ChannelData.Keys.ApiKey, message.ChannelData.First().Key);
+            Assert.Equal("KEY-1", message.ChannelData.First().Value);
         }
 
         #region Message "Content" value test
@@ -1013,10 +1013,10 @@
 
         #endregion
 
-        #region Message "EdpData" value tests
+        #region Message "ChannelData" value tests
 
         [Fact]
-        public void CreateMessageWithEdpData_FromKeyValue()
+        public void CreateMessageWithChannelData_FromKeyValue()
         {
             // arrange
             var composser = EmailMessage.Compose()
@@ -1025,17 +1025,17 @@
 
             // act
             var message = composser
-                .PassEdpData("key", "value")
+                .PassChannelData("key", "value")
                 .Build();
 
             // assert
-            Assert.Equal(1, message.EdpData.Count);
-            Assert.Equal("key", message.EdpData.First().Key);
-            Assert.Equal("value", message.EdpData.First().Value);
+            Assert.Equal(1, message.ChannelData.Count);
+            Assert.Equal("key", message.ChannelData.First().Key);
+            Assert.Equal("value", message.ChannelData.First().Value);
         }
 
         [Fact]
-        public void CreateMessageWithEdpData_FromInstance()
+        public void CreateMessageWithChannelData_FromInstance()
         {
             // arrange
             var composser = EmailMessage.Compose()
@@ -1044,17 +1044,17 @@
 
             // act
             var message = composser
-                .PassEdpData(new EdpData("key", "value"))
+                .PassChannelData(new ChannelData("key", "value"))
                 .Build();
 
             // assert
-            Assert.Equal(1, message.EdpData.Count);
-            Assert.Equal("key", message.EdpData.First().Key);
-            Assert.Equal("value", message.EdpData.First().Value);
+            Assert.Equal(1, message.ChannelData.Count);
+            Assert.Equal("key", message.ChannelData.First().Key);
+            Assert.Equal("value", message.ChannelData.First().Value);
         }
 
         [Fact]
-        public void CreateMessageWithEdpData_FromListInstance()
+        public void CreateMessageWithChannelData_FromListInstance()
         {
             // arrange 
             var composser = EmailMessage.Compose()
@@ -1063,19 +1063,19 @@
 
             // act
             var message = composser
-                .PassEdpData(new[] { new EdpData("key1", "value"), new EdpData("key2", "value") })
+                .PassChannelData(new[] { new ChannelData("key1", "value"), new ChannelData("key2", "value") })
                 .Build();
 
             // assert
-            Assert.Equal(2, message.EdpData.Count);
-            Assert.Equal("key1", message.EdpData.First().Key);
-            Assert.Equal("value", message.EdpData.First().Value);
-            Assert.Equal("key2", message.EdpData.Skip(1).First().Key);
-            Assert.Equal("value", message.EdpData.Skip(1).First().Value);
+            Assert.Equal(2, message.ChannelData.Count);
+            Assert.Equal("key1", message.ChannelData.First().Key);
+            Assert.Equal("value", message.ChannelData.First().Value);
+            Assert.Equal("key2", message.ChannelData.Skip(1).First().Key);
+            Assert.Equal("value", message.ChannelData.Skip(1).First().Value);
         }
 
         [Fact]
-        public void CreateMessageWithEdpData_FromExtensionMethods()
+        public void CreateMessageWithChannelData_FromExtensionMethods()
         {
             // arrange 
             var composser = EmailMessage.Compose()
@@ -1089,11 +1089,11 @@
                 .Build();
 
             // assert
-            Assert.Equal(2, message.EdpData.Count);
-            Assert.Equal(EdpData.Keys.ApiKey, message.EdpData.First().Key);
-            Assert.Equal("API-KEY", message.EdpData.First().Value);
-            Assert.Equal(EdpData.Keys.MailingId, message.EdpData.Skip(1).First().Key);
-            Assert.Equal("messageId", message.EdpData.Skip(1).First().Value);
+            Assert.Equal(2, message.ChannelData.Count);
+            Assert.Equal(ChannelData.Keys.ApiKey, message.ChannelData.First().Key);
+            Assert.Equal("API-KEY", message.ChannelData.First().Value);
+            Assert.Equal(ChannelData.Keys.MailingId, message.ChannelData.Skip(1).First().Key);
+            Assert.Equal("messageId", message.ChannelData.Skip(1).First().Value);
         }
 
         #endregion

@@ -4,7 +4,7 @@
 [![](https://img.shields.io/nuget/v/Email.Net)](https://www.nuget.org/packages/Email.Net/)
 ![Build](https://github.com/YoussefSell/Email.Net/actions/workflows/ci.yml/badge.svg)
 
-Send emails from your .Net application with a flexible solution that guarantee clean architectures, and access to different types of providers.
+Email.Net simplifies sending emails in .NET applications, providing a clean architecture with access to multiple email delivery channels.
 
 ## Quick setup
 
@@ -16,9 +16,9 @@ when you will send an emails using Email.Net, there are three component that you
 
 - **EmailMessage**: the email message content to be sent.
 - **EmailService**: the email service.
-- **Edp**: the Email Delivery Provider.
+- **Channel**: the Email Delivery Channel.
 
-you first compose your message, than you pass it to the email service, than service will send your message using an EDP.
+you first compose your message, than you pass it to the email service, than service will send your message using an Channel.
 
 ### 1. EmailMessage
 
@@ -36,7 +36,7 @@ the message contain your email content, which includes the following
 - **Attachments:** the list of attachments.
 - **Priority:** the priority of this email message.
 - **Headers:** custom headers to be sent with this email message.
-- **EdpData:** custom data to be passed to the EDP used for sending the email.
+- **ChannelData:** custom data to be passed to the Channel used for sending the email.
 
 now let see how can we compose a message:
 
@@ -54,11 +54,11 @@ on the `EmailMessage` class you will find a method called `Compose()`, this meth
 
 now we have a message let's try to send it.
 
-### 2- EDPs [Email Delivery Provider]
+### 2- Channels [Email Delivery Channel]
 
-EDPs are what actually used to send the emails under the hood, when you install Email.Net you get an EDP by default which is `SmtpEmailDeliveryProvider` that you can use to send emails using SmtpClient.
+Channels are what actually used to send the emails under the hood, when you install Email.Net you get a channel by default which is `SmtpEmailDeliveryChannel`, which uses SmtpClient to send emails.
 
-we have also other EDPs that you can use, but they exist in a separate packages:
+we have also other Channels that you can use, but they exist in a separate packages:
 
 - **[Email.Net.Socketlabs](https://www.nuget.org/packages/Email.Net.Socketlabs/):** to send emails using Socketlabs.
 - **[Email.Net.SendGrid](https://www.nuget.org/packages/Email.Net.SendGrid/):** to send emails using SendGrid.
@@ -66,11 +66,11 @@ we have also other EDPs that you can use, but they exist in a separate packages:
 - **[Email.Net.Mailgun](https://www.nuget.org/packages/Email.Net.Mailgun/):** to send emails using Mailgun.
 - **[Email.Net.AmazonSES](https://www.nuget.org/packages/Email.Net.AmazonSES/):** to send emails using AmazonSES.
 
-and we will be adding more in the future, but if you want to create your own EDP you can follow this [tutorial](#) and you will learn how to build one.
+and we will be adding more in the future, but if you want to create your own Channel you can follow this [guide](#) and you will learn how to build one.
 
 ### 3- EmailService
 
-the email service is what you will be interacting with to send emails, to create an instance of email service you can use the `EmailServiceFactory`
+the email service is what you will be interacting with to send emails, to create an instance of the service you can use the `EmailServiceFactory`
 
 ```csharp
 var emailService = EmailServiceFactory.Instance
@@ -85,27 +85,27 @@ var emailService = EmailServiceFactory.Instance
         /* used to specify the default from to be used when sending the emails */
         options.DefaultFrom = new MailAddress("from@email.net");
 
-        /* set the default EDP to be used for sending the emails */
-        options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+        /* set the default Channel to be used for sending the emails */
+        options.DefaultEmailDeliveryChannel = SmtpEmailDeliveryChannel.Name;
     })
-    // register the EDPs
+    // register the Channels
     .UseSmtp(options => options.UseGmailSmtp("your-email@gmail.com", "password"))
     .Create();
 ```
 
-on the `EmailServiceFactory` class you will find a static property `Instance` that give you an instance of the factory, than you will have access to three methods on the factory:
+The `EmailServiceFactory.Instance` provides a fluent API with three key methods:
 
-- **UseOptions():** to configure the email service options.
-- **UseEDP():** to register the EDPs to be used for sending emails.
-- **Create():** to create an instance of the EmailService.
+- **UseOptions():** Configure the email service options.
+- **UseChannel():** Register the Channels to be used for sending emails.
+- **Create():** Build and return the EmailService instance.
 
 starting with `UseOptions()` you can configure the `EmailService` options, there are three options:
 
 - **PauseSending:** to pause the sending of emails, if set to true nothing will be sent.
 - **DefaultFrom:** to set the default Sender email, so that you don't have to do it each time on the message, note that if you have specified a Sender email on the message this value will be ignored.
-- **DefaultEmailDeliveryProvider:** to specify the default EDP that should be used to send the emails, because you can configure multiple EDPs you should indicate which one you want to be used.
+- **DefaultEmailDeliveryChannel:** to specify the default Channel that should be used to send the emails, because you can configure multiple Channels you should indicate which one you want to be used by default.
 
-`UseEDP()` takes an instance of the EDP, like so: `UseEDP(new SmtpEmailDeliveryProvider(configuration))`, but you're not going to use this method, instead you will use the extension methods given to you by the EDPs as we seen on the example above, the SMTP EDP has an extension method `UseSmtp()` that will allow you to register it.
+`UseChannel()` takes an instance of the Channel, like so: `UseChannel(new SmtpEmailDeliveryChannel(configuration))`, but you're not going to use this method, instead you will use the extension methods given to you by the Channels as we seen on the example above, the SMTP Channel has an extension method `UseSmtp()` that will allow you to register it.
 
 finally `Create()` will simply create an instance of the `EmailService`.
 
@@ -120,7 +120,7 @@ var emailService = EmailServiceFactory.Instance
     {
         options.PauseSending = false;
         options.DefaultFrom = new MailAddress("from@email.net");
-        options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+        options.DefaultEmailDeliveryChannel = SmtpEmailDeliveryChannel.Name;
     })
     .UseSmtp(options => options.UseGmailSmtp("your-email@gmail.com", "password"))
     .Create();
@@ -140,9 +140,7 @@ var result = emailService.Send(message);
 
 ## working with Dependency Injection
 
-to register Email.Net with DI we need to use [**Email.Net.DependencyInjection**](https://www.nuget.org/packages/Email.Net.DependencyInjection/) package, this package contains an extension method on the `IServiceCollection` interface that register the `EmailService` as a Scoped service.
-
-once you have the package downloaded you can register Email.Net like so:
+to register Email.Net with DI all you have to do is call the `AddEmailNet` method on the Services collection like so:
 
 ```csharp
 // add Email.Net configuration
@@ -150,7 +148,7 @@ services.AddEmailNet(options =>
 {
     options.PauseSending = false;
     options.DefaultFrom = new MailAddress("from@email.net");
-    options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+    options.DefaultEmailDeliveryChannel = SmtpEmailDeliveryChannel.Name;
 })
 .UseSmtp(options => options.UseGmailSmtp("your-email@gmail.com", "password"));
 ```
@@ -179,7 +177,7 @@ public class IndexModel : PageModel
             .WithHighPriority()
             .Build();
 
-        /* send the message, this will use the default EDP set in the option */
+        /* send the message, this will use the default Channel set in the option */
         var result = _emailService.Send(message);
 
         /* log the result */

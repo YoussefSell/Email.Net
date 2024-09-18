@@ -1,16 +1,16 @@
 ﻿namespace Email.Net.Test.Models
 {
-    using Email.Net.EDP;
+    using Email.Net.Channel;
     using Xunit;
 
-    public class EdpDataShould
+    public class ChannelDataShould
     {
         [Fact]
         public void EqualIfHaveSameKey()
         {
             // arrange
-            var other1 = new EdpData(key: "key1", value: "this is a test");
-            var other2 = new EdpData(key: "key1", value: 12);
+            var other1 = new ChannelData(key: "key1", value: "this is a test");
+            var other2 = new ChannelData(key: "key1", value: 12);
 
             // act
             var equlas = other1 == other2;
@@ -23,8 +23,8 @@
         public void NotEqualIfHaveDeferentKey()
         {
             // arrange
-            var other1 = new EdpData(key: "key1", value: "this is a test");
-            var other2 = new EdpData(key: "key2", value: 12);
+            var other1 = new ChannelData(key: "key1", value: "this is a test");
+            var other2 = new ChannelData(key: "key2", value: 12);
 
             // act
             var equlas = other1 == other2;
@@ -37,8 +37,8 @@
         public void HaveSameHashIfTheyHaveSameKey()
         {
             // arrange
-            var other1 = new EdpData(key: "key1", value: "this is a test");
-            var other2 = new EdpData(key: "key1", value: 12);
+            var other1 = new ChannelData(key: "key1", value: "this is a test");
+            var other2 = new ChannelData(key: "key1", value: 12);
 
             // act
             var equlas = other1.GetHashCode() == other2.GetHashCode();

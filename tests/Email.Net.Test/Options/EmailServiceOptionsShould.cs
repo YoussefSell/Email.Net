@@ -9,7 +9,7 @@
         public void ThrowIfFRequiredValueIsNotSpecified()
         {
             // arrange
-            var options = new EmailServiceOptions() { DefaultEmailDeliveryProvider = null };
+            var options = new EmailServiceOptions() { DefaultEmailDeliveryChannel = null };
 
             // assert
             Assert.Throws<RequiredOptionValueNotSpecifiedException<EmailServiceOptions>>(() =>

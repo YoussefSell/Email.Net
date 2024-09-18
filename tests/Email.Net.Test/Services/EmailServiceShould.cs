@@ -1,33 +1,31 @@
 ﻿namespace Email.Net.Test.Services
 {
-    using Email.Net.EDP;
+    using Email.Net.Channel;
     using Email.Net.Exceptions;
-    using Moq;
+    using NSubstitute;
     using System;
     using Xunit;
 
     public class EmailServiceShould
     {
-        private const string _edp1_name = "mock1_edp";
-        private const string _edp2_name = "mock2_edp";
-        private readonly IEmailDeliveryProvider _edp1;
-        private readonly IEmailDeliveryProvider _edp2;
+        private const string _channel1_name = "mock1_channel";
+        private const string _channel2_name = "mock2_channel";
+        private readonly IEmailDeliveryChannel _channel1;
+        private readonly IEmailDeliveryChannel _channel2;
 
         public EmailServiceShould()
         {
-            var edpMock1 = new Mock<IEmailDeliveryProvider>();
-            edpMock1.Setup(e => e.Name).Returns(_edp1_name);
-            edpMock1.Setup(e => e.Send(It.IsAny<EmailMessage>())).Returns(EmailSendingResult.Success(_edp1_name));
-            _edp1 = edpMock1.Object;
+            _channel1 = Substitute.For<IEmailDeliveryChannel>();
+            _channel1.Name.Returns(_channel1_name);
+            _channel1.Send(message: Arg.Any<EmailMessage>()).Returns(EmailSendingResult.Success(_channel1_name));
 
-            var edpMock2 = new Mock<IEmailDeliveryProvider>();
-            edpMock2.Setup(e => e.Name).Returns(_edp2_name);
-            edpMock2.Setup(e => e.Send(It.IsAny<EmailMessage>())).Returns(EmailSendingResult.Success(_edp2_name));
-            _edp2 = edpMock2.Object;
+            _channel2 = Substitute.For<IEmailDeliveryChannel>();
+            _channel2.Name.Returns(_channel2_name);
+            _channel2.Send(message: Arg.Any<EmailMessage>()).Returns(EmailSendingResult.Success(_channel2_name));
         }
 
         [Fact]
-        public void ThorwIfEmailDeliveryProvidersNull()
+        public void ThorwIfEmailDeliveryChannelsNull()
         {
             // arrange
             var options = new EmailServiceOptions();
@@ -42,18 +40,18 @@
         }
 
         [Fact]
-        public void ThorwIfEmailDeliveryProvidersEmpty()
+        public void ThorwIfEmailDeliveryChannelsEmpty()
         {
             // arrange
             var options = new EmailServiceOptions();
-            var edps = Array.Empty<IEmailDeliveryProvider>();
+            var channels = Array.Empty<IEmailDeliveryChannel>();
 
             // act
 
             // assert
             Assert.Throws<ArgumentException>(() =>
             {
-                var service = new EmailService(edps, options);
+                var service = new EmailService(channels, options);
             });
         }
 
@@ -68,7 +66,7 @@
             // assert
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var service = new EmailService(new[] { _edp1 }, options);
+                var service = new EmailService(new[] { _channel1 }, options);
             });
         }
 
@@ -83,31 +81,31 @@
             // assert
             Assert.Throws<RequiredOptionValueNotSpecifiedException<EmailServiceOptions>>(() =>
             {
-                var service = new EmailService(new[] { _edp1 }, options);
+                var service = new EmailService(new[] { _channel1 }, options);
             });
         }
 
         [Fact]
-        public void ThorwIfDefaultEdpNotFound()
+        public void ThorwIfDefaultChannelNotFound()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = "not_exist_edp" };
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = "not_exist_channel" };
 
             // act
 
             // assert
-            Assert.Throws<EmailDeliveryProviderNotFoundException>(() =>
+            Assert.Throws<EmailDeliveryChannelNotFoundException>(() =>
             {
-                var service = new EmailService(new[] { _edp1 }, options);
+                var service = new EmailService(new[] { _channel1 }, options);
             });
         }
 
         [Fact]
-        public void SendMessageWithDefaultProvider()
+        public void SendMessageWithDefaultChannel()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1, _edp2 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1, _channel2 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
@@ -118,15 +116,15 @@
             var result = service.Send(message);
 
             // assert
-            Assert.Equal(_edp1_name, result.EdpName);
+            Assert.Equal(_channel1_name, result.ChannelName);
         }
 
         [Fact]
-        public void SendMessageWithProviderOfGivenName()
+        public void SendMessageWithChannelOfGivenName()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1, _edp2 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1, _channel2 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
@@ -134,18 +132,18 @@
                 .Build();
 
             // act
-            var result = service.Send(message, _edp2_name);
+            var result = service.Send(message, _channel2_name);
 
             // assert
-            Assert.Equal(_edp2_name, result.EdpName);
+            Assert.Equal(_channel2_name, result.ChannelName);
         }
 
         [Fact]
-        public void ThrowIfGivenEdpNameForSendMessageNotExist()
+        public void ThrowIfGivenChannelNameForSendMessageNotExist()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
@@ -153,19 +151,19 @@
                 .Build();
 
             // assert
-            Assert.Throws<EmailDeliveryProviderNotFoundException>(() =>
+            Assert.Throws<EmailDeliveryChannelNotFoundException>(() =>
             {
                 // act
-                var result = service.Send(message, _edp2_name);
+                var result = service.Send(message, _channel2_name);
             });
         }
 
         [Fact]
-        public void ThrowIfGivenEdpNameForSendMessageIsNull()
+        public void ThrowIfGivenChannelNameForSendMessageIsNull()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
@@ -176,16 +174,16 @@
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // act
-                var result = service.Send(message, edp_name: null);
+                var result = service.Send(message, channel_name: null);
             });
         }
 
         [Fact]
-        public void SendMessageWithTheGivenProviderInstance()
+        public void SendMessageWithTheGivenChannelInstance()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
@@ -193,18 +191,18 @@
                 .Build();
 
             // act
-            var result = service.Send(message, _edp2);
+            var result = service.Send(message, _channel2);
 
             // assert
-            Assert.Equal(_edp2_name, result.EdpName);
+            Assert.Equal(_channel2_name, result.ChannelName);
         }
 
         [Fact]
-        public void ThrowIfGivenEdpInstanceForSendIsNull()
+        public void ThrowIfGivenChannelInstanceForSendIsNull()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")
@@ -215,7 +213,7 @@
             Assert.Throws<ArgumentNullException>(() =>
             {
                 // act
-                var result = service.Send(message, edp: null);
+                var result = service.Send(message, channel: null);
             });
         }
 
@@ -223,8 +221,8 @@
         public void ThrowOnSendWhenMessageInstanceIsNull()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1 }, options);
 
             // assert
             Assert.Throws<ArgumentNullException>(() =>
@@ -238,8 +236,8 @@
         public void UseDefaultSenderEmailSetInEmailServiceOptions()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name, DefaultFrom = new System.Net.Mail.MailAddress("default@email.net") };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name, DefaultFrom = new System.Net.Mail.MailAddress("default@email.net") };
+            var service = new EmailService(new[] { _channel1 }, options);
             var message = EmailMessage.Compose()
                 .To("to@email.net")
                 .WithPlainTextContent("test content")
@@ -256,8 +254,8 @@
         public void ThrowIfSenderEmailIsNotSetNeitherInOptionsOrMessage()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name };
+            var service = new EmailService(new[] { _channel1 }, options);
 
             var message = EmailMessage.Compose()
                 .To("to@email.net")
@@ -276,8 +274,8 @@
         public void NotSendIfSendingIsPaused()
         {
             // arrange
-            var options = new EmailServiceOptions { DefaultEmailDeliveryProvider = _edp1_name, PauseSending = true };
-            var service = new EmailService(new[] { _edp1 }, options);
+            var options = new EmailServiceOptions { DefaultEmailDeliveryChannel = _channel1_name, PauseSending = true };
+            var service = new EmailService(new[] { _channel1 }, options);
             var message = EmailMessage.Compose()
                 .From("from@email.net")
                 .To("to@email.net")

@@ -21,21 +21,21 @@ public class IndexModel : PageModel
             .WithHighPriority()
             .Build();
 
-        /* send the message, this will use the default EDP set in the option */
+        /* send the message, this will use the default Channel set in the option */
         var result = _emailService.Send(message);
 
         /*
-         * if you want to send the email using a deferent EDP you just need to pass the name of the edp 
-         * the edp needs to be registered in order to use it 
+         * if you want to send the email using a deferent Channel you just need to pass the name of the channel 
+         * the channel needs to be registered in order to use it 
          */
-        //var result = mailer.Send(message, SocketLabsEmailDeliveryProvider.Name);
+        //var result = mailer.Send(message, SocketLabsEmailDeliveryChannel.Name);
 
         /*
-         * if the EDP is not registered you can use an instance of the EDP instead.
+         * if the Channel is not registered you can use an instance of the Channel instead.
          */
-        //var myEdp = new SocketLabsEmailDeliveryProvider(new SocketLabsEmailDeliveryProviderOptions { ApiKey = "", DefaultServerId = 0});
-        //var result = mailer.Send(message, myEdp);
+        //var myChannel = new SocketLabsEmailDeliveryChannel(new SocketLabsEmailDeliveryChannelOptions { ApiKey = "", DefaultServerId = 0});
+        //var result = mailer.Send(message, myChannel);
 
-        _logger.LogInformation("sent: {result}", result.IsSuccess);
+        _logger.LogInformation("sent: {Result}", result.IsSuccess);
     }
 }

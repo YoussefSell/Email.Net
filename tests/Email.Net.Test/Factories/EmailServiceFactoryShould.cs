@@ -1,27 +1,26 @@
 ﻿namespace Email.Net.Test.Factories
 {
-    using Email.Net.EDP;
+    using Email.Net.Channel;
     using Email.Net.Exceptions;
     using Email.Net.Factories;
-    using Moq;
+    using NSubstitute;
     using System.Net.Mail;
     using Xunit;
 
     public class EmailServiceFactoryShould
     {
-        private const string _edp1_name = "mock1_edp";
-        private readonly IEmailDeliveryProvider _edp1;
+        private const string _channel1_name = "mock1_channel";
+        private readonly IEmailDeliveryChannel _channel1;
 
         public EmailServiceFactoryShould()
         {
-            var edpMock1 = new Mock<IEmailDeliveryProvider>();
-            edpMock1.Setup(e => e.Name).Returns(_edp1_name);
-            edpMock1.Setup(e => e.Send(It.IsAny<EmailMessage>())).Returns(EmailSendingResult.Success(_edp1_name));
-            _edp1 = edpMock1.Object;
+            _channel1 = Substitute.For<IEmailDeliveryChannel>();
+            _channel1.Name.Returns(_channel1_name);
+            _channel1.Send(message: Arg.Any<EmailMessage>()).Returns(EmailSendingResult.Success(_channel1_name));
         }
 
         [Fact]
-        public void CreateEmailServiceWithOptionsAndSmtpEdp()
+        public void CreateEmailServiceWithOptionsAndSmtpChannel()
         {
             // arrange
             var factorty = EmailServiceFactory.Instance;
@@ -33,16 +32,16 @@
                 {
                     options.PauseSending = false;
                     options.DefaultFrom = defaultEmail;
-                    options.DefaultEmailDeliveryProvider = _edp1_name;
+                    options.DefaultEmailDeliveryChannel = _channel1_name;
                 })
-                .UseEDP(_edp1)
+                .UseChannel(_channel1)
                 .Create() as EmailService;
 
             // assert
             if (service is not null)
             {
-                Assert.Single(service.Edps);
-                Assert.Equal(_edp1_name, service.DefaultEdp.Name);
+                Assert.Single(service.Channels);
+                Assert.Equal(_channel1_name, service.DefaultChannel.Name);
                 Assert.Equal(defaultEmail, service.Options.DefaultFrom);
             }
         }
@@ -63,7 +62,7 @@
                     {
                         options.PauseSending = false;
                         options.DefaultFrom = defaultEmail;
-                        options.DefaultEmailDeliveryProvider = null;
+                        options.DefaultEmailDeliveryChannel = null;
                     });
             });
         }

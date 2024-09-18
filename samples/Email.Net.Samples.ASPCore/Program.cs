@@ -15,15 +15,15 @@ builder.Services.AddEmailNet(options =>
     /* used to specify the default from to be used when sending the emails */
     options.DefaultFrom = new MailAddress("from@email.net");
 
-    /* set the default EDP to be used for sending the emails */
-    options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+    /* set the default Channel to be used for sending the emails */
+    options.DefaultEmailDeliveryChannel = SmtpEmailDeliveryChannel.Name;
 
-    /* to use a deferent EDP as your default one, just uncomment the one you need */
-    //options.DefaultEmailDeliveryProvider = SocketLabsEmailDeliveryProvider.Name;
-    //options.DefaultEmailDeliveryProvider = AmazonSESEmailDeliveryProvider.Name;
-    //options.DefaultEmailDeliveryProvider = SendgridEmailDeliveryProvider.Name;
-    //options.DefaultEmailDeliveryProvider = MailKitEmailDeliveryProvider.Name;
-    //options.DefaultEmailDeliveryProvider = MailgunEmailDeliveryProvider.Name;
+    /* to use a deferent Channel as your default one, just uncomment the one you need */
+    //options.DefaultEmailDeliveryChannel = SocketLabsEmailDeliveryChannel.Name;
+    //options.DefaultEmailDeliveryChannel = AmazonSESEmailDeliveryChannel.Name;
+    //options.DefaultEmailDeliveryChannel = SendgridEmailDeliveryChannel.Name;
+    //options.DefaultEmailDeliveryChannel = MailKitEmailDeliveryChannel.Name;
+    //options.DefaultEmailDeliveryChannel = MailgunEmailDeliveryChannel.Name;
 })
 .UseSmtp(options => options.UseGmailSmtp("your-email@gmail.com", "password"))
 .UseMailKit(options => options.UseOutlookSmtp("your-email@outlook.com", "password"))
@@ -50,4 +50,4 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.Run();
+await app.RunAsync();

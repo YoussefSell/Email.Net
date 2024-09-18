@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Email.Net - Socketlabs Channel</Title>
+    <PackageId>Email.Net.Socketlabs</PackageId>
+    <PackageTags>Email.Net; Emails; Socketlabs;</PackageTags>
+    <Description>Socketlabs Email delivery channel for Email.Net.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SocketLabs.EmailDelivery" Version="1.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Email.Net\Email.Net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

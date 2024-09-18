@@ -13,7 +13,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.*
+          dotnet-version: 8.0.*
       - name: Install dependencies
         run: dotnet restore
       - name: Build
@@ -22,28 +22,15 @@ jobs:
       - name: Pack Email.Net
         run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/Core/Email.Net/Email.Net.csproj -o .
       - name: Pack Email.Net.Socketlabs
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.Net.Socketlabs/Email.Net.Socketlabs.csproj -o .
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryChannels/Email.Net.Socketlabs/Email.Net.Socketlabs.csproj -o .
       - name: Pack Email.Net.SendGrid
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.Net.SendGrid/Email.Net.SendGrid.csproj -o .
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryChannels/Email.Net.SendGrid/Email.Net.SendGrid.csproj -o .
       - name: Pack Email.Net.MailKit
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.Net.MailKit/Email.Net.MailKit.csproj -o .
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryChannels/Email.Net.MailKit/Email.Net.MailKit.csproj -o .
       - name: Pack Email.Net.Mailgun
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.Net.Mailgun/Email.Net.Mailgun.csproj -o .
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryChannels/Email.Net.Mailgun/Email.Net.Mailgun.csproj -o .
       - name: Pack Email.Net.AmazonSES
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryProviders/Email.Net.AmazonSES/Email.Net.AmazonSES.csproj -o .
-
-      - name: Pack Email.Net.DependencyInjection
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.Net.DependencyInjection/Email.Net.DependencyInjection.csproj -o .
-      - name: Pack Email.Net.Socketlabs.DependencyInjection
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.Net.Socketlabs.DependencyInjection/Email.Net.Socketlabs.DependencyInjection.csproj -o .
-      - name: Pack Email.Net.SendGrid.DependencyInjection
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.Net.SendGrid.DependencyInjection/Email.Net.SendGrid.DependencyInjection.csproj -o .
-      - name: Pack Email.Net.MailKit.DependencyInjection
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.Net.MailKit.DependencyInjection/Email.Net.MailKit.DependencyInjection.csproj -o .
-      - name: Pack Email.Net.Mailgun.DependencyInjection
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.Net.Mailgun.DependencyInjection/Email.Net.Mailgun.DependencyInjection.csproj -o .
-      - name: Pack Email.Net.AmazonSES.DependencyInjection
-        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/DependencyInjection/Email.Net.AmazonSES.DependencyInjection/Email.Net.AmazonSES.DependencyInjection.csproj -o .
+        run: dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg --no-build -c Release src/EmailDeliveryChannels/Email.Net.AmazonSES/Email.Net.AmazonSES.csproj -o .
 
       - name: Push packages
         run: dotnet nuget push *.nupkg --api-key ${{secrets.NUGET_KEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
