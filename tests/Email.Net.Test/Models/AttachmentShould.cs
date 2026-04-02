@@ -2,8 +2,8 @@
 {
     using System;
     using System.IO;
-using System.Net.Mail;
     using Xunit;
+
     public class AttachmentShould
     {
         #region base attachment file name tests

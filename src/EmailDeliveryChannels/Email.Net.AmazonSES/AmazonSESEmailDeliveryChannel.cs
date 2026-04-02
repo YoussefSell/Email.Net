@@ -114,15 +114,15 @@
                 Destination = new Destination(),
             };
 
-            if (!(message.Subject is null))
+            if (message.Subject is not null)
                 mailMessage.Message.Subject = new Content(message.Subject);
 
             mailMessage.Message.Body = new Body();
 
-            if (!(message.HtmlBody is null))
+            if (message.HtmlBody is not null)
                 mailMessage.Message.Body.Html = new Content(message.HtmlBody);
 
-            if (!(message.PlainTextBody is null))
+            if (message.PlainTextBody is not null)
                 mailMessage.Message.Body.Text = new Content(message.PlainTextBody);
 
             if (!string.IsNullOrEmpty(message.Charset))
@@ -132,25 +132,36 @@
                 mailMessage.Message.Body.Text.Charset = message.Charset;
             }
 
-            if (!(message.ReplyTo is null) && message.ReplyTo.Any())
+            if (message.ReplyTo is not null && message.ReplyTo.Any())
             {
+                mailMessage.ReplyToAddresses ??= [];
+
                 foreach (var email in message.ReplyTo)
                     mailMessage.ReplyToAddresses.Add(email.Address);
             }
 
-            foreach (var email in message.To)
-                mailMessage.Destination.ToAddresses.Add(email.Address);
-
-            if (!(message.Bcc is null) && message.Bcc.Any())
+            if (message.Bcc is not null && message.Bcc.Any())
             {
+                mailMessage.Destination.BccAddresses ??= [];
+
                 foreach (var email in message.Bcc)
                     mailMessage.Destination.BccAddresses.Add(email.Address);
             }
 
-            if (!(message.Cc is null) && message.Cc.Any())
+            if (message.Cc is not null && message.Cc.Any())
             {
+                mailMessage.Destination.CcAddresses ??= [];
+
                 foreach (var email in message.Cc)
                     mailMessage.Destination.CcAddresses.Add(email.Address);
+            }
+
+            if (message.To is not null && message.To.Any())
+            {
+                mailMessage.Destination.ToAddresses ??= [];
+
+                foreach (var email in message.To)
+                    mailMessage.Destination.ToAddresses.Add(email.Address);
             }
 
             return mailMessage;
