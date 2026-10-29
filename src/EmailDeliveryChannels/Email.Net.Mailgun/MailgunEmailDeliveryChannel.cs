@@ -20,34 +20,45 @@
         /// <inheritdoc/>
         public async Task<EmailSendingResult> SendAsync(EmailMessage message, CancellationToken cancellationToken = default)
         {
+            // only dispose the HttpClient if we own it
+            var client = _httpClient ?? new HttpClient();
+
             try
             {
-                using (var client = new HttpClient())
+                var buildUri = new UriBuilder()
                 {
-                    var buildUri = new UriBuilder()
-                    {
-                        Host = _options.BaseUrl,
-                        Scheme = _options.UseSSL ? "https" : "http",
-                        Path = string.Format("{0}/messages", _options.Domain)
-                    };
+                    Host = _options.BaseUrl,
+                    Scheme = _options.UseSSL ? "https" : "http",
+                    Path = string.Format("{0}/messages", _options.Domain)
+                };
 
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                        Convert.ToBase64String(Encoding.UTF8.GetBytes($"api:{_options.ApiKey}")));
+                using var request = new HttpRequestMessage(HttpMethod.Post, buildUri.ToString())
+                {
+                    Content = CreateMessage(message),
+                };
 
-                    var response = await client.PostAsync(buildUri.ToString(), CreateMessage(message), cancellationToken)
-                        .ConfigureAwait(false);
+                // set the authorization on the request, not on the client, since the client could be shared
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic",
+                    Convert.ToBase64String(Encoding.UTF8.GetBytes($"api:{_options.ApiKey}")));
 
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        return EmailSendingResult.Success(Name);
+                using var response = await client.SendAsync(request, cancellationToken)
+                    .ConfigureAwait(false);
 
-                    return EmailSendingResult.Failure(Name)
-                        .AddError(new EmailSendingError(((int)response.StatusCode).ToString(), response.StatusCode.ToString()))
-                        .AddMetaData("api_response", await response.Content.ReadAsStringAsync());
-                }
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    return EmailSendingResult.Success(Name);
+
+                return EmailSendingResult.Failure(Name)
+                    .AddError(new EmailSendingError(((int)response.StatusCode).ToString(), response.StatusCode.ToString()))
+                    .AddMetaData("api_response", await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             }
             catch (Exception ex)
             {
                 return EmailSendingResult.Failure(Name).AddError(ex);
+            }
+            finally
+            {
+                if (_httpClient is null)
+                    client.Dispose();
             }
         }
     }
@@ -66,6 +77,7 @@
         string IEmailDeliveryChannel.Name => Name;
 
         private readonly MailgunEmailDeliveryChannelOptions _options;
+        private readonly HttpClient _httpClient;
 
         /// <summary>
         /// create an instance of <see cref="MailgunEmailDeliveryChannel"/>
@@ -80,6 +92,18 @@
             // validate if the options are valid
             options.Validate();
             _options = options;
+        }
+
+        /// <summary>
+        /// create an instance of <see cref="MailgunEmailDeliveryChannel"/> that uses the given <see cref="HttpClient"/> to send the requests.
+        /// </summary>
+        /// <param name="options">the channel options instance</param>
+        /// <param name="httpClient">the <see cref="HttpClient"/> instance used to call the Mailgun api</param>
+        /// <exception cref="ArgumentNullException">if the given channel options or httpClient is null</exception>
+        public MailgunEmailDeliveryChannel(MailgunEmailDeliveryChannelOptions options, HttpClient httpClient)
+            : this(options)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         /// <summary>

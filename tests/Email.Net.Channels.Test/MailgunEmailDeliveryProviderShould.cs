@@ -2,15 +2,19 @@ namespace Email.Net.Mailgun.Test
 {
     using Email.Net.Channel.Mailgun;
     using Email.Net.Exceptions;
+    using Email.Net.Factories;
     using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using Xunit;
 
     public class MailgunEmailDeliveryChannelshould
     {
-        static readonly string TEST_TO_EMAIL = EnvVariable.Load("EMAIL_NET_TO_EMAIL");
-        static readonly string TEST_FROM_EMAIL = EnvVariable.Load("EMAIL_NET_FROM_EMAIL");
-        static readonly string TEST_DOMAIN = EnvVariable.Load("EMAIL_NET_MAILGUN_DOMAIN");
-        static readonly string TEST_API_KEY = EnvVariable.Load("EMAIL_NET_MAILGUN_API_KEY");
+        const string TEST_DOMAIN = "mg.email.net";
+        const string TEST_API_KEY = "test-api-key";
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -135,7 +139,25 @@ namespace Email.Net.Mailgun.Test
         }
 
         [Fact]
-        public void CreateMailMessageFromMessage()
+        public void ThorwIfHttpClientIsNull()
+        {
+            // arrange
+            HttpClient? httpClient = null;
+
+            // assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // act
+                var channel = new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions
+                {
+                    ApiKey = TEST_API_KEY,
+                    Domain = TEST_DOMAIN,
+                }, httpClient);
+            });
+        }
+
+        [Fact]
+        public async Task CreateMailMessageFromMessage()
         {
             // arrange
             var channel = new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions()
@@ -144,7 +166,197 @@ namespace Email.Net.Mailgun.Test
                 Domain = TEST_DOMAIN,
             });
 
-            var message = EmailMessage.Compose()
+            var message = CreateMessage().Build();
+
+            // act
+            var content = await channel.CreateMessage(message).ReadAsStringAsync(TestContext.Current.CancellationToken);
+
+            // assert
+            AssertFormField(content, "from", "from@email.net");
+            AssertFormField(content, "h:Reply-To", "replayto@email.net");
+            AssertFormField(content, "to", "to@email.net");
+            AssertFormField(content, "subject", "test subject");
+            AssertFormField(content, "text", "this is a test");
+            AssertFormField(content, "html", "<p>this is a test</p>");
+            AssertFormField(content, "bcc", "bcc@email.net");
+            AssertFormField(content, "cc", "cc@email.net");
+            AssertFormField(content, "h:key", "value");
+        }
+
+        [Fact]
+        public void SendEmail()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage()
+                .UseTestMode()
+                .Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.True(result.IsSuccess);
+            Assert.Equal(MailgunEmailDeliveryChannel.Name, result.ChannelName);
+
+            var request = Assert.Single(handler.Requests);
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Equal($"https://api.mailgun.net/v3/{TEST_DOMAIN}/messages", request.Uri?.ToString());
+            Assert.Equal("Basic", request.Request.Headers.Authorization?.Scheme);
+            Assert.Equal(Convert.ToBase64String(Encoding.UTF8.GetBytes($"api:{TEST_API_KEY}")), request.Request.Headers.Authorization?.Parameter);
+            AssertFormField(request.Body, "to", "to@email.net");
+            AssertFormField(request.Body, "o:testmode", "yes");
+        }
+
+        [Fact]
+        public async Task SendEmailAsync()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
+
+            // act
+            var result = await channel.SendAsync(message, TestContext.Current.CancellationToken);
+
+            // assert
+            Assert.True(result.IsSuccess);
+            Assert.Single(handler.Requests);
+        }
+
+        [Fact]
+        public async Task SendMultipleEmailsUsingTheSameHttpClient()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK);
+            var channel = CreateChannel(handler);
+
+            // act
+            var result1 = channel.Send(CreateMessage().Build());
+            var result2 = await channel.SendAsync(CreateMessage().Build(), TestContext.Current.CancellationToken);
+
+            // assert
+            Assert.True(result1.IsSuccess);
+            Assert.True(result2.IsSuccess);
+            Assert.Equal(2, handler.Requests.Count);
+            Assert.All(handler.Requests, r => Assert.NotNull(r.Request.Headers.Authorization));
+        }
+
+        [Fact]
+        public void SendEmailUsingHttp_WhenSSLIsDisabled()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK);
+            var channel = new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions()
+            {
+                ApiKey = TEST_API_KEY,
+                Domain = TEST_DOMAIN,
+                BaseUrl = "api.eu.mailgun.net/v3",
+                UseSSL = false,
+            }, handler.CreateClient());
+
+            // act
+            var result = channel.Send(CreateMessage().Build());
+
+            // assert
+            Assert.True(result.IsSuccess);
+            Assert.Equal($"http://api.eu.mailgun.net/v3/{TEST_DOMAIN}/messages", handler.LastRequest.Uri?.ToString());
+        }
+
+        [Fact]
+        public void SendEmailWithBase64Attachement()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage()
+                .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value))
+                .Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.True(result.IsSuccess);
+
+            var request = Assert.Single(handler.Requests);
+            Assert.Contains("name=attachment; filename=test_file.txt", request.Body);
+            Assert.Contains(Encoding.UTF8.GetString(Convert.FromBase64String(MockData.TestFileBase64Value)), request.Body);
+        }
+
+        [Fact]
+        public void SendEmailWithFilePathAttachement()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage()
+                .IncludeAttachment(new FilePathAttachment(MockData.TestFilePath))
+                .Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.True(result.IsSuccess);
+
+            var request = Assert.Single(handler.Requests);
+            Assert.Contains($"name=attachment; filename={MockData.TestFileName}", request.Body);
+            Assert.Contains(Encoding.UTF8.GetString(Convert.FromBase64String(MockData.TestFileBase64Value)), request.Body);
+        }
+
+        [Fact]
+        public void ReturnFailureWithErrors_WhenApiReturnsError()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.Unauthorized, "Forbidden");
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Forbidden", result.GetMetaData<string>("api_response"));
+
+            var error = Assert.Single(result.Errors);
+            Assert.Equal("401", error.Code);
+            Assert.Equal(nameof(HttpStatusCode.Unauthorized), error.Message);
+        }
+
+        [Fact]
+        public void ReturnFailure_WhenRequestThrows()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(_ => throw new HttpRequestException("network error"));
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.False(result.IsSuccess);
+
+            var error = Assert.Single(result.Errors);
+            Assert.IsType<HttpRequestException>(error.Exception);
+        }
+
+        // the field name is quoted when it contains special chars, e.g. name="h:Reply-To"
+        private static void AssertFormField(string content, string name, string value)
+            => Assert.Matches($"name=\"?{Regex.Escape(name)}\"?\\r\\n\\r\\n{Regex.Escape(value)}\\r\\n", content);
+
+        private static MailgunEmailDeliveryChannel CreateChannel(FakeHttpMessageHandler handler)
+            => new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions()
+            {
+                ApiKey = TEST_API_KEY,
+                Domain = TEST_DOMAIN,
+            }, handler.CreateClient());
+
+        private static EmailMessageComposer CreateMessage()
+            => EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -154,122 +366,6 @@ namespace Email.Net.Mailgun.Test
                 .SetCharsetTo("utf-8")
                 .WithBcc("bcc@email.net")
                 .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .Build();
-
-            // act
-            _ = channel.CreateMessage(message);
-
-            // assert
-            //Assert.Equal(message.From.Address, mailMessage.From.Email);
-            //Assert.Equal(message.From.DisplayName, mailMessage.From.FriendlyName);
-            //Assert.Equal(message.ReplyTo.First().Address, mailMessage.ReplyTo.Email);
-            //Assert.Equal(message.ReplyTo.First().DisplayName, mailMessage.ReplyTo.FriendlyName);
-            //Assert.Equal(message.To.First().Address, mailMessage.To.First().Email);
-            //Assert.Equal(message.To.First().DisplayName, mailMessage.To.First().FriendlyName);
-            //Assert.Equal(message.Subject, mailMessage.Subject);
-            //Assert.Equal(message.PlainTextBody, mailMessage.PlainTextBody);
-            //Assert.Equal(message.HtmlBody, mailMessage.HtmlBody);
-            //Assert.Equal(message.Charset, mailMessage.CharSet);
-            //Assert.Equal(message.Bcc.First().Address, mailMessage.Bcc.First().Email);
-            //Assert.Equal(message.Bcc.First().DisplayName, mailMessage.Bcc.First().FriendlyName);
-            //Assert.Equal(message.Cc.First().Address, mailMessage.Cc.First().Email);
-            //Assert.Equal(message.Cc.First().DisplayName, mailMessage.Cc.First().FriendlyName);
-            //Assert.Equal(message.Headers.First().Key, mailMessage.CustomHeaders.First().Name);
-            //Assert.Equal(message.Headers.First().Value, mailMessage.CustomHeaders.First().Value);
-        }
-
-        [Fact(Skip = "no Mailgun account for testing")]
-        public void SendEmail()
-        {
-            // arrange
-            var channel = new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions()
-            {
-                ApiKey = TEST_API_KEY,
-                Domain = TEST_DOMAIN,
-            });
-
-            var message = EmailMessage.Compose()
-                .From(TEST_FROM_EMAIL)
-                .ReplyTo("replayto@email.net")
-                .To(TEST_TO_EMAIL)
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .UseTestMode()
-                .Build();
-
-            // act
-            var result = channel.Send(message);
-
-            // assert
-            Assert.True(result.IsSuccess);
-        }
-
-        [Fact(Skip = "no Mailgun account for testing")]
-        public void SendEmailWithBase64Attachement()
-        {
-            // arrange
-            var channel = new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions()
-            {
-                ApiKey = TEST_API_KEY,
-                Domain = TEST_DOMAIN,
-            });
-
-            var message = EmailMessage.Compose()
-                .From(TEST_FROM_EMAIL)
-                .ReplyTo("replayto@email.net")
-                .To(TEST_TO_EMAIL)
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value))
-                .Build();
-
-            // act
-            var result = channel.Send(message);
-
-            // assert
-            Assert.True(result.IsSuccess);
-        }
-
-        [Fact(Skip = "no Mailgun account for testing")]
-        public void SendEmailWithFilePathAttachement()
-        {
-            // arrange
-            var channel = new MailgunEmailDeliveryChannel(new MailgunEmailDeliveryChannelOptions()
-            {
-                ApiKey = TEST_API_KEY,
-                Domain = TEST_DOMAIN,
-            });
-
-            var message = EmailMessage.Compose()
-                .From(TEST_FROM_EMAIL)
-                .ReplyTo("replayto@email.net")
-                .To(TEST_TO_EMAIL)
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .IncludeAttachment(new FilePathAttachment(MockData.TestFilePath))
-                .Build();
-
-            // act
-            var result = channel.Send(message);
-
-            // assert
-            Assert.True(result.IsSuccess);
-        }
+                .WithHeader("key", "value");
     }
 }
