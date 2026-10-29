@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -54,6 +55,7 @@
         string IEmailDeliveryChannel.Name => Name;
 
         private readonly SendgridEmailDeliveryChannelOptions _options;
+        private readonly HttpClient _httpClient;
 
         /// <summary>
         /// create an instance of <see cref="SendgridEmailDeliveryChannel"/>
@@ -70,6 +72,18 @@
             _options = options;
         }
 
+        /// <summary>
+        /// create an instance of <see cref="SendgridEmailDeliveryChannel"/> that uses the given <see cref="HttpClient"/> to send the requests.
+        /// </summary>
+        /// <param name="options">the channel options instance</param>
+        /// <param name="httpClient">the <see cref="HttpClient"/> instance used to call the SendGrid api</param>
+        /// <exception cref="ArgumentNullException">if the given channel options or httpClient is null</exception>
+        public SendgridEmailDeliveryChannel(SendgridEmailDeliveryChannelOptions options, HttpClient httpClient)
+            : this(options)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        }
+
         private SendGridClient CreateClient(IEnumerable<ChannelData> data)
         {
             var apiKey = _options.ApiKey;
@@ -80,7 +94,10 @@
             if (!apikeyChannelData.IsEmpty())
                 apiKey = apikeyChannelData.GetValue<string>();
 
-            return new SendGridClient(apiKey);
+            if (_httpClient is null)
+                return new SendGridClient(apiKey);
+
+            return new SendGridClient(_httpClient, apiKey);
         }
 
         private static async Task<EmailSendingResult> BuildResultObjectAsync(Response result)
