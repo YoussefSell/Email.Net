@@ -14,8 +14,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Update="Microsoft.SourceLink.GitHub" Version="10.0.203" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.7" />
+		<PackageReference Update="Microsoft.SourceLink.GitHub" Version="10.0.403" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.14" />
 	</ItemGroup>
 
 </Project>
