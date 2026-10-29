@@ -19,10 +19,11 @@
         /// <inheritdoc/>
         public async Task<EmailSendingResult> SendAsync(EmailMessage message, CancellationToken cancellationToken = default)
         {
+            // only dispose the client if we own it
+            var client = _client ?? CreateClient();
+
             try
             {
-                using var client = CreateClient();
-
                 var response = await client.SendEmailAsync(CreateMessage(message), cancellationToken)
                     .ConfigureAwait(false);
 
@@ -49,6 +50,11 @@
             {
                 return EmailSendingResult.Failure(Name).AddError(ex);
             }
+            finally
+            {
+                if (_client is null)
+                    client.Dispose();
+            }
         }
     }
 
@@ -66,6 +72,7 @@
         string IEmailDeliveryChannel.Name => Name;
 
         private readonly AmazonSESEmailDeliveryChannelOptions _options;
+        private readonly IAmazonSimpleEmailService _client;
 
         /// <summary>
         /// create an instance of <see cref="AmazonSESEmailDeliveryChannel"/>
@@ -82,7 +89,19 @@
             _options = options;
         }
 
-        private AmazonSimpleEmailServiceClient CreateClient()
+        /// <summary>
+        /// create an instance of <see cref="AmazonSESEmailDeliveryChannel"/> that uses the given <see cref="IAmazonSimpleEmailService"/> client to send the emails.
+        /// </summary>
+        /// <param name="options">the options instance</param>
+        /// <param name="client">the Amazon SES client instance</param>
+        /// <exception cref="ArgumentNullException">the given options or client instance is null</exception>
+        public AmazonSESEmailDeliveryChannel(AmazonSESEmailDeliveryChannelOptions options, IAmazonSimpleEmailService client)
+            : this(options)
+        {
+            _client = client ?? throw new ArgumentNullException(nameof(client));
+        }
+
+        private IAmazonSimpleEmailService CreateClient()
         {
             if (!string.IsNullOrEmpty(_options.AwsAccessKeyId)
                 && !string.IsNullOrEmpty(_options.AwsSecretAccessKey)

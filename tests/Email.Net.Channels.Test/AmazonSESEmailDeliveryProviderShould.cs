@@ -1,9 +1,16 @@
 namespace Email.Net.AmazonSES.Test
 {
     using Email.Net.Channel.AmazonSES;
+    using Amazon.Runtime;
+    using Amazon.SimpleEmail;
+    using Amazon.SimpleEmail.Model;
     using Email.Net.Exceptions;
+    using NSubstitute;
     using System;
     using System.Linq;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Xunit;
 
     public class AmazonSESEmailDeliveryChannelshould
@@ -92,75 +99,149 @@ namespace Email.Net.AmazonSES.Test
             Assert.Equal(message.Cc.First().Address, mailMessage.Destination.CcAddresses.First());
         }
 
-        [Fact(Skip = "no Amazon account for testing")]
+        [Fact]
+        public void ThorwIfClientIsNull()
+        {
+            // arrange
+            IAmazonSimpleEmailService? client = null;
+
+            // assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // act
+                var channel = new AmazonSESEmailDeliveryChannel(new AmazonSESEmailDeliveryChannelOptions()
+                {
+                    RegionEndpoint = Amazon.RegionEndpoint.USWest2,
+                }, client);
+            });
+        }
+
+        [Fact]
         public void SendEmail()
         {
             // arrange
-            var channel = new AmazonSESEmailDeliveryChannel(new AmazonSESEmailDeliveryChannelOptions()
+            var client = CreateClient(new SendEmailResponse
             {
-                RegionEndpoint = Amazon.RegionEndpoint.USWest2,
+                HttpStatusCode = HttpStatusCode.OK,
+                MessageId = "test-message-id",
+                ResponseMetadata = new ResponseMetadata { RequestId = "test-request-id" },
             });
 
-            var message = EmailMessage.Compose()
-                .From("from@email.net")
-                .ReplyTo("replayto@email.net")
-                .To("to@email.net")
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .Build();
+            var channel = CreateChannel(client);
+            var message = CreateMessage();
 
             // act
             var result = channel.Send(message);
 
             // assert
             Assert.True(result.IsSuccess);
+            Assert.Equal(AmazonSESEmailDeliveryChannel.Name, result.ChannelName);
+            Assert.Equal("test-message-id", result.GetMetaData<string>("message_id"));
+            Assert.Equal("test-request-id", result.GetMetaData<string>("request_id"));
+
+            client.Received(1).SendEmailAsync(
+                Arg.Is<SendEmailRequest>(r =>
+                    r.Source == "from@email.net" &&
+                    r.Destination.ToAddresses.Single() == "to@email.net" &&
+                    r.Message.Subject.Data == "test subject"),
+                Arg.Any<CancellationToken>());
         }
 
-        [Fact(Skip = "no Amazon account for testing")]
-        public void SendEmailWithBase64Attachement()
+        [Fact]
+        public async Task SendEmailAsync()
         {
             // arrange
-            var channel = new AmazonSESEmailDeliveryChannel(new AmazonSESEmailDeliveryChannelOptions()
-            {
-                RegionEndpoint = Amazon.RegionEndpoint.USWest2,
-            });
-
-            var message = EmailMessage.Compose()
-                .From("from@email.net")
-                .ReplyTo("replayto@email.net")
-                .To("to@email.net")
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value))
-                .Build();
+            var client = CreateClient(new SendEmailResponse { HttpStatusCode = HttpStatusCode.OK });
+            var channel = CreateChannel(client);
+            var message = CreateMessage();
 
             // act
-            var result = channel.Send(message);
+            var result = await channel.SendAsync(message, TestContext.Current.CancellationToken);
 
             // assert
             Assert.True(result.IsSuccess);
+            await client.Received(1).SendEmailAsync(Arg.Any<SendEmailRequest>(), TestContext.Current.CancellationToken);
         }
 
-        [Fact(Skip = "no Amazon account for testing")]
-        public void SendEmailWithFilePathAttachement()
+        [Fact]
+        public void NotDisposeTheGivenClient()
         {
             // arrange
-            var channel = new AmazonSESEmailDeliveryChannel(new AmazonSESEmailDeliveryChannelOptions()
+            var client = CreateClient(new SendEmailResponse { HttpStatusCode = HttpStatusCode.OK });
+            var channel = CreateChannel(client);
+
+            // act
+            channel.Send(CreateMessage());
+            channel.Send(CreateMessage());
+
+            // assert
+            client.DidNotReceive().Dispose();
+            client.Received(2).SendEmailAsync(Arg.Any<SendEmailRequest>(), Arg.Any<CancellationToken>());
+        }
+
+        [Fact]
+        public void ReturnFailureWithMetaData_WhenResponseIsNotOk()
+        {
+            // arrange
+            var responseMetadata = new ResponseMetadata { RequestId = "test-request-id" };
+            responseMetadata.Metadata.Add("error", "test error");
+
+            var client = CreateClient(new SendEmailResponse
             {
-                RegionEndpoint = Amazon.RegionEndpoint.USWest2,
+                HttpStatusCode = HttpStatusCode.BadRequest,
+                MessageId = "test-message-id",
+                ResponseMetadata = responseMetadata,
             });
 
-            var message = EmailMessage.Compose()
+            var channel = CreateChannel(client);
+
+            // act
+            var result = channel.Send(CreateMessage());
+
+            // assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal("test-message-id", result.GetMetaData<string>("message_id"));
+            Assert.Equal("test-request-id", result.GetMetaData<string>("request_id"));
+            Assert.Equal("test error", result.GetMetaData<string>("error"));
+        }
+
+        [Fact]
+        public void ReturnFailure_WhenClientThrows()
+        {
+            // arrange
+            var client = Substitute.For<IAmazonSimpleEmailService>();
+            client.SendEmailAsync(Arg.Any<SendEmailRequest>(), Arg.Any<CancellationToken>())
+                .Returns<Task<SendEmailResponse>>(_ => throw new MessageRejectedException("Email address is not verified."));
+
+            var channel = CreateChannel(client);
+
+            // act
+            var result = channel.Send(CreateMessage());
+
+            // assert
+            Assert.False(result.IsSuccess);
+
+            var error = Assert.Single(result.Errors);
+            Assert.IsType<MessageRejectedException>(error.Exception);
+        }
+
+        private static IAmazonSimpleEmailService CreateClient(SendEmailResponse response)
+        {
+            var client = Substitute.For<IAmazonSimpleEmailService>();
+            client.SendEmailAsync(Arg.Any<SendEmailRequest>(), Arg.Any<CancellationToken>())
+                .Returns(response);
+
+            return client;
+        }
+
+        private static AmazonSESEmailDeliveryChannel CreateChannel(IAmazonSimpleEmailService client)
+            => new AmazonSESEmailDeliveryChannel(new AmazonSESEmailDeliveryChannelOptions()
+            {
+                RegionEndpoint = Amazon.RegionEndpoint.USWest2,
+            }, client);
+
+        private static EmailMessage CreateMessage()
+            => EmailMessage.Compose()
                 .From("from@email.net")
                 .ReplyTo("replayto@email.net")
                 .To("to@email.net")
@@ -171,14 +252,6 @@ namespace Email.Net.AmazonSES.Test
                 .WithBcc("bcc@email.net")
                 .WithCc("cc@email.net")
                 .WithHeader("key", "value")
-                .IncludeAttachment(new FilePathAttachment(MockData.TestFilePath))
                 .Build();
-
-            // act
-            var result = channel.Send(message);
-
-            // assert
-            Assert.True(result.IsSuccess);
-        }
     }
 }
