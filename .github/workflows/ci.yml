@@ -7,14 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      EMAIL_NET_TO_EMAIL: ${{secrets.EMAIL_NET_TO_EMAIL}}
-      EMAIL_NET_FROM_EMAIL: ${{secrets.EMAIL_NET_FROM_EMAIL}}
-      EMAIL_NET_SOCKETLABS_API_KEY: ${{secrets.EMAIL_NET_SOCKETLABS_API_KEY}}
-      EMAIL_NET_SOCKETLABS_SERVER: ${{secrets.EMAIL_NET_SOCKETLABS_SERVER}}
-      EMAIL_NET_SENDGRID_API_KEY: ${{secrets.EMAIL_NET_SENDGRID_API_KEY}}
-      EMAIL_NET_MAILGUN_API_KEY: ${{secrets.EMAIL_NET_MAILGUN_API_KEY}}
-      EMAIL_NET_MAILGUN_DOMAIN: ${{secrets.EMAIL_NET_MAILGUN_DOMAIN}}
     steps:
       - uses: actions/checkout@v2
       - name: Setup dotnet
