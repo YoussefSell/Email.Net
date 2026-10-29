@@ -2,16 +2,19 @@ namespace Email.Net.Socketlabs.Test
 {
     using Email.Net.Channel.SocketLabs;
     using Email.Net.Exceptions;
+    using Email.Net.Factories;
     using System;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
     using Xunit;
 
     public class SocketLabsEmailDeliveryChannelshould
     {
-        static readonly string TEST_TO_EMAIL = EnvVariable.Load("EMAIL_NET_TO_EMAIL");
-        static readonly string TEST_FROM_EMAIL = EnvVariable.Load("EMAIL_NET_FROM_EMAIL");
-        static readonly string TEST_API_KEY = EnvVariable.Load("EMAIL_NET_SOCKETLABS_API_KEY");
-        static readonly int TEST_SERVER = int.Parse(EnvVariable.Load("EMAIL_NET_SOCKETLABS_SERVER"));
+        const string TEST_API_KEY = "test-api-key";
+        const int TEST_SERVER = 12345;
+        const string SUCCESS_RESPONSE = "{\"ErrorCode\":\"Success\",\"MessageResults\":[],\"TransactionReceipt\":\"test-receipt\"}";
 
         [Fact]
         public void ThorwIfOptionsIsNull()
@@ -94,6 +97,24 @@ namespace Email.Net.Socketlabs.Test
         }
 
         [Fact]
+        public void ThorwIfHttpClientIsNull()
+        {
+            // arrange
+            HttpClient? httpClient = null;
+
+            // assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // act
+                var channel = new SocketLabsEmailDeliveryChannel(new SocketLabsEmailDeliveryChannelOptions
+                {
+                    ApiKey = TEST_API_KEY,
+                    DefaultServerId = TEST_SERVER,
+                }, httpClient);
+            });
+        }
+
+        [Fact]
         public void CreateMailMessageFromMessage()
         {
             // arrange
@@ -142,53 +163,67 @@ namespace Email.Net.Socketlabs.Test
         public void SendEmail()
         {
             // arrange
-            var channel = new SocketLabsEmailDeliveryChannel(new SocketLabsEmailDeliveryChannelOptions()
-            {
-                ApiKey = TEST_API_KEY,
-                DefaultServerId = TEST_SERVER,
-            });
-
-            var message = EmailMessage.Compose()
-                .From(TEST_FROM_EMAIL)
-                .ReplyTo("replayto@email.net")
-                .To(TEST_TO_EMAIL)
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
-                .Build();
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK, SUCCESS_RESPONSE);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
 
             // act
             var result = channel.Send(message);
 
             // assert
             Assert.True(result.IsSuccess);
+            Assert.Equal(SocketLabsEmailDeliveryChannel.Name, result.ChannelName);
+            Assert.Equal("test-receipt", result.GetMetaData<string>("transaction_receipt_key"));
+
+            var request = Assert.Single(handler.Requests);
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Equal("https://inject.socketlabs.com/api/v1/email", request.Uri?.ToString());
+            Assert.Contains(TEST_SERVER.ToString(), request.Body);
+            Assert.Contains("\"from@email.net\"", request.Body);
+            Assert.Contains("\"to@email.net\"", request.Body);
+            Assert.Contains("\"test subject\"", request.Body);
+        }
+
+        [Fact]
+        public async Task SendEmailAsync()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK, SUCCESS_RESPONSE);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
+
+            // act
+            var result = await channel.SendAsync(message, TestContext.Current.CancellationToken);
+
+            // assert
+            Assert.True(result.IsSuccess);
+            Assert.Single(handler.Requests);
+        }
+
+        [Fact]
+        public async Task SendMultipleEmailsUsingTheSameHttpClient()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK, SUCCESS_RESPONSE);
+            var channel = CreateChannel(handler);
+
+            // act
+            var result1 = channel.Send(CreateMessage().Build());
+            var result2 = await channel.SendAsync(CreateMessage().Build(), TestContext.Current.CancellationToken);
+
+            // assert
+            Assert.True(result1.IsSuccess);
+            Assert.True(result2.IsSuccess);
+            Assert.Equal(2, handler.Requests.Count);
         }
 
         [Fact]
         public void SendEmailWithBase64Attachement()
         {
             // arrange
-            var channel = new SocketLabsEmailDeliveryChannel(new SocketLabsEmailDeliveryChannelOptions()
-            {
-                ApiKey = TEST_API_KEY,
-                DefaultServerId = TEST_SERVER,
-            });
-
-            var message = EmailMessage.Compose()
-                .From(TEST_FROM_EMAIL)
-                .ReplyTo("replayto@email.net")
-                .To(TEST_TO_EMAIL)
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK, SUCCESS_RESPONSE);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage()
                 .IncludeAttachment(new Base64Attachement(@"test_file.txt", MockData.TestFileBase64Value))
                 .Build();
 
@@ -197,29 +232,19 @@ namespace Email.Net.Socketlabs.Test
 
             // assert
             Assert.True(result.IsSuccess);
+
+            var request = Assert.Single(handler.Requests);
+            Assert.Contains("\"test_file.txt\"", request.Body);
+            Assert.Contains(MockData.TestFileBase64Value, request.Body);
         }
 
         [Fact]
         public void SendEmailWithFilePathAttachement()
         {
             // arrange
-            var channel = new SocketLabsEmailDeliveryChannel(new SocketLabsEmailDeliveryChannelOptions()
-            {
-                ApiKey = TEST_API_KEY,
-                DefaultServerId = TEST_SERVER,
-            });
-
-            var message = EmailMessage.Compose()
-                .From(TEST_FROM_EMAIL)
-                .ReplyTo("replayto@email.net")
-                .To(TEST_TO_EMAIL)
-                .WithSubject("test subject")
-                .WithPlainTextContent("this is a test")
-                .WithHtmlContent("<p>this is a test</p>")
-                .SetCharsetTo("utf-8")
-                .WithBcc("bcc@email.net")
-                .WithCc("cc@email.net")
-                .WithHeader("key", "value")
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK, SUCCESS_RESPONSE);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage()
                 .IncludeAttachment(new FilePathAttachment(MockData.TestFilePath))
                 .Build();
 
@@ -228,6 +253,84 @@ namespace Email.Net.Socketlabs.Test
 
             // assert
             Assert.True(result.IsSuccess);
+
+            var request = Assert.Single(handler.Requests);
+            Assert.Contains($"\"{MockData.TestFileName}\"", request.Body);
+            Assert.Contains(MockData.TestFileBase64Value, request.Body);
         }
+
+        [Fact]
+        public void SendEmailUsingCustomServerId()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK, SUCCESS_RESPONSE);
+            var channel = CreateChannel(handler);
+            var message = CreateMessage()
+                .UseCustomServerId(98765)
+                .Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.True(result.IsSuccess);
+            Assert.Contains("98765", handler.LastRequest.Body);
+        }
+
+        [Fact]
+        public void ReturnFailureWithErrors_WhenApiReturnsError()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(HttpStatusCode.OK,
+                "{\"ErrorCode\":\"InvalidAuthentication\",\"MessageResults\":[],\"TransactionReceipt\":null}");
+
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.False(result.IsSuccess);
+
+            var error = Assert.Single(result.Errors);
+            Assert.Equal("InvalidAuthentication", error.Code);
+        }
+
+        [Fact]
+        public void ReturnFailure_WhenRequestThrows()
+        {
+            // arrange
+            var handler = new FakeHttpMessageHandler(_ => throw new HttpRequestException("network error"));
+            var channel = CreateChannel(handler);
+            var message = CreateMessage().Build();
+
+            // act
+            var result = channel.Send(message);
+
+            // assert
+            Assert.False(result.IsSuccess);
+            Assert.NotEmpty(result.Errors);
+        }
+
+        private static SocketLabsEmailDeliveryChannel CreateChannel(FakeHttpMessageHandler handler)
+            => new SocketLabsEmailDeliveryChannel(new SocketLabsEmailDeliveryChannelOptions()
+            {
+                ApiKey = TEST_API_KEY,
+                DefaultServerId = TEST_SERVER,
+            }, handler.CreateClient());
+
+        private static EmailMessageComposer CreateMessage()
+            => EmailMessage.Compose()
+                .From("from@email.net")
+                .ReplyTo("replayto@email.net")
+                .To("to@email.net")
+                .WithSubject("test subject")
+                .WithPlainTextContent("this is a test")
+                .WithHtmlContent("<p>this is a test</p>")
+                .SetCharsetTo("utf-8")
+                .WithBcc("bcc@email.net")
+                .WithCc("cc@email.net")
+                .WithHeader("key", "value");
     }
 }

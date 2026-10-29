@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -22,13 +23,19 @@
                 var basicMessage = CreateMessage(message);
 
                 // create the client
-                using (var client = CreateClient(message.ChannelData))
+                var client = CreateClient(message.ChannelData);
+
+                try
                 {
                     // send the message
                     var result = client.Send(basicMessage);
 
                     // build the result object and return
                     return BuildResultObject(result);
+                }
+                finally
+                {
+                    DisposeClient(client);
                 }
             }
             catch (Exception ex)
@@ -46,14 +53,21 @@
                 var basicMessage = CreateMessage(message);
 
                 // create the client
-                using var client = CreateClient(message.ChannelData);
+                var client = CreateClient(message.ChannelData);
 
-                // send the message
-                var result = await client.SendAsync(basicMessage, cancellationToken)
-                    .ConfigureAwait(false);
+                try
+                {
+                    // send the message
+                    var result = await client.SendAsync(basicMessage, cancellationToken)
+                        .ConfigureAwait(false);
 
-                // build the result object and return
-                return BuildResultObject(result);
+                    // build the result object and return
+                    return BuildResultObject(result);
+                }
+                finally
+                {
+                    DisposeClient(client);
+                }
             }
             catch (Exception ex)
             {
@@ -76,6 +90,7 @@
         string IEmailDeliveryChannel.Name => Name;
 
         private readonly SocketLabsEmailDeliveryChannelOptions _options;
+        private readonly HttpClient _httpClient;
 
         /// <summary>
         /// create an instance of <see cref="SocketLabsEmailDeliveryChannel"/>
@@ -90,6 +105,18 @@
             // validate if the options are valid
             options.Validate();
             _options = options;
+        }
+
+        /// <summary>
+        /// create an instance of <see cref="SocketLabsEmailDeliveryChannel"/> that uses the given <see cref="HttpClient"/> to send the requests.
+        /// </summary>
+        /// <param name="options">the channel options instance</param>
+        /// <param name="httpClient">the <see cref="HttpClient"/> instance used to call the SocketLabs api</param>
+        /// <exception cref="ArgumentNullException">if the given channel options or httpClient is null</exception>
+        public SocketLabsEmailDeliveryChannel(SocketLabsEmailDeliveryChannelOptions options, HttpClient httpClient)
+            : this(options)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         private SocketLabsClient CreateClient(IEnumerable<ChannelData> data)
@@ -107,7 +134,18 @@
             if (!serverIdChannelData.IsEmpty())
                 serverId = serverIdChannelData.GetValue<int>();
 
-            return new SocketLabsClient(serverId, apiKey);
+            if (_httpClient is null)
+                return new SocketLabsClient(serverId, apiKey);
+
+            return new SocketLabsClient(serverId, apiKey, _httpClient);
+        }
+
+        private void DisposeClient(SocketLabsClient client)
+        {
+            // disposing the SocketLabsClient also disposes its HttpClient,
+            // so we only dispose it if we own the HttpClient
+            if (_httpClient is null)
+                client.Dispose();
         }
 
         private static EmailSendingResult BuildResultObject(SendResponse result)
