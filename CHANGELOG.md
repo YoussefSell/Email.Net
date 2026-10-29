@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0]
+
+####  Added
+- `SendgridEmailDeliveryChannel`, `SocketLabsEmailDeliveryChannel` and `MailgunEmailDeliveryChannel` now have a constructor that accepts an `HttpClient`, so you can provide your own client (e.g. one created by `IHttpClientFactory`).
+- `AmazonSESEmailDeliveryChannel` now has a constructor that accepts an `IAmazonSimpleEmailService` client.
+- when an `HttpClient` or `IAmazonSimpleEmailService` is registered in the DI container, the channels will now use it.
+
+####  Changed
+- Mailgun: the `Authorization` header is now set on each request instead of the `HttpClient` default headers, so a shared `HttpClient` is not modified.
+- the channels do not dispose the `HttpClient` / SES client given to them, it's the caller's responsibility.
+- Upgrade NuGet packages, including `Microsoft.SourceLink.GitHub`, `Microsoft.Extensions.DependencyInjection.Abstractions`, `AWSSDK.SimpleEmail` and MailKit.
+- the channel tests no longer send real emails, they now use a fake `HttpMessageHandler` (or a mocked SES client), and the email providers secrets are no longer needed to run the tests or the CI.
+- add `global.json` to use the Microsoft.Testing.Platform runner, since `dotnet test` with the VSTest target is no longer supported on the .NET 10 SDK.
+
+####  Removed
+- removed the `.env` file with the email-related environment variables placeholders, it's no longer needed by the tests.
+
+## [2.2.0]
+
+####  Changed
+- Upgrade NuGet packages, including `Microsoft.SourceLink.GitHub`, `Microsoft.Extensions.DependencyInjection.Abstractions`, `AWSSDK.SimpleEmail`, MailKit, and test dependencies (`Microsoft.Net.Test.Sdk`, `coverlet.collector`).
+- Update the CI/CD workflows to use .NET 10.0.
+
 ## [2.1.0]
 
 ####  Changed
